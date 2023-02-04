@@ -31,7 +31,7 @@ if (mysqli_num_rows($cart_query) > 0) {
 $preference->items = $items;
 
 $preference->back_urls = array(
-    "success" => 'http://localhost/Loja/index.php?pay',
+    "success" => 'http://localhost/OUV-Trajes/index.php?pay',
     "failure" => '',
     "pending" => ''
 );

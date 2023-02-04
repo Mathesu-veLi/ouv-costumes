@@ -160,6 +160,7 @@ if (isset($_POST['checkout'])) {
             });
         })();
     </script>
+    <script src="../mobile-menu.js"></script>
 </body>
 
 </html>

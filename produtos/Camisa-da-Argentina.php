@@ -40,8 +40,8 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/Loja/css/style.css">
-        <link rel="shortcut icon" href="/Loja/img/favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="../css/style.css">
+        <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
         <title>Camisa da Argentina - OUV Shop</title>
     </head>
     <body class="produto-back">
@@ -86,8 +86,8 @@
         ?>
         <div class="nav-pages">
                         <ol>
-                            <li><a href="/Loja/index.html">Inicio</a></li>
-                            <li><a href="/Loja/comprar.html">Comprar</a></li>
+                            <li><a href="../index.html">Inicio</a></li>
+                            <li><a href="../comprar.html">Comprar</a></li>
                             <li>Camisa da Argentina</li>
                         </ol>
         </div>
@@ -145,6 +145,6 @@
                 <input type="hidden" name="product_file" value="Camisa-da-Argentina.php">
             </form>
         </main>
-        <script src="/Loja/mobile-menu.js"></script>
+        <script src="../mobile-menu.js"></script>
     </body>
 </html>

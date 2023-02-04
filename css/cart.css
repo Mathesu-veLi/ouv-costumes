@@ -1,0 +1,147 @@
+@import url(style.css);
+
+input[type="number"] {
+  height: 40px;
+  width: 60px;
+  padding: 10px;
+  border-radius: 0;
+}
+
+td {
+  padding: 10px 15px;
+}
+
+th {
+  padding: 10px;
+}
+
+.alert-red {
+  background-color: rgb(150, 0, 0);
+  border-radius: 10px;
+  padding: 10px;
+  color: white;
+  border: 1px solid black;
+}
+
+.alert-red:hover {
+  background-color: rgb(100, 0, 0);
+}
+
+.cart {
+  background-color: #FAFAFA;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 75vw;
+  padding: 30px;
+  border-radius: 5px;
+  transition: 0.5s;
+  position: relative;
+  border: 1px solid black;
+}
+
+.cart.mobile {
+  display: none;
+}
+
+.shopping-cart {
+  display: flex;
+  justify-content: center;
+  flex-flow: column;
+  align-items: center;
+  height: 80vh;
+}
+
+.quant * {
+  margin: 10px 5px;
+  display: inline;
+}
+
+.quant {
+  width: 250px;
+}
+
+.remove {
+  color: blue;
+}
+
+.remove:hover {
+  color: rgb(0, 0, 50);
+}
+
+.click {
+  cursor: pointer;
+}
+
+.name {
+  min-width: 200px;
+  align-content: center;
+}
+
+.checkout {
+  background: linear-gradient(to right, #237258, #1f343b);
+  padding: 15px 20px;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  transition: .2s linear;
+}
+
+.checkout:hover {
+  border-radius: 10px;
+  box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.3);
+}
+
+.box-checkout {
+  min-width: 191px;
+  justify-content: center;
+  align-items: center;
+}
+
+hr {
+  width: 100%;
+  border: transparent;
+  margin: 0px;
+}
+
+@media (min-width: 1400px) {
+  .cart {
+    width: 60vw;
+  }
+}
+
+@media (max-width: 1100px) {
+  .cart.pc {
+    display: none;
+  }
+
+  .cart.mobile {
+    display: flex;
+    width: 100vw;
+    flex-wrap: wrap;
+    padding: 15px;
+  }
+
+  .cart.mobile * {
+    margin-bottom: 5px;
+  }
+
+  .cart.mobile p:nth-child(1) {
+    padding: 0 0 10px 0;
+  }
+
+  .cart.mobile p:nth-child(3) {
+    padding: 10px 0 0 0;
+  }
+
+  .name {
+    min-width: 150px;
+  }
+
+  .table-bottom {
+    display: flex;
+  }
+
+  .table-bottom p:nth-child(1) {
+    margin-right: 10px;
+  }
+}

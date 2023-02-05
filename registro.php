@@ -5,8 +5,8 @@
     {
         $name = mysqli_real_escape_string($conn, $_POST['name']);
         $email = mysqli_real_escape_string($conn, $_POST['email']);
-        $pass = mysqli_real_escape_string($conn, md5($_POST['password']));
-        $cpass = mysqli_real_escape_string($conn, md5($_POST['cpassword']));
+        $pass = mysqli_real_escape_string($conn, $_POST['password']);
+        $cpass = mysqli_real_escape_string($conn, $_POST['cpassword']);
         $cep = 0;
         $estado = '';
         $cidade = '';

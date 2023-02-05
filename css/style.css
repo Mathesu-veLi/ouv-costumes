@@ -44,7 +44,7 @@ body{
     padding: 20px;
 }
 
-#index h1, #index p
+#index h1, #index p:not(.dropdown p)
 {
     font-family: Anzeigen;
     font-size: 80px;
@@ -56,7 +56,7 @@ body{
     text-transform: uppercase;
 }
 
-#index p
+#index p:not(.dropdown p)
 {
     font-style: normal;
     font-size: 30px;
@@ -94,12 +94,12 @@ body{
     flex-direction: column;
 }
 
-#index div
+#index div:not(.hamb)
 {
     margin: 60px;
 }
 
-#index div *
+#index div *:not(.bar)
 {
     margin: 30px;
 }
@@ -355,7 +355,7 @@ h2 small
 
 
 @media (max-width: 999px) {
-    #index img
+    #index img:not(.cart-img, .logo)
     {
         width: 100%;
         margin: 0;
@@ -390,7 +390,7 @@ h2 small
     {
         font-size: 28px;
     }
-    #index div{
+    #index div:not(.hamb){
         margin: 20px;
     }
     

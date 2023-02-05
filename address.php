@@ -37,7 +37,7 @@ if (isset($_POST['checkout'])) {
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
 </head>
 
-<body style="margin-bottom: 0; height: 100%;">
+<body class="address-body" style="margin-bottom: 0; height: 100%;">
     <script src="https://sdk.mercadopago.com/js/v2"></script>
     <header>
         <nav class="navbar">
@@ -67,7 +67,7 @@ if (isset($_POST['checkout'])) {
         </nav>
     </header>
 
-    <div style="display: flex; height: 100vh;">
+    <div class="address-div" style="display: flex; height: 100vh;">
         <div class="pay">
             <form method="POST" class="address-form form">
                 <center>
@@ -160,7 +160,7 @@ if (isset($_POST['checkout'])) {
             });
         })();
     </script>
-    <script src="../mobile-menu.js"></script>
+    <script src="mobile-menu.js"></script>
 </body>
 
 </html>

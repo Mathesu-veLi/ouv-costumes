@@ -70,7 +70,7 @@
                             ';
                 } ?>
             </ul>
-            <a href="cart.php"><img src="../img/shopping-cart-white.png" alt="Carrinho" width="50"></a>
+            <a href="../cart.php"><img src="../img/shopping-cart-white.png" alt="Carrinho" width="50"></a>
         </nav>
     </header>
         <?php

@@ -20,7 +20,7 @@ if (isset($_POST['checkout'])) {
     $complemento = $_POST["Complemento"];
     mysqli_query($conn, "UPDATE `user_form` SET `cep` = '$cep', `estado` = '$estado', `cidade` = '$cidade', `bairro` = '$bairro', `rua` = '$rua', `numero` = '$numero', `complemento` = '$complemento' WHERE `user_form`.`id` = $user_id
 ") or die('query failed');
-    header('location: http://192.168.100.6/Loja/mercado-pago/index.php');
+    header('location: http://192.168.100.6/ouv/mercado-pago/index.php');
 }
 
 ?>

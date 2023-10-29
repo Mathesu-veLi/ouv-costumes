@@ -1,0 +1,20 @@
+.navbar {
+    background-color: #01131f;
+    height: 110px;
+}
+
+.nav a {
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 17px;
+}
+
+.nav a:hover {
+    transition: 0.3s;
+    color: aqua;
+    opacity: 0.7;
+}
+
+.nav a:focus {
+    color: rgb(3, 127, 131)
+}

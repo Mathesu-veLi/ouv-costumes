@@ -14,7 +14,7 @@ export default function Login() {
                     <label htmlFor="email">E-mail:</label>
                     <input
                         type="email"
-                        name="password"
+                        name="email"
                         id="email"
                         placeholder="exemple@exemple.com"
                     />

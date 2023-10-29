@@ -1,6 +1,5 @@
 .navbar {
     background-color: #01131f;
-    height: 110px;
 }
 
 .nav a {
@@ -17,4 +16,8 @@
 
 .nav a:focus {
     color: rgb(3, 127, 131)
+}
+
+.fixed-top {
+    margin-top: 10px;
 }

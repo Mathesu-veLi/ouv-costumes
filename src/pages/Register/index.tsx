@@ -11,13 +11,15 @@ export default function Register() {
             <div>
                 <Form method="post" className="d-flex flex-column">
                     <h1 className="text-center">Register</h1>
-                    <label htmlFor="email">Name:</label>
+
+                    <label htmlFor="name">Name:</label>
                     <input
-                        type="email"
-                        name="email"
-                        id="email"
-                        placeholder="exemple@exemple.com"
+                        type="text"
+                        name="name"
+                        id="name"
+                        placeholder="Your name"
                     />
+
                     <label htmlFor="email" className="mt-3">
                         E-mail:
                     </label>
@@ -27,6 +29,7 @@ export default function Register() {
                         id="email"
                         placeholder="exemple@exemple.com"
                     />
+                    
                     <label htmlFor="password" className="mt-3">
                         Password:
                     </label>

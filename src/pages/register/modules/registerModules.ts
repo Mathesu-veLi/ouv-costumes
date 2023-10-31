@@ -22,11 +22,7 @@ export function validate(name: string, email: string, password: string) {
     return formErrors;
 }
 
-export function register(
-    name: string,
-    email: string,
-    password: string,
-) {
+export function register(name: string, email: string, password: string) {
     const errors = validate(name, email, password);
     if (!errors) return;
 }

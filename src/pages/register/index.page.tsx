@@ -1,10 +1,11 @@
+import React from 'react';
 import { useState } from 'react';
 
 import { Button, Container } from 'react-bootstrap';
-import { Form } from './styled.ts';
+import { Form } from './styled';
 import './style.css';
 
-import { register } from './modules/registerModules.ts';
+import { register } from './modules/registerModules';
 
 export default function Register() {
     const [userName, setName] = useState('');

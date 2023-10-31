@@ -4,6 +4,7 @@
 
 .nav a {
     color: #fff;
+    text-decoration: none;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 17px;
 }

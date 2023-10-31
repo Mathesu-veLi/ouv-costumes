@@ -1,5 +1,7 @@
 import './index.css';
-import ouvLogo from '../../assets/ouvLogo.png';
+import ouvLogo from '@/assets/ouvLogo.png';
+import Image from 'next/image';
+import Link from 'next/link';
 
 import { Nav, Navbar } from 'react-bootstrap';
 
@@ -7,8 +9,8 @@ export default function Header() {
     return (
         <header>
             <Navbar expand="md" className="navbar py-4">
-                <Navbar.Brand className="position-absolute fixed-top mx-5 h-100">
-                    <img src={ouvLogo} alt="" width={120} />
+                <Navbar.Brand className="position-absolute mx-5 h-100">
+                    <Image src={ouvLogo} alt="" width={120} />
                 </Navbar.Brand>
 
                 <Navbar.Toggle
@@ -20,26 +22,26 @@ export default function Header() {
                 />
                 <Navbar.Collapse id="basic-nav">
                     <Nav className="me-auto mx-auto nav pt-2">
-                        <Nav.Link
+                        <Link
                             className="px-5 m-0 btn-block text-center "
                             href="/"
                         >
                             Início
-                        </Nav.Link>
+                        </Link>
 
-                        <Nav.Link
+                        <Link
                             className="px-5 m-0 btn-block text-center "
-                            href="shop"
+                            href="/shop"
                         >
                             Comprar
-                        </Nav.Link>
+                        </Link>
 
-                        <Nav.Link
+                        <Link
                             className="px-5 m-0 btn-block text-center "
-                            href="contact"
+                            href="/contact"
                         >
                             Contato
-                        </Nav.Link>
+                        </Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

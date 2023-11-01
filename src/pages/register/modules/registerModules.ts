@@ -22,7 +22,22 @@ export function validate(name: string, email: string, password: string) {
     return formErrors;
 }
 
-export function register(name: string, email: string, password: string) {
+export async function register(name: string, email: string, password: string) {
     const errors = validate(name, email, password);
-    if (!errors) return;
+    if (errors) return;
+
+    const userData = {
+        name,
+        email,
+        password,
+    };
+
+    const response = await fetch('http://localhost:3000/api/register', {
+        method: 'POST',
+        body: JSON.stringify(userData),
+    });
+
+    if (response.status === 201) {
+        toast.success('Usuário cadastrado');
+    }
 }

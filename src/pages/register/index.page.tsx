@@ -21,7 +21,7 @@ export default function Register() {
                 <Form
                     onSubmit={(e) => {
                         e.preventDefault();
-                        register(userName, email, password)
+                        register(userName, email, password);
                     }}
                     method="post"
                     className="d-flex flex-column"

@@ -1,16 +1,19 @@
 import React from 'react';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 import { Button, Container } from 'react-bootstrap';
 import { Form } from './styled';
 import './style.css';
 
-import { register } from './modules/registerModules';
+import { signup } from './modules/signup';
 
 export default function Register() {
     const [userName, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const router = useRouter()
 
     return (
         <Container
@@ -21,7 +24,8 @@ export default function Register() {
                 <Form
                     onSubmit={(e) => {
                         e.preventDefault();
-                        register(userName, email, password);
+                        signup(userName, email, password);
+                        router.push('/login');
                     }}
                     method="post"
                     className="d-flex flex-column"

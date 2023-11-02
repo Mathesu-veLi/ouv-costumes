@@ -1,5 +1,7 @@
 import { toast } from 'react-toastify';
 import { isEmail } from 'validator';
+import bcrypt from 'bcryptjs';
+
 
 export function validate(name: string, email: string, password: string) {
     let formErrors = false;
@@ -22,14 +24,16 @@ export function validate(name: string, email: string, password: string) {
     return formErrors;
 }
 
-export async function register(name: string, email: string, password: string) {
+export async function signup(name: string, email: string, password: string) {
     const errors = validate(name, email, password);
     if (errors) return;
+
+    const encryptedPassword = bcrypt.hashSync(password, 8);
 
     const userData = {
         name,
         email,
-        password,
+        password: encryptedPassword,
     };
 
     const response = await fetch('http://localhost:3000/api/register', {
@@ -38,6 +42,8 @@ export async function register(name: string, email: string, password: string) {
     });
 
     if (response.status === 201) {
-        toast.success('Usuário cadastrado');
+        return toast.success('Usuário cadastrado');
     }
+
+    toast.error(await response.json().then((response) => response.errors));
 }

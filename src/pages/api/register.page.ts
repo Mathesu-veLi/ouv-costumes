@@ -1,32 +1,30 @@
 import { PrismaClient } from '@prisma/client';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const jwt = require('@/utils/jwt');
+
 const prisma = new PrismaClient();
 
 export default function register(req: NextApiRequest, res: NextApiResponse) {
-    const user = main(JSON.parse(req.body))
-        .then(async () => {
+    const user: unknown = main(JSON.parse(req.body))
+        .then(async (user) => {
             await prisma.$disconnect();
-            res.status(201)
+            res.status(201).json({ user });
         })
         .catch(async (e) => {
-            console.error(e);
+            console.log(e);
             await prisma.$disconnect();
-            process.exit(1);
+
+            res.status(400).json({ errors: 'Usuário já cadastrado' });
         });
 
-    res.status(200).json(user);
+    return user;
 }
 
-const main = async ({
-    name,
-    email,
-    password,
-}: {
-    name: string;
-    email: string;
-    password: string;
-}) => {
-    const data = { name, email, password };
-    return await prisma.user.create({ data });
+const main = async (data: { [key: string]: unknown }) => {
+    let user = await prisma.user.create({ data });
+    data.accessToken = await jwt.signAccessToken(user);
+
+    return data;
 };

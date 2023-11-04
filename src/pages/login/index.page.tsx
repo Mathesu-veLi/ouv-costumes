@@ -1,18 +1,22 @@
+import { Button, Container } from 'react-bootstrap';
+import { Form } from './styled';
+import './style.css';
+
 import React from 'react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-import { Button, Container } from 'react-bootstrap';
-import { Form } from './styled';
-import './style.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginSuccess } from '@/store/user/actions';
+
 import { login } from './modules/login';
 
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [id, setId] = useState('');
 
     const router = useRouter();
+    const dispatch = useDispatch();
 
     return (
         <Container
@@ -23,11 +27,21 @@ export default function Login() {
                 <Form
                     onSubmit={async (e) => {
                         e.preventDefault();
-                        await login(email, password).then((user) =>
-                            setId(user.id),
-                        );
+                        await login(email, password).then((newUser) => {
+                            if (newUser) {
+                                dispatch(
+                                    loginSuccess({
+                                        user: {
+                                            id: newUser.id,
+                                            email,
+                                        },
 
-                        router.push('/')
+                                        accessToken: newUser.accessToken,
+                                    }),
+                                );
+                            }
+                        });
+                        router.push('/');
                     }}
                     method="post"
                     className="d-flex flex-column"

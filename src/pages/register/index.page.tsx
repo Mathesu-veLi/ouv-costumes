@@ -1,10 +1,12 @@
-import React from 'react';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-
 import { Button, Container } from 'react-bootstrap';
 import { Form } from './styled';
 import './style.css';
+
+import React from 'react';
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+
+import { useRouter } from 'next/navigation';
 
 import { signup } from './modules/signup';
 
@@ -13,7 +15,21 @@ export default function Register() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const { isLoggedIn } = useSelector(
+        (rootReducer: {
+            userReducer: {
+                isLoggedIn: boolean;
+            };
+        }) => rootReducer.userReducer,
+    );
+
     const router = useRouter();
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            router.push('/');
+        }
+    });
 
     return (
         <Container

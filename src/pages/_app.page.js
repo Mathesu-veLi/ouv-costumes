@@ -7,7 +7,8 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { Provider } from 'react-redux';
-import store from '@/store';
+import { PersistGate } from 'redux-persist/integration/react';
+import store, { persistor } from '@/store';
 
 function MyApp({ Component, pageProps }) {
     return (
@@ -21,7 +22,9 @@ function MyApp({ Component, pageProps }) {
             </Head>
             <Header />
             <Provider store={store}>
-                <Component {...pageProps} />
+                <PersistGate persistor={persistor}>
+                    <Component {...pageProps} />
+                </PersistGate>
             </Provider>
             <ToastContainer autoClose={5000} className="toast-container" />
         </>

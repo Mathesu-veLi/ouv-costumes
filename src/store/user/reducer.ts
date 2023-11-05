@@ -3,11 +3,12 @@ import * as types from './types';
 const initialState = {
     user: {},
     token: '',
+    isLoggedIn: false,
 };
 
 const userReducer = (
     state = initialState,
-    action: { type: string; payload: { user: object, accessToken: string } },
+    action: { type: string; payload: { user: object; accessToken: string } },
 ) => {
     const actionPayload = action.payload;
 
@@ -16,6 +17,7 @@ const userReducer = (
             const newState = { ...state };
             newState.user = actionPayload.user;
             newState.token = actionPayload.accessToken;
+            newState.isLoggedIn = true;
             return newState;
         }
         default:

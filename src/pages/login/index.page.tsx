@@ -2,21 +2,35 @@ import { Button, Container } from 'react-bootstrap';
 import { Form } from './styled';
 import './style.css';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-
 import { useDispatch, useSelector } from 'react-redux';
-import { loginSuccess } from '@/store/user/actions';
 
+import { useRouter } from 'next/router';
+
+import { loginSuccess } from '@/store/user/actions';
 import { login } from './modules/login';
 
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const { isLoggedIn } = useSelector(
+        (rootReducer: {
+            userReducer: {
+                isLoggedIn: boolean;
+            };
+        }) => rootReducer.userReducer,
+    );
+
     const router = useRouter();
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            router.push('/');
+        }
+    });
 
     return (
         <Container
@@ -40,8 +54,9 @@ export default function Login() {
                                     }),
                                 );
                             }
+
+                            router.push('/');
                         });
-                        router.push('/');
                     }}
                     method="post"
                     className="d-flex flex-column"

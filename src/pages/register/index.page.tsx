@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 
 import { signup } from './modules/signup';
+import { toast } from 'react-toastify';
 
 export default function Register() {
     const [userName, setName] = useState('');
@@ -40,8 +41,16 @@ export default function Register() {
                 <Form
                     onSubmit={(e) => {
                         e.preventDefault();
-                        signup(userName, email, password);
-                        router.push('/login');
+                        signup(userName, email, password)
+                            .then((mensage) => {
+                                router.push('/login');
+                                toast.success(mensage);
+                            })
+                            .catch((errors) => {
+                                errors.forEach((error: string) => {
+                                    toast.error(error);
+                                });
+                            });
                     }}
                     method="post"
                     className="d-flex flex-column"

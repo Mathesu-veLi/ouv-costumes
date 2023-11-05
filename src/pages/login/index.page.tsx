@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import { Button, Container } from 'react-bootstrap';
 import { Form } from './styled';
 import './style.css';
@@ -41,22 +42,24 @@ export default function Login() {
                 <Form
                     onSubmit={async (e) => {
                         e.preventDefault();
-                        await login(email, password).then((newUser) => {
-                            if (newUser) {
-                                dispatch(
-                                    loginSuccess({
-                                        user: {
-                                            id: newUser.id,
-                                            email,
-                                        },
+                        await login(email, password)
+                            .then((newUser) => {
+                                if (newUser) {
+                                    dispatch(
+                                        loginSuccess({
+                                            user: {
+                                                id: newUser.id,
+                                                email,
+                                            },
 
-                                        accessToken: newUser.accessToken,
-                                    }),
-                                );
-                            }
-
-                            router.push('/');
-                        });
+                                            accessToken: newUser.accessToken,
+                                        }),
+                                    );
+                                }
+                                router.push('/');
+                                toast.success('Login efetuado com sucesso');
+                            })
+                            .catch((error) => toast.error(error));
                     }}
                     method="post"
                     className="d-flex flex-column"

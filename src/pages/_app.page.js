@@ -20,9 +20,9 @@ function MyApp({ Component, pageProps }) {
                 />
                 <title>OUV Trajes</title>
             </Head>
-            <Header />
             <Provider store={store}>
                 <PersistGate persistor={persistor}>
+                    <Header />
                     <Component {...pageProps} />
                 </PersistGate>
             </Provider>

@@ -5,7 +5,17 @@ import Link from 'next/link';
 
 import { Nav, Navbar } from 'react-bootstrap';
 
+import { useSelector } from 'react-redux';
+
 export default function Header() {
+    const { isLoggedIn } = useSelector(
+        (rootReducer: {
+            userReducer: {
+                isLoggedIn: boolean;
+            };
+        }) => rootReducer.userReducer,
+    );
+
     return (
         <header>
             <Navbar expand="md" className="navbar py-4">
@@ -22,26 +32,41 @@ export default function Header() {
                 />
                 <Navbar.Collapse id="basic-nav">
                     <Nav className="me-auto mx-auto nav pt-2">
-                        <Link
-                            className="px-5 m-0 btn-block text-center "
-                            href="/"
-                        >
-                            Início
-                        </Link>
+                        <div>
+                            <Link
+                                className="px-5 m-0 btn-block text-center "
+                                href="/"
+                            >
+                                Início
+                            </Link>
+                            <Link
+                                className="px-5 m-0 btn-block text-center "
+                                href="/shop"
+                            >
+                                Comprar
+                            </Link>
+                            <Link
+                                className="px-5 m-0 btn-block text-center "
+                                href="/contact"
+                            >
+                                Contato
+                            </Link>
+                        </div>
 
-                        <Link
-                            className="px-5 m-0 btn-block text-center "
-                            href="/shop"
-                        >
-                            Comprar
-                        </Link>
-
-                        <Link
-                            className="px-5 m-0 btn-block text-center "
-                            href="/contact"
-                        >
-                            Contato
-                        </Link>
+                        {!isLoggedIn && (
+                            <>
+                                <div>
+                                    <Link
+                                        className="px-4 m-0 btn-block text-center "
+                                        href="/login"
+                                    >Login</Link>
+                                    <Link
+                                        className="px-4 m-0 btn-block text-center "
+                                        href="/register"
+                                    >Register</Link>
+                                </div>
+                            </>
+                        )}
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

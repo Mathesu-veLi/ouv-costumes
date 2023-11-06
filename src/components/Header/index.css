@@ -31,14 +31,22 @@ a {
     font-size: 17px;
 }
 
+.nav a {
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
 .nav a:hover {
     transition: 0.3s;
     color: aqua;
     opacity: 0.7;
+    background-color: #01070f;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    transform: scale(105%, 105%);
 }
 
 .nav a:focus {
-    color: rgb(3, 127, 131)
+    color: rgb(3, 127, 131);
 }
 
 .fixed-top {

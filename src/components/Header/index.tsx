@@ -36,19 +36,19 @@ export default function Header() {
                     <Nav className="me-auto mx-auto nav pt-2">
                         <div className="links">
                             <Link
-                                className="px-5 m-0 btn-block text-center "
+                                className="px-5 py-2 mx-3 btn-block text-center "
                                 href="/"
                             >
                                 Início
                             </Link>
                             <Link
-                                className="px-5 m-0 btn-block text-center "
+                                className="px-5 py-2 mx-3 btn-block text-center "
                                 href="/shop"
                             >
                                 Comprar
                             </Link>
                             <Link
-                                className="px-5 m-0 btn-block text-center "
+                                className="px-5 py-2 mx-3 btn-block text-center "
                                 href="/contact"
                             >
                                 Contato
@@ -58,13 +58,13 @@ export default function Header() {
                         {!isLoggedIn && (
                             <div className="login">
                                 <Link
-                                    className="px-4 m-0 btn-block text-center "
+                                    className="px-4 py-2 mx-3 btn-block text-center "
                                     href="/login"
                                 >
                                     Login
                                 </Link>
                                 <Link
-                                    className="px-4 m-0 btn-block text-center "
+                                    className="px-4 py-2 mx-3 btn-block text-center "
                                     href="/register"
                                 >
                                     Register

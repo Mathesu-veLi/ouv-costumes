@@ -4,6 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { Nav, Navbar } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 
 import { useSelector } from 'react-redux';
 
@@ -54,21 +56,28 @@ export default function Header() {
                         </div>
 
                         {!isLoggedIn && (
-                            <>
-                                <div>
-                                    <Link
-                                        className="px-4 m-0 btn-block text-center "
-                                        href="/login"
-                                    >Login</Link>
-                                    <Link
-                                        className="px-4 m-0 btn-block text-center "
-                                        href="/register"
-                                    >Register</Link>
-                                </div>
-                            </>
+                            <div>
+                                <Link
+                                    className="px-4 m-0 btn-block text-center "
+                                    href="/login"
+                                >
+                                    Login
+                                </Link>
+                                <Link
+                                    className="px-4 m-0 btn-block text-center "
+                                    href="/register"
+                                >
+                                    Register
+                                </Link>
+                            </div>
                         )}
                     </Nav>
                 </Navbar.Collapse>
+                {isLoggedIn && (
+                    <Link href="/cart" id="icon">
+                        <FontAwesomeIcon icon={faCartShopping} size="xl" />
+                    </Link>
+                )}
             </Navbar>
         </header>
     );

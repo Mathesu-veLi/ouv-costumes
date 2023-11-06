@@ -1,5 +1,6 @@
 .navbar {
     background-color: #01131f;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.6);
 }
 
 .nav {
@@ -18,7 +19,7 @@
     margin-left: 80%;
 }
 
-.nav a {
+a {
     color: #fff;
     text-decoration: none;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -37,4 +38,9 @@
 
 .fixed-top {
     margin-top: 10px;
+}
+
+#icon {
+    position: absolute;
+    margin-left: 95%;
 }

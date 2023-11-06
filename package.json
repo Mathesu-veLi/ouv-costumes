@@ -29,6 +29,8 @@
     "validator": "^13.11.0"
   },
   "devDependencies": {
+    "@fortawesome/free-solid-svg-icons": "latest",
+    "@fortawesome/react-fontawesome": "latest",
     "@types/bcryptjs": "^2.4.5",
     "@types/jsonwebtoken": "^9.0.4",
     "@types/node": "^20",

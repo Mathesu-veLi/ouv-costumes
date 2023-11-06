@@ -29,7 +29,7 @@ export default function Login() {
 
     useEffect(() => {
         if (isLoggedIn) {
-            router.push('/');
+            //router.push('/');
         }
     });
 

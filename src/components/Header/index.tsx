@@ -34,7 +34,7 @@ export default function Header() {
                 />
                 <Navbar.Collapse id="basic-nav">
                     <Nav className="me-auto mx-auto nav pt-2">
-                        <div>
+                        <div className="links">
                             <Link
                                 className="px-5 m-0 btn-block text-center "
                                 href="/"
@@ -56,7 +56,7 @@ export default function Header() {
                         </div>
 
                         {!isLoggedIn && (
-                            <div>
+                            <div className="login">
                                 <Link
                                     className="px-4 m-0 btn-block text-center "
                                     href="/login"

@@ -5,18 +5,23 @@
 
 .nav {
     width: 100%;
+    position: relative;
 }
 
-.nav div:nth-child(1) {
+.links {
     width: 100%;
+}
+
+.login {
+    position: absolute;
+    margin-left: 80%;
+}
+
+.links, .login {
     display: flex;
     flex-direction: row;
     justify-content: center;
-}
-
-.nav div:nth-child(2) {
-    position: absolute;
-    margin-left: 80%;
+    align-items: center;
 }
 
 a {
@@ -43,4 +48,20 @@ a {
 #icon {
     position: absolute;
     margin-left: 95%;
+}
+
+@media screen and (max-width: 765px) {
+    .links,
+    .login {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: inherit;
+        margin: 0;
+    }
+
+    .links *,
+    .login * {
+        margin: 10px 0 10px 0;
+    }
 }

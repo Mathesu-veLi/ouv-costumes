@@ -1,7 +1,5 @@
 import type { AppProps } from 'next/app';
 
-import '@/assets/globals.css';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,7 +11,9 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import store, { persistor } from '@/store';
 
-function MyApp({ Component, pageProps }: AppProps) {
+import '@/assets/globals.css';
+
+export default function App({ Component, pageProps }: AppProps) {
     return (
         <>
             <Head>
@@ -37,5 +37,3 @@ function MyApp({ Component, pageProps }: AppProps) {
         </>
     );
 }
-
-export default MyApp;

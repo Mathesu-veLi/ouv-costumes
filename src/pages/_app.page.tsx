@@ -10,12 +10,12 @@ import Header from '@/components/Header/index.tsx';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import store, { persistor } from '@/store';
-
-import '@/assets/globals.css';
+import { GlobalStyle } from '@/assets/globalStyle';
 
 export default function App({ Component, pageProps }: AppProps) {
     return (
         <>
+            <GlobalStyle />
             <Head>
                 <meta
                     name="viewport"

@@ -22,7 +22,7 @@ export default function Header() {
         <header>
             <Navbar expand="md" className="navbar py-4">
                 <Navbar.Brand className="position-absolute mx-5 h-100">
-                    <Image src={ouvLogo} alt="" width={120} />
+                    <Image src={ouvLogo} alt="logo" width={120} />
                 </Navbar.Brand>
 
                 <Navbar.Toggle

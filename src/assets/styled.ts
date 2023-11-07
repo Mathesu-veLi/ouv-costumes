@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { primaryLightColor } from '../config/colors';
+import { primaryLightColor } from './globalStyle';
+
 
 export const Form = styled.form`
     border: 1px solid black;

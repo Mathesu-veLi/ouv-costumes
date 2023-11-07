@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { primaryLightColor } from '../../config/colors';
+import { primaryLightColor } from '../config/colors';
 
 export const Form = styled.form`
     border: 1px solid black;
@@ -7,8 +7,8 @@ export const Form = styled.form`
     background-color: ${primaryLightColor};
     padding: 20px;
     width: 33em;
-    box-shadow: 5px 5px 10px 5px;
-
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.7);
+    color: initial;
     h1 {
         font-size: 2em;
         margin-bottom: 1.2em;

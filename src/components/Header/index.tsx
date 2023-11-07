@@ -1,5 +1,5 @@
 import './index.css';
-import ouvLogo from '@/assets/ouvLogo.png';
+import ouvLogo from '/public/ouvLogo.png';
 import Image from 'next/image';
 import Link from 'next/link';
 

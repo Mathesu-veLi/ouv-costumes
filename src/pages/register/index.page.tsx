@@ -1,5 +1,5 @@
 import { Button, Container } from 'react-bootstrap';
-import { Form } from './styled';
+import { Form } from '@/assets/styled';
 import './style.css';
 
 import React from 'react';

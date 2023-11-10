@@ -5,11 +5,11 @@ export const Title = styled.h1`
     position: relative;
     display: flex;
     justify-content: center;
-    color: black;
+    color: #fff;
 
     &::before {
         content: '';
-        border: 1px solid #000;
+        border: 1px solid #fff;
         width: 7%;
         top: 110%;
         transition: 0.5s;
@@ -23,7 +23,7 @@ export const Title = styled.h1`
 
 export const Showcase = styled.div`
     width: 270px;
-    height: 400px;
+    height: 350px;
     border: 1px solid black;
     display: flex;
     justify-content: center;
@@ -40,7 +40,6 @@ export const Showcase = styled.div`
 
     .image {
         display: flex;
-        width: 100%;
         justify-content: center;
     }
 
@@ -52,10 +51,10 @@ export const Showcase = styled.div`
     }
 
     .about h2 {
-        font-size: 1.5em;
+        font-size: 1.3em;
     }
 
     .about h3 {
-        font-size: 1.2em;
+        font-size: 1.15em;
     }
 `;

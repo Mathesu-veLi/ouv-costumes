@@ -32,12 +32,12 @@ export default function Shop() {
                             index,
                         ) => (
                             <Showcase key={index} className="m-5 row gx-4">
-                                <div className="image mb-4 col">
+                                <div className="image col">
                                     <Image
                                         src={`/products/${product.imagePath}`}
                                         alt=""
-                                        width={200}
-                                        height={250}
+                                        width={230}
+                                        height={230}
                                     />
                                 </div>
                                 <div className="about">

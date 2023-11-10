@@ -15,7 +15,6 @@ import { GlobalStyle } from '@/assets/globalStyle';
 export default function App({ Component, pageProps }: AppProps) {
     return (
         <>
-            <GlobalStyle />
             <Head>
                 <meta
                     name="viewport"
@@ -31,6 +30,7 @@ export default function App({ Component, pageProps }: AppProps) {
                 <PersistGate persistor={persistor}>
                     <Header />
                     <Component {...pageProps} />
+                    <GlobalStyle />
                 </PersistGate>
             </Provider>
             <ToastContainer autoClose={5000} className="toast-container" />

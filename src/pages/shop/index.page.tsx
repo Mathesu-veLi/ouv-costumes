@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { Container } from 'react-bootstrap';
 
 import { GlobalStyle } from './style.global';
+import Link from 'next/link';
 
 export default function Shop() {
     const [productsArray, setProductsArray] = useState([]);
@@ -32,20 +33,22 @@ export default function Shop() {
                             index,
                         ) => (
                             <Showcase key={index} className="m-5 row gx-4">
-                                <div className="image col">
-                                    <Image
-                                        src={`/products/${product.imagePath}`}
-                                        alt=""
-                                        width={230}
-                                        height={230}
-                                    />
-                                </div>
-                                <div className="about">
-                                    <h2 className="m-0">{product.name}</h2>
-                                    <h3 className="m-0">
-                                        R${Number(product.price).toFixed(2)}
-                                    </h3>
-                                </div>
+                                <Link href={`/product/${product.id}`}>
+                                    <div className="image col">
+                                        <Image
+                                            src={`/products/${product.imagePath}`}
+                                            alt=""
+                                            width={230}
+                                            height={230}
+                                        />
+                                    </div>
+                                    <div className="about mt-4">
+                                        <h2 className="m-0">{product.name}</h2>
+                                        <h3 className="m-0">
+                                            R${Number(product.price).toFixed(2)}
+                                        </h3>
+                                    </div>
+                                </Link>
                             </Showcase>
                         ),
                     )}

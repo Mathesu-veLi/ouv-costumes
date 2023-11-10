@@ -38,23 +38,23 @@ export const Showcase = styled.div`
         transform: scale(101%, 101%);
     }
 
-    .image {
+    a .image {
         display: flex;
         justify-content: center;
     }
 
-    .about {
+    a .about {
         display: flex;
         justify-content: space-around;
         align-items: center;
         color: #fff;
     }
 
-    .about h2 {
-        font-size: 1.3em;
+    a .about h2 {
+        font-size: 1.2em;
     }
 
-    .about h3 {
-        font-size: 1.15em;
+    a .about h3 {
+        font-size: 1.1em;
     }
 `;

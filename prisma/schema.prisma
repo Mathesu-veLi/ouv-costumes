@@ -19,8 +19,9 @@ model User {
 }
 
 model Products {
-    id        Int     @id @default(autoincrement())
-    name      String
-    price     Decimal
-    imagePath String
+    id          Int     @id @default(autoincrement())
+    name        String
+    price       Decimal
+    description String
+    imagePath   String
 }

@@ -16,6 +16,8 @@ export default function Shop() {
         getProducts().then((products) => setProductsArray(products));
     }, []);
 
+    if (!productsArray) return null;
+
     return (
         <>
             <Container>

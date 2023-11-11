@@ -36,7 +36,7 @@ export default function Shop() {
                                 <Link href={`/product/${product.id}`}>
                                     <div className="image col">
                                         <Image
-                                            src={`/products/${product.imagePath}`}
+                                            src={`/shop/${product.imagePath}`}
                                             alt=""
                                             width={230}
                                             height={230}

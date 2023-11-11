@@ -1,3 +1,4 @@
+import { primaryLightColor } from '@/assets/globalStyle';
 import styled from 'styled-components';
 
 export const ProductDiv = styled.div`
@@ -8,6 +9,7 @@ export const ProductDiv = styled.div`
     align-items: center;
     padding: 30px;
     border: 1px solid rgba(0, 0, 0, 0.5);
+    background-color: ${primaryLightColor};
     width: 70%;
     border-radius: 10px;
 

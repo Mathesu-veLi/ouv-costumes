@@ -16,6 +16,8 @@ export default function Shop() {
         getProducts().then((products) => setProductsArray(products));
     }, []);
 
+    if (!productsArray) return null;
+
     return (
         <>
             <Container>
@@ -33,7 +35,7 @@ export default function Shop() {
                             index,
                         ) => (
                             <Showcase key={index} className="m-5 row gx-4">
-                                <Link href={`/product/${product.id}`}>
+                                <Link href={`/shop/${product.id}`}>
                                     <div className="image col">
                                         <Image
                                             src={`/products/${product.imagePath}`}

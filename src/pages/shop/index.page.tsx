@@ -33,10 +33,10 @@ export default function Shop() {
                             index,
                         ) => (
                             <Showcase key={index} className="m-5 row gx-4">
-                                <Link href={`/product/${product.id}`}>
+                                <Link href={`/shop/${product.id}`}>
                                     <div className="image col">
                                         <Image
-                                            src={`/shop/${product.imagePath}`}
+                                            src={`/products/${product.imagePath}`}
                                             alt=""
                                             width={230}
                                             height={230}

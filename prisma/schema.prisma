@@ -25,3 +25,10 @@ model Products {
     description String
     imagePath   String
 }
+
+model Cart {
+    id Int @id @default(autoincrement())
+    userId Int
+    productId Int
+    quantity Int
+}

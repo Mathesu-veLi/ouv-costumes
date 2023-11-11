@@ -2,6 +2,12 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { getProduct } from './modules/getProducts';
 
+import Image from 'next/image';
+
+import { GlobalStyle } from './styles/style.global';
+import { ProductDiv } from './styles/styled.product';
+import { toast } from 'react-toastify';
+
 export default function Product() {
     const [product, setProduct] = useState({
         id: null,
@@ -10,15 +16,25 @@ export default function Product() {
         imagePath: null,
     });
 
-    const { id } = useRouter().query;
+    const router = useRouter();
+    const { id } = router.query;
 
     useEffect(() => {
+        async function callProduct() {
+            setProduct(await getProduct(Number(id)));
+        }
+
         if (id) {
-            getProduct(Number(id)).then((product) => {
-                return setProduct(product);
-            });
+            callProduct();
         }
     }, [id]);
 
-    return <h1>{product.id}</h1>;
+    if (!product) {
+        router.push('/shop');
+        return toast.error('Product not found')
+    } else if (!product.id) return null
+
+    return (
+                <div className="about">{product.name}</div>
+    );
 }

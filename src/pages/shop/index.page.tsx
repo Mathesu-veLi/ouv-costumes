@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { getProducts } from './modules/getProducts';
-import { Showcase, Title } from './styled';
+import { Showcase, Title } from './styles/styled.index';
 
 import Image from 'next/image';
 
 import { Container } from 'react-bootstrap';
 
-import { GlobalStyle } from './style.global';
+import { GlobalStyle } from './styles/style.global';
 import Link from 'next/link';
 
 export default function Shop() {

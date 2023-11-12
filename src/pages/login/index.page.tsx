@@ -43,7 +43,7 @@ export default function Login() {
                     onSubmit={async (e) => {
                         e.preventDefault();
                         await login(email, password)
-                            .then((newUser) => {
+                            .then(async (newUser) => {
                                 if (newUser) {
                                     dispatch(
                                         loginSuccess({
@@ -56,7 +56,15 @@ export default function Login() {
                                         }),
                                     );
                                 }
-                                router.push('/');
+
+                                if (router.query.referer){
+                                    let urlRedirect = `/${router.query.referer}`;
+                                    if (router.query.refererPageId) urlRedirect += `/${router.query.refererPageId}`
+                                    
+                                    return await router.push(urlRedirect)
+                                } else {
+                                    router.push('/')
+                                }
                                 toast.success('Login efetuado com sucesso');
                             })
                             .catch((error) => toast.error(error));

@@ -3,6 +3,10 @@ export default function addProductToCart(
     productId: number,
     quantity: number,
 ) {
+    if (!userId) {
+        throw new Error('userId is required');
+    }
+
     return fetch('http://192.168.100.5:3000/api/cart', {
         method: 'POST',
         body: JSON.stringify({

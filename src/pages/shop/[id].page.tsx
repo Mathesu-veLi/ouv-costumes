@@ -9,6 +9,7 @@ import { ProductDiv } from './styles/styled.product';
 import { toast } from 'react-toastify';
 import { Title } from './styles/styled.index';
 import addProductToCart from './modules/addProductToCart';
+import { useSelector } from 'react-redux';
 
 export default function Product() {
     interface IProduct {
@@ -31,6 +32,16 @@ export default function Product() {
 
     const router = useRouter();
     const productId = router.query.id;
+
+    const { id } = useSelector(
+        (rootReducer: {
+            userReducer: {
+                user: {
+                    id: number;
+                };
+            };
+        }) => rootReducer.userReducer.user,
+    );
 
     useEffect(() => {
         async function callProduct() {
@@ -57,7 +68,18 @@ export default function Product() {
             <form
                 onSubmit={(e) => {
                     e.preventDefault();
+                    try {
                         return addProductToCart(id, product.id, quantity);
+                    } catch (error) {
+                        if (error.message === 'userId is required') {
+                            toast.error(
+                                'Você precisa estar logado para adicionar produto no carrinho',
+                            );
+                            return router.push(
+                                `/login?referer=shop&refererPageId=${product.id}`,
+                            );
+                        }
+                    }
                 }}
                 className="d-flex justify-content-center align-items-center flex-column mt-5"
             >

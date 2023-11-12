@@ -23,7 +23,7 @@ export default function register(req: NextApiRequest, res: NextApiResponse) {
 }
 
 const main = async (data: { [key: string]: unknown }) => {
-    let user = await prisma.user.create({ data });
+    const user = await prisma.user.create({ data });
     data.accessToken = await jwt.signAccessToken(user);
 
     return data;

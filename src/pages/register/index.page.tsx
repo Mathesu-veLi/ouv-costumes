@@ -46,7 +46,7 @@ export default function Register() {
                                 router.push('/login');
                                 toast.success(mensage);
                             })
-                            .catch((errors) => {
+                            .catch((errors: string[]) => {
                                 errors.forEach((error: string) => {
                                     toast.error(error);
                                 });

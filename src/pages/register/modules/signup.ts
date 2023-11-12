@@ -21,7 +21,7 @@ export function validate(name: string, email: string, password: string) {
 
 export async function signup(name: string, email: string, password: string) {
     const errors = validate(name, email, password);
-    if (errors) throw errors;
+    if (errors.length > 0) throw errors;
 
     const encryptedPassword = bcrypt.hashSync(password, 8);
 

@@ -8,6 +8,7 @@ import { GlobalStyle } from './styles/style.global';
 import { ProductDiv } from './styles/styled.product';
 import { toast } from 'react-toastify';
 import { Title } from './styles/styled.index';
+import addProductToCart from './modules/addProductToCart';
 
 export default function Product() {
     interface IProduct {
@@ -26,12 +27,14 @@ export default function Product() {
         description: [''],
     });
 
+    const [quantity, setQuantity] = useState(1);
+
     const router = useRouter();
-    const { id } = router.query;
+    const productId = router.query.id;
 
     useEffect(() => {
         async function callProduct() {
-            const productObtained = await getProduct(Number(id));
+            const productObtained = await getProduct(Number(productId));
             productObtained.description = (
                 productObtained.description as string
             ).split(';');
@@ -39,10 +42,10 @@ export default function Product() {
             setProduct(productObtained);
         }
 
-        if (id) {
+        if (productId) {
             callProduct();
         }
-    }, [id]);
+    }, [productId]);
 
     if (!product) {
         router.push('/shop');
@@ -52,7 +55,10 @@ export default function Product() {
     return (
         <>
             <form
-                action=""
+                onSubmit={(e) => {
+                    e.preventDefault();
+                        return addProductToCart(id, product.id, quantity);
+                }}
                 className="d-flex justify-content-center align-items-center flex-column mt-5"
             >
                 <Title>{product.name}</Title>
@@ -77,7 +83,10 @@ export default function Product() {
                                 type="number"
                                 name="quantity"
                                 id="quantity"
-                                value="1"
+                                value={quantity}
+                                onChange={(e) =>
+                                    setQuantity(Number(e.target.value))
+                                }
                             />
                         </div>
                     </div>

@@ -8,7 +8,6 @@ import { GlobalStyle } from './styles/style.global';
 import { ProductDiv } from './styles/styled.product';
 import { toast } from 'react-toastify';
 import { Title } from './styles/styled.index';
-import addProductToCart from './modules/addProductToCart';
 import { useSelector } from 'react-redux';
 
 export default function Product() {
@@ -69,7 +68,7 @@ export default function Product() {
                 onSubmit={(e) => {
                     e.preventDefault();
                     try {
-                        return addProductToCart(id, product.id, quantity);
+                        if (!id) throw new Error('userId is required');
                     } catch (error) {
                         if (error.message === 'userId is required') {
                             toast.error(

@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 
 import { loginSuccess } from '@/store/user/actions';
 import { login } from './modules/login';
+import { getUserCartProducts } from '@/store/cart/actions';
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -55,15 +56,34 @@ export default function Login() {
                                             accessToken: newUser.accessToken,
                                         }),
                                     );
+
+                                    const cartProducts = await fetch(
+                                        `http://192.168.100.5:3000/api/cart/${newUser.id}`,
+                                        {
+                                            method: 'GET',
+                                        },
+                                    ).then(
+                                        async (response) =>
+                                            await response
+                                                .json()
+                                                .then((products) => products),
+                                    );
+                                    
+                                    console.log(cartProducts);
+
+                                    dispatch(
+                                        getUserCartProducts(cartProducts),
+                                    );
                                 }
 
-                                if (router.query.referer){
+                                if (router.query.referer) {
                                     let urlRedirect = `/${router.query.referer}`;
-                                    if (router.query.refererPageId) urlRedirect += `/${router.query.refererPageId}`
-                                    
-                                    return await router.push(urlRedirect)
+                                    if (router.query.refererPageId)
+                                        urlRedirect += `/${router.query.refererPageId}`;
+
+                                    return await router.push(urlRedirect);
                                 } else {
-                                    router.push('/')
+                                    router.push('/');
                                 }
                                 toast.success('Login efetuado com sucesso');
                             })

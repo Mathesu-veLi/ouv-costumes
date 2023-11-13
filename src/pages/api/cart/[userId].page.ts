@@ -7,17 +7,15 @@ export default async function products(
     req: NextApiRequest,
     res: NextApiResponse,
 ) {
-    const body = JSON.parse(req.body);
+    const userId = Number(req.query.userId);
     switch (req.method) {
-        case 'POST': {
-            await prisma.cart.create({
-                data: {
-                    userId: body.userId,
-                    productId: body.productId,
-                    quantity: body.quantity,
+        case 'GET': {
+            const products = await prisma.cart.findMany({
+                where: {
+                    userId,
                 },
             });
-            return res.status(200).json({ data: 'success' });
+            return res.status(200).json({ products });
         }
 
         default:

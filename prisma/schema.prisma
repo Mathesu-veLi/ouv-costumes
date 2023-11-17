@@ -31,4 +31,6 @@ model Cart {
     userId Int
     productId Int
     quantity Int
+
+    @@unique([userId, productId])
 }

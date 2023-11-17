@@ -6,3 +6,10 @@ export function getUserCartProducts(payload: []) {
         payload,
     }
 }
+
+export function addProductToCart(payload: object) {
+    return {
+        type: types.ADD_PRODUCT_TO_CART,
+        payload,
+    };
+}

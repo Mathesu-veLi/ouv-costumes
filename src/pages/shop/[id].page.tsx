@@ -8,7 +8,9 @@ import { GlobalStyle } from './styles/style.global';
 import { ProductDiv } from './styles/styled.product';
 import { toast } from 'react-toastify';
 import { Title } from './styles/styled.index';
-import { useSelector } from 'react-redux';
+import addProductToCartDb from './modules/addProductToCart';
+import { useDispatch, useSelector } from 'react-redux';
+import { addProductToCart } from '@/store/cart/actions';
 
 export default function Product() {
     interface IProduct {
@@ -32,6 +34,8 @@ export default function Product() {
     const router = useRouter();
     const productId = router.query.id;
 
+    const dispatch = useDispatch();
+
     const { id } = useSelector(
         (rootReducer: {
             userReducer: {
@@ -40,6 +44,14 @@ export default function Product() {
                 };
             };
         }) => rootReducer.userReducer.user,
+    );
+
+    const { products } = useSelector(
+        (rootReducer: {
+            cartReducer: {
+                products: [];
+            };
+        }) => rootReducer.cartReducer,
     );
 
     useEffect(() => {
@@ -69,6 +81,16 @@ export default function Product() {
                     e.preventDefault();
                     try {
                         if (!id) throw new Error('userId is required');
+
+                        dispatch(
+                            addProductToCart({
+                                id: product.id,
+                                userId: id,
+                                quantity: quantity,
+                            }),
+                        );
+                        
+                        return addProductToCartDb(id, products, product.id, quantity);
                     } catch (error) {
                         if (error.message === 'userId is required') {
                             toast.error(

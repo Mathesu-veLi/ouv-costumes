@@ -3,14 +3,20 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { userExists } from './utils/userExists';
+import { generatePasswordHash } from './utils/generatePasswordHash';
 
 @Injectable()
 export class UsersService {
   constructor(private prismaService: PrismaService) {}
 
   create(createUserDto: CreateUserDto) {
+    const passwordHash = generatePasswordHash(createUserDto.password);
     return this.prismaService.user.create({
-      data: { ...createUserDto },
+      data: {
+        name: createUserDto.name,
+        email: createUserDto.email,
+        password_hash: passwordHash,
+      },
     });
   }
 

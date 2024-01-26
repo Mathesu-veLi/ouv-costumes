@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { userExists } from './utils/userExists';
 
 @Injectable()
 export class UsersService {
@@ -18,36 +19,26 @@ export class UsersService {
   }
 
   async findOne(id: number) {
-    try {
-      return await this.prismaService.user.findUniqueOrThrow({ where: { id } });
-    } catch (e) {
-      if (e.code === 'P2025') {
-        throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-      }
-      throw e;
-    }
+    if (!(await userExists(this.prismaService, id)))
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+
+    return this.prismaService.user.findUnique({ where: { id } });
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
-    try {
-      return await this.prismaService.user.update({
-        where: { id },
-        data: { ...updateUserDto },
-      });
-    } catch (e) {
-      if (e.code === 'P2025') {
-        throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-      }
-    }
+    if (!(await userExists(this.prismaService, id)))
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+
+    return this.prismaService.user.update({
+      data: { ...updateUserDto },
+      where: { id },
+    });
   }
 
   async remove(id: number) {
-    try {
-      return await this.prismaService.user.delete({ where: { id } });
-    } catch (e) {
-      if (e.code === 'P2025') {
-        throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-      }
-    }
+    if (!(await userExists(this.prismaService, id)))
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+
+    return this.prismaService.user.delete({ where: { id } });
   }
 }

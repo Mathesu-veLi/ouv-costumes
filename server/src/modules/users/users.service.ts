@@ -3,7 +3,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { userExists, userNotExistThrow } from '../../utils/validUserUtils';
-import { generatePasswordHash } from '../../utils/generatePasswordHash';
+import { generatePasswordHash } from '../../utils/passwordUtils';
 
 @Injectable()
 export class UsersService {

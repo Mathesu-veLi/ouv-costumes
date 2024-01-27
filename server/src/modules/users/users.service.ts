@@ -32,7 +32,7 @@ export class UsersService {
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
-    const user = this.prismaService.user.update({
+    const user = await this.prismaService.user.update({
       data: { ...updateUserDto },
       where: { id },
     });
@@ -42,7 +42,7 @@ export class UsersService {
   }
 
   async remove(id: number) {
-    const user = this.prismaService.user.delete({ where: { id } });
+    const user = await this.prismaService.user.delete({ where: { id } });
     if (!user) userNotExistThrow();
 
     return user;

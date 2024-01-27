@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { userExists, userNotExistThrow } from '../../utils/validUserUtils';
+import { userNotExistThrow } from '../../utils/userNotExistThrow';
 import { generatePasswordHash } from '../../utils/passwordUtils';
 
 @Injectable()
@@ -25,23 +25,26 @@ export class UsersService {
   }
 
   async findOne(id: number) {
-    if (!(await userExists(this.prismaService, id))) userNotExistThrow();
+    const user = await this.prismaService.user.findUnique({ where: { id } });
+    if (!user) userNotExistThrow();
 
-    return this.prismaService.user.findUnique({ where: { id } });
+    return user;
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
-    if (!(await userExists(this.prismaService, id))) userNotExistThrow();
-
-    return this.prismaService.user.update({
+    const user = this.prismaService.user.update({
       data: { ...updateUserDto },
       where: { id },
     });
+    if (!user) userNotExistThrow();
+
+    return user;
   }
 
   async remove(id: number) {
-    if (!(await userExists(this.prismaService, id))) userNotExistThrow();
+    const user = this.prismaService.user.delete({ where: { id } });
+    if (!user) userNotExistThrow();
 
-    return this.prismaService.user.delete({ where: { id } });
+    return user;
   }
 }

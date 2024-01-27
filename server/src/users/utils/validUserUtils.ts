@@ -1,3 +1,4 @@
+import { HttpException, HttpStatus } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 export async function userExists(prismaService: PrismaService, userId: number) {
@@ -7,4 +8,8 @@ export async function userExists(prismaService: PrismaService, userId: number) {
   } catch (e) {
     return false;
   }
+}
+
+export function userNotExistThrow() {
+  throw new HttpException('User not found', HttpStatus.NOT_FOUND);
 }

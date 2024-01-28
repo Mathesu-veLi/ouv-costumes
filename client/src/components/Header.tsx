@@ -24,9 +24,13 @@ export function Header() {
 
   return (
     <header className="flex justify-center w-full">
-      <div className="relative flex justify-center lg:gap-40 gap-10 items-center mt-5 mb-8 py-3 bg-slate-950 px-10 lg:border lg:border-slate-900 lg:shadow lg:shadow-slate-900 rounded-md lg:rounded-2xl">
-        <div className="z-20 flex gap-10 items-center bg-inherit">
-          <a href="/" className="lg:w-20 lg:mx-7">
+      <div
+        className={`relative flex justify-center lg:gap-40 gap-10 items-center mt-5 mb-8 py-3 ${
+          isOpen ? 'border-x border-t rounded-t-lg' : 'border rounded-lg'
+        } border-zinc-800 px-12 lg:border lg:border-slate-900 lg:shadow lg:shadow-slate-900 lg:rounded-2xl`}
+      >
+        <div className="z-20 flex gap-10 items-center bg-inherit bg-zinc-950">
+          <a href="/" className="lg:w-20 lg:mx-8">
             <img src={favicon} alt="logo" />
           </a>
 
@@ -39,8 +43,8 @@ export function Header() {
         </div>
 
         <div
-          className={`flex items-center justify-center lg:gap-20 absolute lg:static z-10 transition-all duration-500 ease-in-out bg-inherit lg:p-0 p-4 left-0 w-full rounded-md ${
-            isOpen ? 'top-[3.5em]' : '-top-[280px]'
+          className={`flex flex-col lg:flex-row lg:border-none items-center justify-center gap-4 lg:gap-20 absolute lg:static z-10 lg:opacity-100 transition-all duration-500 ease-in-out border-x border-b lg:p-0 p-3 bg-zinc-950 left-0 w-full rounded-b-md ${
+            isOpen ? 'top-12 opacity-100' : 'opacity-0 -top-56'
           }`}
         >
           <ul className="flex flex-col lg:flex-row lg:gap-20 justify-center items-center">
@@ -53,9 +57,13 @@ export function Header() {
             })}
           </ul>
 
-          <div className="lg:flex gap-7">
-            <Button variant="outline"><a href="/login">Login</a></Button>
-            <Button variant="outline"><a href="/register">Cadastro</a></Button>
+          <div className="flex gap-2 lg:gap-7 p-1">
+            <Button variant="outline">
+              <a href="/login">Login</a>
+            </Button>
+            <Button variant="outline">
+              <a href="/register">Cadastro</a>
+            </Button>
           </div>
         </div>
       </div>

@@ -59,12 +59,13 @@ export function Header() {
           </ul>
 
           <div className="flex gap-2 lg:gap-7 p-1">
-            <Button variant="outline">
-              <Link to="/login">Login</Link>
-            </Button>
-            <Button variant="outline">
-              <Link to="/register">Register</Link>
-            </Button>
+            <Link to="/login">
+              <Button variant="outline">Login</Button>
+            </Link>
+
+            <Link to="/register">
+              <Button variant="outline">Register</Button>
+            </Link>
           </div>
         </div>
       </div>

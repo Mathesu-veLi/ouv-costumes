@@ -11,11 +11,11 @@ export function Header() {
       path: '/',
     },
     {
-      name: 'Produtos',
+      name: 'Products',
       path: '/products',
     },
     {
-      name: 'Contatos',
+      name: 'Contacts',
       path: '/contacts',
     },
   ];
@@ -62,7 +62,7 @@ export function Header() {
               <a href="/login">Login</a>
             </Button>
             <Button variant="outline">
-              <a href="/register">Cadastro</a>
+              <a href="/register">Register</a>
             </Button>
           </div>
         </div>

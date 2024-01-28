@@ -3,6 +3,7 @@ import { FaBars } from 'react-icons/fa';
 import { MdClose } from 'react-icons/md';
 import { useState } from 'react';
 import { Button } from './ui/button';
+import { Link } from 'react-router-dom';
 
 export function Header() {
   const Links = [
@@ -30,9 +31,9 @@ export function Header() {
         } px-12 lg:border lg:shadow-lg lg:shadow-violet-900 lg:rounded-2xl`}
       >
         <div className="z-20 flex gap-10 items-center bg-inherit bg-zinc-950">
-          <a href="/" className="lg:w-20 lg:mx-8">
+          <Link to="/" className="lg:w-20 lg:mx-8">
             <img src={favicon} alt="logo" />
-          </a>
+          </Link>
 
           <div
             onClick={() => setIsOpen(!isOpen)}
@@ -51,7 +52,7 @@ export function Header() {
             {Links.map((link) => {
               return (
                 <li key={link.name} className="my-5">
-                  <a href={link.path}>{link.name}</a>
+                  <Link to={link.path}>{link.name}</Link>
                 </li>
               );
             })}
@@ -59,10 +60,10 @@ export function Header() {
 
           <div className="flex gap-2 lg:gap-7 p-1">
             <Button variant="outline">
-              <a href="/login">Login</a>
+              <Link to="/login">Login</Link>
             </Button>
             <Button variant="outline">
-              <a href="/register">Register</a>
+              <Link to="/register">Register</Link>
             </Button>
           </div>
         </div>

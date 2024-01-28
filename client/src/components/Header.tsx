@@ -25,7 +25,7 @@ export function Header() {
     <header className="flex justify-center w-full">
       <div className="relative flex justify-center lg:gap-40 gap-10 items-center mt-5 mb-8 py-3 bg-slate-950 px-10 lg:border lg:border-slate-900 lg:shadow lg:shadow-slate-900 rounded-md">
         <div className="z-20 flex gap-10 items-center bg-inherit">
-          <a href="/" className="lg:mx-10">
+          <a href="/" className="lg:w-20">
             <img src={favicon} alt="logo" />
           </a>
 
@@ -38,11 +38,11 @@ export function Header() {
         </div>
 
         <div
-          className={`flex justify-center lg:gap-20 lg:pl-0 absolute lg:static lg:pb-0 pb-6 z-10 transition-all duration-500 ease-in-out bg-inherit p-4 left-0 w-full rounded-md ${
+          className={`flex justify-center lg:gap-20 absolute lg:static z-10 transition-all duration-500 ease-in-out bg-inherit lg:p-0 p-4 left-0 w-full rounded-md ${
             isOpen ? 'top-[3.5em]' : '-top-[280px]'
           }`}
         >
-          <ul className="flex flex-col justify-center items-center">
+          <ul className="flex flex-col lg:flex-row lg:gap-20 justify-center items-center">
             {Links.map((link) => {
               return (
                 <li key={link.name} className="my-5">

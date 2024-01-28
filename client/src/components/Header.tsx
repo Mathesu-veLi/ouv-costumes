@@ -1,33 +1,64 @@
-import { Link } from 'react-router-dom';
 import favicon from '@/assets/favicon.png';
-import { Button } from './ui/button';
+import { FaBars } from 'react-icons/fa';
+import { MdClose } from 'react-icons/md';
+import { useState } from 'react';
 
 export function Header() {
-  return (
-    <>
-      <header className="relative flex justify-between items-center p-7 mb-8 bg-slate-950 w-full">
-        <Link to="/" className='mx-10'>
-          <img src={favicon} alt="logo" />
-        </Link>
+  const Links = [
+    {
+      name: 'Home',
+      path: '/',
+    },
+    {
+      name: 'Produtos',
+      path: '/products',
+    },
+    {
+      name: 'Contatos',
+      path: '/contacts',
+    },
+  ];
 
-        <div className="flex gap-32">
-          <Link className="transition hover:text-gray-400" to="/">
-            Home
-          </Link>
-          <Link className="transition hover:text-gray-400" to="#">
-            Produtos
-          </Link>
-          <Link className="transition hover:text-gray-400" to="#">
-            Contatos
-          </Link>
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <header className="flex justify-center w-full">
+      <div className="relative flex justify-center lg:gap-40 gap-10 items-center mt-5 mb-8 py-3 bg-slate-950 px-10 lg:border lg:border-slate-900 lg:shadow lg:shadow-slate-900 rounded-md">
+        <div className="z-20 flex gap-10 items-center bg-inherit">
+          <a href="/" className="lg:mx-10">
+            <img src={favicon} alt="logo" />
+          </a>
+
+          <div
+            onClick={() => setIsOpen(!isOpen)}
+            className="w-6 h-6 lg:hidden flex justify-center items-center"
+          >
+            {isOpen ? <MdClose /> : <FaBars />}
+          </div>
         </div>
 
-        <div className="flex gap-10">
+        <div
+          className={`flex justify-center lg:gap-20 lg:pl-0 absolute lg:static lg:pb-0 pb-6 z-10 transition-all duration-500 ease-in-out bg-inherit p-4 left-0 w-full rounded-md ${
+            isOpen ? 'top-[3.5em]' : '-top-[280px]'
+          }`}
+        >
+          <ul className="flex flex-col justify-center items-center">
+            {Links.map((link) => {
+              return (
+                <li key={link.name} className="my-5">
+                  <a href={link.path}>{link.name}</a>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+
+        {/*<div className="lg:flex gap-10">
           <Button variant="outline">Login</Button>
           <Button variant="outline">Cadastro</Button>
-        </div>
-      </header>
-    </>
+        </div>*/}
+      </div>
+    </header>
   );
 }
 

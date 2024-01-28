@@ -23,11 +23,11 @@ export function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="flex justify-center w-full">
+    <header className="flex absolute justify-center w-full">
       <div
         className={`relative flex justify-center lg:gap-40 gap-10 items-center mt-5 mb-8 py-3 ${
           isOpen ? 'border-x border-t rounded-t-lg' : 'border rounded-lg'
-        } border-zinc-800 px-12 lg:border lg:border-slate-900 lg:shadow lg:shadow-slate-900 lg:rounded-2xl`}
+        } px-12 lg:border lg:shadow-lg lg:shadow-violet-900 lg:rounded-2xl`}
       >
         <div className="z-20 flex gap-10 items-center bg-inherit bg-zinc-950">
           <a href="/" className="lg:w-20 lg:mx-8">

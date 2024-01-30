@@ -3,6 +3,7 @@ import { About } from './containers/About';
 import { Header } from './components/Header';
 import { Login } from './containers/Login';
 import { Register } from './containers/Register';
+import { Home } from './containers/Home';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -18,19 +19,19 @@ function App() {
   routes.push({
     path: '/',
     element: <Home />,
-  })
+  });
   routes.push({
     path: '/about',
     element: <About />,
-  })
+  });
   routes.push({
     path: '/login',
     element: <Login />,
-  })
+  });
   routes.push({
     path: '/register',
     element: <Register />,
-  })
+  });
 
   return (
     <>

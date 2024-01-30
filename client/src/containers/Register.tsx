@@ -1,10 +1,8 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import {
-  RegisterFormIsValid,
-  registerFormValidation,
-} from '@/utils/validations';
+import { RegisterFormIsValid } from '@/utils/FormIsValid';
+import { registerFormValidation } from '@/utils/ShowFormErrors';
 import { FormEvent } from 'react';
 
 export function Register() {

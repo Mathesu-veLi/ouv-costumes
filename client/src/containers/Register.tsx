@@ -21,6 +21,15 @@ export function Register() {
     const form = new RegisterFormValidator(formElements);
 
     if (!form.isValid()) form.showErrors();
+
+    await api
+      .post('/users', {
+        name: formElements.name.value,
+        email: formElements.email.value,
+        password: formElements.password.value,
+      })
+      .then(() => console.log('Usuário registrado'))
+      .catch((e) => console.log(e));
   }
 
   return (

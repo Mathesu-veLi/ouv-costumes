@@ -1,3 +1,4 @@
+import { api } from '@/lib/axios';
 import { createFormError } from '@/utils/createFormError';
 import isEmail from 'validator/lib/isEmail';
 
@@ -14,12 +15,22 @@ export abstract class UserFormValidator {
   protected abstract email: HTMLInputElement;
   protected abstract password: HTMLInputElement;
 
-  public isValid() {
+  public isValid(): Promise<boolean> | boolean {
     return this.emailIsValid() && this.passwordIsValid();
   }
 
   protected emailIsValid(): boolean {
     return isEmail(this.email.value);
+  }
+
+  protected async emailIsRegistered(): Promise<boolean> {
+    const user = await api.get('/users', {
+      params: {
+        email: this.email.value,
+      },
+    });
+
+    return user ? true : false;
   }
 
   protected passwordIsValid(): boolean {

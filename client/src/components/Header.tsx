@@ -5,21 +5,17 @@ import { useState } from 'react';
 import { Button } from './ui/button';
 import { Link } from 'react-router-dom';
 
+interface IHeaderLink {
+  name: string;
+  path: string;
+}
+
 export function Header() {
-  const Links = [
-    {
-      name: 'Home',
-      path: '/',
-    },
-    {
-      name: 'Products',
-      path: '/products',
-    },
-    {
-      name: 'Contacts',
-      path: '/contacts',
-    },
-  ];
+  const Links: IHeaderLink[] = [];
+  
+  Links.push({ name: 'Home', path: '/' });
+  Links.push({ name: 'About', path: '/about' });
+  Links.push({ name: 'Contact', path: '/contact' });
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -51,7 +47,10 @@ export function Header() {
           <ul className="flex flex-col lg:flex-row lg:gap-20 justify-center items-center">
             {Links.map((link) => {
               return (
-                <li key={link.name} className="my-5 hover:text-gray-400 transition">
+                <li
+                  key={link.name}
+                  className="my-5 hover:text-gray-400 transition"
+                >
                   <Link to={link.path}>{link.name}</Link>
                 </li>
               );

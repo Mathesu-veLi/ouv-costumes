@@ -1,5 +1,4 @@
 import { createFormError } from '@/utils/createFormError';
-
 import { IUserForm, UserFormValidator } from './UserFormValidator';
 
 export class RegisterFormValidator extends UserFormValidator {
@@ -12,13 +11,16 @@ export class RegisterFormValidator extends UserFormValidator {
   protected password = this.form.password;
   protected confirmPassword = this.form.confirmPassword;
 
-  public isValid(): boolean {
+  public async isValid() {
     return (
-      super.isValid() && this.confirmPasswordIsValid() && this.nameIsValid()
+      super.isValid() &&
+      this.confirmPasswordIsValid() &&
+      this.nameIsValid() &&
+      await this.emailIsRegistered()
     );
   }
 
-  protected nameIsValid(): boolean {  
+  protected nameIsValid(): boolean {
     return this.name?.value.length !== 0;
   }
 
@@ -26,9 +28,9 @@ export class RegisterFormValidator extends UserFormValidator {
     return this.confirmPassword?.value === this.password.value;
   }
 
-  public showErrors(): void {
+  public async showErrors(): Promise<void> {
     super.showErrors();
-    
+
     if (this.name && !this.nameIsValid())
       createFormError(this.name, 'Name must not be empty');
     else document.querySelector('#nameError')?.remove();
@@ -36,5 +38,9 @@ export class RegisterFormValidator extends UserFormValidator {
     if (this.confirmPassword && !this.confirmPasswordIsValid())
       createFormError(this.confirmPassword, "Passwords don't match");
     else document.querySelector('#confirmPasswordError')?.remove();
+
+    if (await this.emailIsRegistered())
+      createFormError(this.email, 'Email already registered');
+    else document.querySelector('#emailError')?.remove();
   }
 }

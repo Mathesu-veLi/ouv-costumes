@@ -24,7 +24,7 @@ export function Register() {
 
     const form = new RegisterFormValidator(formElements);
 
-    if (!form.isValid()) return await form.showErrors();
+    if (!(await form.isValid())) return await form.showErrors();
 
     await api
       .post('/users', {

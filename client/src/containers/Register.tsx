@@ -1,8 +1,9 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { RegisterFormIsValid } from '@/utils/FormIsValid';
-import { registerFormValidation } from '@/utils/ShowFormErrors';
+import { RegisterFormValidator } from '@/classes/UserFormValidator';
+import { registerFormValidation } from '@/utils/showFormErrors';
+
 import { FormEvent } from 'react';
 
 export function Register() {
@@ -17,7 +18,7 @@ export function Register() {
       ) as HTMLInputElement,
     };
 
-    const form = new RegisterFormIsValid(formElements);
+    const form = new RegisterFormValidator(formElements);
 
     if (!form.isValid) registerFormValidation(formElements);
   }

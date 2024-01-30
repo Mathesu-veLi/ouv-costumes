@@ -1,6 +1,6 @@
 import { isEmail } from 'validator';
 import { createFormError } from './createFormError';
-import { IUserForm } from './UserFormValidator';
+import { IUserForm } from '../classes/UserFormValidator';
 
 export function registerFormValidation(formElements: IUserForm): void {
   if (!formElements.confirmPassword) return;

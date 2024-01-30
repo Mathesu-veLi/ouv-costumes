@@ -9,15 +9,22 @@ import {
 } from './ui/dropdown-menu';
 import { Button } from './ui/button';
 import { IoIosArrowDropdown } from 'react-icons/io';
+import { useNavigate } from 'react-router-dom';
 
 interface IHeaderDropdown {
   userName: string;
 }
 
 export function HeaderDropdown({ userName }: IHeaderDropdown) {
+  const navigate = useNavigate();
+
   function logout() {
     localStorage.removeItem('user');
     window.location.reload();
+  }
+
+  function redirectToEditPage() {
+    navigate('/edit');
   }
 
   return (
@@ -33,7 +40,9 @@ export function HeaderDropdown({ userName }: IHeaderDropdown) {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>Purchases</DropdownMenuItem>
-          <DropdownMenuItem>Edit account</DropdownMenuItem>
+          <DropdownMenuItem onClick={redirectToEditPage}>
+            Edit account
+          </DropdownMenuItem>
           <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>

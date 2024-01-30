@@ -3,6 +3,7 @@ import { About } from './containers/About';
 import { Header } from './components/Header';
 import { Login } from './containers/Login';
 import { Register } from './containers/Register';
+import { EditUserData } from './containers/EditUserData';
 import { Home } from './containers/Home';
 
 import { ToastContainer } from 'react-toastify';
@@ -31,6 +32,10 @@ function App() {
   routes.push({
     path: '/register',
     element: <Register />,
+  });
+  routes.push({
+    path: '/edit',
+    element: <EditUserData />,
   });
 
   return (

@@ -4,8 +4,11 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { api } from '@/lib/axios';
 import { FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export function Register() {
+  const navigate = useNavigate();
+
   async function register(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
@@ -23,12 +26,14 @@ export function Register() {
     if (!form.isValid()) form.showErrors();
 
     await api
-      .post('/users', {
-        name: formElements.name.value,
-        email: formElements.email.value,
-        password: formElements.password.value,
+    .post('/users', {
+      name: formElements.name.value,
+      email: formElements.email.value,
+      password: formElements.password.value,
+    })
+    .then(() => {
+        navigate('/login');
       })
-      .then(() => console.log('Usuário registrado'))
       .catch((e) => console.log(e));
   }
 

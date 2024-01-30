@@ -24,15 +24,15 @@ export function Register() {
 
     const form = new RegisterFormValidator(formElements);
 
-    if (!form.isValid()) return form.showErrors();
+    if (!form.isValid()) return await form.showErrors();
 
     await api
-    .post('/users', {
-      name: formElements.name.value,
-      email: formElements.email.value,
-      password: formElements.password.value,
-    })
-    .then(() => {
+      .post('/users', {
+        name: formElements.name.value,
+        email: formElements.email.value,
+        password: formElements.password.value,
+      })
+      .then(() => {
         toast.success('User successfully registered!');
         navigate('/login');
       })

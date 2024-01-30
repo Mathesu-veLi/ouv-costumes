@@ -38,3 +38,5 @@ export abstract class UserFormValidator {
     else document.querySelector('#passwordError')?.remove();
   }
 }
+
+//FIXME: The last error message not disappearing

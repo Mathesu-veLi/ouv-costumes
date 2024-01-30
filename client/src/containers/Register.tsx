@@ -5,6 +5,7 @@ import { Label } from '@/components/ui/label';
 import { api } from '@/lib/axios';
 import { FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export function Register() {
   const navigate = useNavigate();
@@ -32,6 +33,7 @@ export function Register() {
       password: formElements.password.value,
     })
     .then(() => {
+        toast.success('User successfully registered!');
         navigate('/login');
       })
       .catch((e) => console.log(e));

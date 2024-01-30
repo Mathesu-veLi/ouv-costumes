@@ -4,6 +4,9 @@ import { Header } from './components/Header';
 import { Login } from './containers/Login';
 import { Register } from './containers/Register';
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function App() {
   const routes = [
     {
@@ -19,11 +22,12 @@ function App() {
       element: <Register />,
     },
   ];
-  
+
   return (
     <>
       <BrowserRouter>
         <Header />
+        <ToastContainer />
         <Routes>
           {routes.map((route) => {
             return (

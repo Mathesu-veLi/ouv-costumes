@@ -1,4 +1,7 @@
-export function createFormError(input: HTMLInputElement, errorMessage: string) {
+export function createFormError(
+  input: HTMLInputElement,
+  errorMessage: string,
+): void {
   let errorParagraph = document.querySelector(
     `#${input.name}Error`,
   ) as HTMLParagraphElement;
@@ -13,5 +16,4 @@ export function createFormError(input: HTMLInputElement, errorMessage: string) {
   }
 
   errorParagraph.innerText = errorMessage;
-  return errorParagraph;
 }

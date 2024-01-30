@@ -15,6 +15,11 @@ interface IHeaderDropdown {
 }
 
 export function HeaderDropdown({ userName }: IHeaderDropdown) {
+  function logout() {
+    localStorage.removeItem('user');
+    window.location.reload();
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -29,7 +34,7 @@ export function HeaderDropdown({ userName }: IHeaderDropdown) {
         <DropdownMenuGroup>
           <DropdownMenuItem>Purchases</DropdownMenuItem>
           <DropdownMenuItem>Edit account</DropdownMenuItem>
-          <DropdownMenuItem>Logout</DropdownMenuItem>
+          <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>

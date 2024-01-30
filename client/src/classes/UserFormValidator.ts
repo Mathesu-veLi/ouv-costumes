@@ -7,23 +7,22 @@ export interface IUserForm {
   confirmPassword?: HTMLInputElement;
 }
 
+interface IUserFormErrors {
+  email?: HTMLParagraphElement;
+  password?: HTMLParagraphElement;
+  confirmPassword?: HTMLParagraphElement;
+}
+
 abstract class UserFormValidator {
   constructor(protected form: IUserForm) {}
 
   protected abstract email: HTMLInputElement;
   protected abstract password: HTMLInputElement;
 
-  public elementErrors: HTMLParagraphElement[] = [];
+  public elementErrors: IUserFormErrors = {};
 
   public isValid() {
-    if (this.emailIsValid() && this.passwordIsValid()) {
-      for (const inputName in this.form) {
-        this.removeError(inputName);
-      }
-      return true;
-    }
-
-    return false;
+    return this.emailIsValid() && this.passwordIsValid();
   }
 
   protected emailIsValid(): boolean {
@@ -34,23 +33,22 @@ abstract class UserFormValidator {
     return this.password.value.length < 5 && this.password.value.length > 25;
   }
 
-  protected removeError(inputName: string) {
-    const error = document.querySelector(`#${inputName}Error`);
-
-    if (error) error.remove();
+  protected removeError(errorElement: HTMLParagraphElement): void {
+    console.log(errorElement);
+    errorElement.remove();
   }
 
   public showErrors(): void {
     if (!this.emailIsValid())
-      this.elementErrors.push(createFormError(this.email, 'Email not valid'));
+      this.elementErrors.email = createFormError(this.email, 'Email not valid');
+    else document.querySelector('#emailError')?.remove();
 
     if (!this.passwordIsValid())
-      this.elementErrors.push(
-        createFormError(
-          this.password,
-          'The password must be between 5 and 25 characters long',
-        ),
+      this.elementErrors.password = createFormError(
+        this.password,
+        'The password must be between 5 and 25 characters long',
       );
+    else document.querySelector('#passwordError')?.remove();
   }
 }
 
@@ -64,19 +62,7 @@ export class RegisterFormValidator extends UserFormValidator {
   protected confirmPassword = this.form.confirmPassword;
 
   public isValid(): boolean {
-    if (
-      this.emailIsValid() &&
-      this.passwordIsValid() &&
-      this.confirmPasswordIsValid()
-    ) {
-      for (const inputName in this.form) {
-        this.removeError(inputName);
-      }
-
-      return true;
-    }
-
-    return false;
+    return super.isValid() && this.confirmPasswordIsValid();
   }
 
   protected confirmPasswordIsValid(): boolean {
@@ -86,10 +72,11 @@ export class RegisterFormValidator extends UserFormValidator {
   public showErrors(): void {
     super.showErrors();
 
-    if (this.confirmPassword && !this.confirmPasswordIsValid()) {
-      this.elementErrors.push(
-        createFormError(this.confirmPassword, "Passwords don't match"),
+    if (this.confirmPassword && !this.confirmPasswordIsValid())
+      this.elementErrors.confirmPassword = createFormError(
+        this.confirmPassword,
+        "Passwords don't match",
       );
-    }
+    else document.querySelector('#confirmPasswordError')?.remove();
   }
 }

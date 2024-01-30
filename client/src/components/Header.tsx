@@ -12,10 +12,10 @@ interface IHeaderLink {
 
 export function Header() {
   const Links: IHeaderLink[] = [];
-  
+
   Links.push({ name: 'Home', path: '/' });
-  Links.push({ name: 'About', path: '/about' });
   Links.push({ name: 'Contact', path: '/contact' });
+  Links.push({ name: 'About', path: '/about' });
 
   const [isOpen, setIsOpen] = useState(false);
 

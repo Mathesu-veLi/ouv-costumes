@@ -15,14 +15,22 @@ interface IRoute {
 function App() {
   const routes: IRoute[] = [];
 
-  function createRoute(path: string, element: JSX.Element): void {
-    routes.push({ path, element });
-  }
-
-  createRoute('/', <About />);
-  createRoute('/about', <About />);
-  createRoute('/login', <Login />);
-  createRoute('/register', <Register />);
+  routes.push({
+    path: '/',
+    element: <Home />,
+  })
+  routes.push({
+    path: '/about',
+    element: <About />,
+  })
+  routes.push({
+    path: '/login',
+    element: <Login />,
+  })
+  routes.push({
+    path: '/register',
+    element: <Register />,
+  })
 
   return (
     <>

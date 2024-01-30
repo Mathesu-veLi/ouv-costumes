@@ -22,7 +22,7 @@ export abstract class UserFormValidator {
   }
 
   protected passwordIsValid(): boolean {
-    return this.password.value.length < 5 && this.password.value.length > 25;
+    return this.password.value.length >= 5 && this.password.value.length <= 25;
   }
 
   public showErrors(): void {

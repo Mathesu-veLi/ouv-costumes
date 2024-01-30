@@ -51,7 +51,7 @@ export function Header() {
           <ul className="flex flex-col lg:flex-row lg:gap-20 justify-center items-center">
             {Links.map((link) => {
               return (
-                <li key={link.name} className="my-5">
+                <li key={link.name} className="my-5 hover:text-gray-400 transition">
                   <Link to={link.path}>{link.name}</Link>
                 </li>
               );

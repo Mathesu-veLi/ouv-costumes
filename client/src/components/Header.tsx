@@ -4,6 +4,8 @@ import { MdClose } from 'react-icons/md';
 import { useState } from 'react';
 import { Button } from './ui/button';
 import { Link } from 'react-router-dom';
+import { useUserStore } from '@/store/useUserStore';
+import { HeaderDropdown } from './HeaderDropdown';
 
 interface IHeaderLink {
   name: string;
@@ -18,6 +20,7 @@ export function Header() {
   Links.push({ name: 'About', path: '/about' });
 
   const [isOpen, setIsOpen] = useState(false);
+  const { name } = useUserStore().userData;
 
   return (
     <header className="flex absolute justify-center w-full">
@@ -57,15 +60,19 @@ export function Header() {
             })}
           </ul>
 
-          <div className="flex gap-2 lg:gap-7 p-1">
-            <Link to="/login">
-              <Button variant="outline">Login</Button>
-            </Link>
+          {!name ? (
+            <div className="flex gap-2 lg:gap-7 p-1">
+              <Link to="/login">
+                <Button variant="outline">Login</Button>
+              </Link>
 
-            <Link to="/register">
-              <Button variant="outline">Register</Button>
-            </Link>
-          </div>
+              <Link to="/register">
+                <Button variant="outline">Register</Button>
+              </Link>
+            </div>
+          ) : (
+            <HeaderDropdown userName={name} />
+          )}
         </div>
       </div>
     </header>

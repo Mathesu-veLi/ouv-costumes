@@ -2,7 +2,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RegisterFormValidator } from '@/classes/UserFormValidator';
-import { registerFormValidation } from '@/utils/showFormErrors';
 
 import { FormEvent } from 'react';
 
@@ -20,7 +19,7 @@ export function Register() {
 
     const form = new RegisterFormValidator(formElements);
 
-    if (!form.isValid) registerFormValidation(formElements);
+    if (!form.isValid()) form.showErrors();
   }
 
   return (

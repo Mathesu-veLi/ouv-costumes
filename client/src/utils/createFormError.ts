@@ -13,4 +13,5 @@ export function createFormError(input: HTMLInputElement, errorMessage: string) {
   }
 
   errorParagraph.innerText = errorMessage;
+  return errorParagraph;
 }

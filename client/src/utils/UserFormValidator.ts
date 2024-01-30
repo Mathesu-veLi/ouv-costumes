@@ -1,4 +1,4 @@
-import isEmail from "validator/lib/isEmail";
+import isEmail from 'validator/lib/isEmail';
 
 export interface IUserForm {
   email: HTMLInputElement;
@@ -6,7 +6,7 @@ export interface IUserForm {
   confirmPassword?: HTMLInputElement;
 }
 
-abstract class UserFormIsValid {
+abstract class UserFormValidator {
   constructor(protected form: IUserForm) {}
 
   protected abstract email: HTMLInputElement;
@@ -25,7 +25,7 @@ abstract class UserFormIsValid {
   }
 }
 
-export class RegisterFormIsValid extends UserFormIsValid {
+export class RegisterFormValidator extends UserFormValidator {
   constructor(form: IUserForm) {
     super(form);
   }

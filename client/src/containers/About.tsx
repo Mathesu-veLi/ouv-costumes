@@ -11,7 +11,7 @@ export function About() {
 
       <div className="flex justify-around flex-wrap mx-5">
         <div className="lg:max-w-2xl flex flex-col gap-5">
-          <h1 className="text-blue-500 uppercase text-xl italic lg:text-3xl">
+          <h1 className="text-blue-500 uppercase text-xl italic lg:text-3xl font-bold">
             Sobre a nossa empresa
           </h1>
 
@@ -36,7 +36,7 @@ export function About() {
       </div>
 
       <div className="flex justify-center items-center flex-col flex-wrap mx-5 gap-4">
-        <h1 className="text-blue-500 uppercase text-xl lg:text-3xl italic">
+        <h1 className="text-blue-500 uppercase text-xl lg:text-3xl italic font-bold">
           Nossos produtos
         </h1>
 

@@ -15,7 +15,7 @@ export function Login() {
 
     const form = new LoginFormValidator(formElements);
 
-    if (!form.isValid()) form.showErrors();
+    if (!form.isValid()) return form.showErrors();
   }
 
   return (

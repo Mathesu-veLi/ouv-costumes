@@ -2,13 +2,15 @@ import { RegisterFormValidator } from '@/classes/formValidators/RegisterFormVali
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { api } from '@/lib/axios';
 import { FormEvent } from 'react';
 
 export function Register() {
-  function register(e: FormEvent<HTMLFormElement>) {
+  async function register(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const formElements = {
+      name: document.querySelector('#name') as HTMLInputElement,
       email: document.querySelector('#email') as HTMLInputElement,
       password: document.querySelector('#password') as HTMLInputElement,
       confirmPassword: document.querySelector(
@@ -30,7 +32,19 @@ export function Register() {
           create your account
         </p>
         <form onSubmit={register} action="" className="w-full">
-          <div className="grid gap-6">
+          <div className="grid gap-9">
+            <div className="grid gap-2">
+              <Label htmlFor="email" className="text-md text-gray-100">
+                Name
+              </Label>
+              <Input
+                id="name"
+                name="name"
+                placeholder="Name"
+                type="text"
+                autoComplete="off"
+              />
+            </div>
             <div className="grid gap-2">
               <Label htmlFor="email" className="text-md text-gray-100">
                 Email

@@ -2,6 +2,7 @@ import { createFormError } from '@/utils/createFormError';
 import isEmail from 'validator/lib/isEmail';
 
 export interface IUserForm {
+  name?: HTMLInputElement;
   email: HTMLInputElement;
   password: HTMLInputElement;
   confirmPassword?: HTMLInputElement;

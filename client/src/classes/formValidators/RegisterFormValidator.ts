@@ -7,12 +7,19 @@ export class RegisterFormValidator extends UserFormValidator {
     super(form);
   }
 
+  protected name = this.form.name;
   protected email = this.form.email;
   protected password = this.form.password;
   protected confirmPassword = this.form.confirmPassword;
 
   public isValid(): boolean {
-    return super.isValid() && this.confirmPasswordIsValid();
+    return (
+      super.isValid() && this.confirmPasswordIsValid() && this.nameIsValid()
+    );
+  }
+
+  protected nameIsValid(): boolean {  
+    return this.name?.value.length !== 0;
   }
 
   protected confirmPasswordIsValid(): boolean {
@@ -21,6 +28,10 @@ export class RegisterFormValidator extends UserFormValidator {
 
   public showErrors(): void {
     super.showErrors();
+    
+    if (this.name && !this.nameIsValid())
+      createFormError(this.name, 'Name must not be empty');
+    else document.querySelector('#nameError')?.remove();
 
     if (this.confirmPassword && !this.confirmPasswordIsValid())
       createFormError(this.confirmPassword, "Passwords don't match");

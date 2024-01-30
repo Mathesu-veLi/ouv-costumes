@@ -1,16 +1,27 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { registerFormValidation } from '@/utils/validations';
+import {
+  RegisterFormIsValid,
+  registerFormValidation,
+} from '@/utils/validations';
 import { FormEvent } from 'react';
 
 export function Register() {
   function register(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const form = document.querySelector('form') as HTMLFormElement;
+    const formElements = {
+      email: document.querySelector('#email') as HTMLInputElement,
+      password: document.querySelector('#password') as HTMLInputElement,
+      confirmPassword: document.querySelector(
+        '#confirmPassword',
+      ) as HTMLInputElement,
+    };
 
-    registerFormValidation(form);
+    const form = new RegisterFormIsValid(formElements);
+
+    if (!form.isValid) registerFormValidation(formElements);
   }
 
   return (

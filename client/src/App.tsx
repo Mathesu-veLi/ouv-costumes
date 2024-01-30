@@ -7,21 +7,22 @@ import { Register } from './containers/Register';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+interface IRoute {
+  path: string;
+  element: JSX.Element;
+}
+
 function App() {
-  const routes = [
-    {
-      path: '/',
-      element: <Home />,
-    },
-    {
-      path: '/login',
+  const routes: IRoute[] = [];
+
+  function createRoute(path: string, element: JSX.Element): void {
+    routes.push({ path, element });
+  }
+
+  createRoute('/', <Home />);
       element: <Login />,
-    },
-    {
-      path: '/register',
-      element: <Register />,
-    },
-  ];
+  createRoute('/login', <Login />);
+  createRoute('/register', <Register />);
 
   return (
     <>

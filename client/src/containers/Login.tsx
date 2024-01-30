@@ -2,10 +2,18 @@ import { LoginFormValidator } from '@/classes/formValidators/LoginFormValidator'
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { api } from '@/lib/axios';
+import { useUserStore } from '@/store/useUserStore';
 import { FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export function Login() {
-  function login(e: FormEvent<HTMLFormElement>) {
+  const { setToken } = useUserStore();
+  const { setUserData } = useUserStore();
+  const navigate = useNavigate();
+
+  async function login(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const formElements = {
@@ -16,6 +24,19 @@ export function Login() {
     const form = new LoginFormValidator(formElements);
 
     if (!form.isValid()) return form.showErrors();
+
+    await api
+      .post('/token', {
+        email: formElements.email.value,
+        password: formElements.password.value,
+      })
+      .then((response) => {
+        setToken(response.data.token);
+        setUserData(response.data.user);
+        toast.success('User logged in successfully!');
+        navigate('/');
+      })
+      .catch((e) => console.log(e));
   }
 
   return (

@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Home } from './containers/Home';
+import { About } from './containers/About';
 import { Header } from './components/Header';
 import { Login } from './containers/Login';
 import { Register } from './containers/Register';
@@ -19,8 +19,8 @@ function App() {
     routes.push({ path, element });
   }
 
-  createRoute('/', <Home />);
-      element: <Login />,
+  createRoute('/', <About />);
+  createRoute('/about', <About />);
   createRoute('/login', <Login />);
   createRoute('/register', <Register />);
 

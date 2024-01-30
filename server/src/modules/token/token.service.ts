@@ -10,18 +10,21 @@ export class TokenService {
   constructor(private prismaService: PrismaService) {}
 
   async create(createTokenDto: CreateTokenDto) {
-    const { id, email, password_hash } =
-      await this.prismaService.user.findUnique({
-        where: { email: createTokenDto.email },
-      });
-    if (!id) userNotExist();
-    if (!passwordIsValid(createTokenDto.password, password_hash))
+    const user = await this.prismaService.user.findUnique({
+      where: { email: createTokenDto.email },
+    });
+    if (!user.id) userNotExist();
+    if (!passwordIsValid(createTokenDto.password, user.password_hash))
       return passwordIsNotValid();
 
-    const token = sign({ id, email }, process.env.TOKEN_SECRET, {
-      expiresIn: process.env.TOKEN_EXPIRATION,
-    });
+    const token = sign(
+      { id: user.id, email: user.email },
+      process.env.TOKEN_SECRET,
+      {
+        expiresIn: process.env.TOKEN_EXPIRATION,
+      },
+    );
 
-    return { token };
+    return { token, user: { id: user.id, name: user.name, email: user.email } };
   }
 }

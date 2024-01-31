@@ -4,13 +4,14 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { api } from '@/lib/axios';
 import { useUserStore } from '@/store/useUserStore';
-import { FormEvent } from 'react';
+import { FormEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 export function Login() {
-  const { setToken } = useUserStore();
-  const { setUserData } = useUserStore();
+  const { setToken, setUserData } = useUserStore();
+  const { id } = useUserStore().userData;
+
   const navigate = useNavigate();
 
   async function login(e: FormEvent<HTMLFormElement>) {
@@ -42,6 +43,13 @@ export function Login() {
       })
       .catch((e) => console.log(e));
   }
+
+  useEffect(() => {
+    if (id) {
+      toast('You already logged in');
+      return navigate('/');
+    }
+  }, [id]);
 
   return (
     <div className="flex justify-center items-center w-full h-screen">

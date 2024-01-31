@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { api } from '@/lib/axios';
 import { useUserStore } from '@/store/useUserStore';
-import { FormEvent } from 'react';
+import { FormEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -13,6 +13,13 @@ export function EditUserData() {
   const { setUserData } = useUserStore();
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!id) {
+      toast('Your need stay logged in to enter in this page');
+      return navigate('/login');
+    }
+  }, [id]);
 
   async function editData(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();

@@ -5,7 +5,7 @@ import isEmail from 'validator/lib/isEmail';
 export interface IUserForm {
   name?: HTMLInputElement;
   email: HTMLInputElement;
-  password: HTMLInputElement;
+  password?: HTMLInputElement;
   confirmPassword?: HTMLInputElement;
 }
 
@@ -24,13 +24,10 @@ export abstract class UserFormValidator {
   }
 
   protected async emailIsRegistered(): Promise<boolean> {
-    const user = await api.get('/users', {
-      params: {
-        email: this.email.value,
-      },
-    });
-
-    return user ? true : false;
+    const user = await api.get('/users');
+    return user.data.find(
+      (u: { email: string }) => u.email === this.email.value,
+    );
   }
 
   protected passwordIsValid(): boolean {
@@ -49,5 +46,3 @@ export abstract class UserFormValidator {
     else document.querySelector('#passwordError')?.remove();
   }
 }
-
-//FIXME: The last error message not disappearing

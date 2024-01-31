@@ -7,19 +7,25 @@ interface UserState {
   userData: IUserData;
   setToken: (token: string) => void;
   setUserData: (userData: IUserData) => void;
+  reset: () => void;
 }
+
+const initialState = {
+  token: '',
+  userData: {
+    id: 0,
+    name: '',
+    email: '',
+  },
+};
 
 export const useUserStore = create<UserState>()(
   persist(
     (set) => ({
-      token: '',
-      userData: {
-        id: 0,
-        name: '',
-        email: '',
-      },
+      ...initialState,
       setToken: (token: string) => set({ token }),
       setUserData: (userData: IUserData) => set({ userData }),
+      reset: () => set(initialState),
     }),
     {
       name: 'user',

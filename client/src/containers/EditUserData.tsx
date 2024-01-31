@@ -10,16 +10,16 @@ import { toast } from 'react-toastify';
 
 export function EditUserData() {
   const { id, name, email } = useUserStore().userData;
-  const { setUserData } = useUserStore();
+  const { setUserData, reset } = useUserStore();
 
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!id) {
-      toast('Your need stay logged in to enter in this page');
+      toast('You need to log in to access the user data editing page');
       return navigate('/login');
     }
-  }, [id]);
+  }, []);
 
   async function editData(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -40,7 +40,6 @@ export function EditUserData() {
       })
       .then(() => {
         toast.success('User data uploaded successfully!');
-
         setUserData({
           id,
           name: formElements.name.value,
@@ -48,10 +47,9 @@ export function EditUserData() {
         });
 
         if (email !== formElements.email.value) {
-          localStorage.removeItem('user');
-
-          toast('Log in again');
-          navigate('/login');
+          reset();
+          toast('Please log in again');
+          return navigate('/login');
         }
       });
   }

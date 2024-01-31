@@ -14,7 +14,7 @@ export class TokenService {
       where: { email: createTokenDto.email },
     });
     if (!user) return userNotExist();
-    if (!passwordIsValid(createTokenDto.password, user.password_hash))
+    if (!(await passwordIsValid(createTokenDto.password, user.password_hash)))
       return passwordIsNotValid();
 
     const token = sign(

@@ -4,9 +4,9 @@ export function generatePasswordHash(password: string): string {
   return hashSync(password, 12);
 }
 
-export function passwordIsValid(
+export async function passwordIsValid(
   password: string,
   password_hash: string,
-): boolean {
-  return compare(password, password_hash);
+): Promise<boolean> {
+  return await compare(password, password_hash);
 }

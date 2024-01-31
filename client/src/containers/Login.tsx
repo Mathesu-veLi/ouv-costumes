@@ -35,6 +35,8 @@ export function Login() {
         if (response.data.user) {
           setToken(response.data.token);
           setUserData(response.data.user);
+          api.defaults.headers.Authorization = `Beather ${response.data.token}`;
+          
           toast.success('User logged in successfully!');
           return navigate('/');
         }

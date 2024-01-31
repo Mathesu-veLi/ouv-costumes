@@ -42,7 +42,6 @@ export function EditUserData() {
 
         if (email !== formElements.email.value) {
           localStorage.removeItem('user');
-          window.location.reload();
 
           toast('Log in again');
           navigate('/login');

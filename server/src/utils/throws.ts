@@ -1,9 +1,9 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 
 export function userNotExist() {
-  throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+  return new HttpException('User not found', HttpStatus.NOT_FOUND);
 }
 
 export function passwordIsNotValid() {
-  throw new HttpException('Password is not valid', HttpStatus.UNAUTHORIZED);
+  return new HttpException('Password is not valid', HttpStatus.UNAUTHORIZED);
 }

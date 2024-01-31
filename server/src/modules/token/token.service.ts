@@ -13,7 +13,7 @@ export class TokenService {
     const user = await this.prismaService.user.findUnique({
       where: { email: createTokenDto.email },
     });
-    if (!user.id) userNotExist();
+    if (!user) return userNotExist();
     if (!passwordIsValid(createTokenDto.password, user.password_hash))
       return passwordIsNotValid();
 

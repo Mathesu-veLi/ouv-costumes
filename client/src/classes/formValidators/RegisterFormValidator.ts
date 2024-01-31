@@ -8,7 +8,7 @@ export class RegisterFormValidator extends UserFormValidator {
 
   protected name = this.form.name;
   protected email = this.form.email;
-  protected password = this.form.password;
+  protected password = this.form.password as HTMLInputElement;
   protected confirmPassword = this.form.confirmPassword;
 
   public async isValid() {
@@ -16,7 +16,7 @@ export class RegisterFormValidator extends UserFormValidator {
       super.isValid() &&
       this.confirmPasswordIsValid() &&
       this.nameIsValid() &&
-      await this.emailIsRegistered()
+      !(await this.emailIsRegistered())
     );
   }
 

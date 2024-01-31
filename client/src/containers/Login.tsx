@@ -49,7 +49,7 @@ export function Login() {
       toast('You already logged in');
       return navigate('/');
     }
-  }, [id]);
+  }, []);
 
   return (
     <div className="flex justify-center items-center w-full h-screen">

@@ -48,6 +48,7 @@ export function EditUserData() {
 
         if (email !== formElements.email.value) {
           reset();
+
           toast('Please log in again');
           return navigate('/login');
         }
@@ -104,6 +105,9 @@ export function EditUserData() {
               </div>
             </div>
             <Button>Edit</Button>
+            {
+              // TODO: Sends a email to user with the url (/users/:id/password) to change password
+            }
           </div>
         </form>
       </div>

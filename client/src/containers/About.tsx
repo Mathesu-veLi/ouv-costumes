@@ -1,6 +1,6 @@
 import banner from '@/assets/banner.png';
 import topQualityShirts from '@/assets/topQualityShirts.png';
-import tshirts from '@/assets/tshirts.png';
+import tShirts from '@/assets/tShirts.png';
 
 export function About() {
   return (
@@ -12,36 +12,35 @@ export function About() {
       <div className="flex justify-around flex-wrap mx-5">
         <div className="lg:max-w-2xl flex flex-col gap-5">
           <h1 className="text-blue-500 uppercase text-xl italic lg:text-3xl font-bold">
-            Sobre a nossa empresa
+            About our company
           </h1>
 
           <p className="text-sm lg:text-xl leading-relaxed indent-2">
-            Especializada em camisas de futebol e artigos esportivos, a loja
-            virtual surgiu em 2024 na cidade de salvador(ba) e reúne uniformes
-            completos dos mais variados clubes brasileiros, internacionais e
-            seleções - dos mais consagrados aos menos conhecidos.
+            Specializing in soccer shirts and sporting goods, the online store
+            came into being in 2024 in the city of salvador(ba) and brings
+            together uniforms of the most varied Brazilian and international
+            clubs and national teams - from the most famous to the least known.
           </p>
           <p className="text-sm lg:text-xl leading-relaxed indent-2">
-            Com a maior variedade em camisas de times de futebol no mercado
-            nacional, a ouv trabalha em parceria com as principais marcas
-            esportivas para comercializar somente produtos originais e com
-            garantia de qualidade.
+            With the widest range of soccer shirts on the market market, ouv
+            works in partnership with the main sports brands to brands to sell
+            only original products with a quality guarantee. guaranteed quality.
           </p>
           <p className="text-sm lg:text-xl leading-relaxed indent-2">
-            Além disso, a loja possui certificados de segurança que oferecem ao
-            cliente um ambiente de compra confiável.
+            In addition, the store has security certificates that offer the
+            customer a a reliable shopping environment.
           </p>
         </div>
-        <img src={tshirts} alt="" className="mt-5 lg:w-4/12" />
+        <img src={tShirts} alt="" className="mt-5 lg:w-4/12" />
       </div>
 
       <div className="flex justify-center items-center flex-col flex-wrap mx-5 gap-4">
         <h1 className="text-blue-500 uppercase text-xl lg:text-3xl italic font-bold">
-          Nossos produtos
+          Our products
         </h1>
 
         <h2 className="uppercase text-lg lg:mt-3 lg:text-2xl italic text-center">
-          Camisetas de alta qualidade
+          High quality t-shirts
         </h2>
         <img src={topQualityShirts} className="mt-5" alt="" />
       </div>

@@ -10,9 +10,10 @@ import { UsersModule } from './modules/users/users.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { TokenModule } from './modules/token/token.module';
 import { LoginRequiredMiddleware } from './middlewares/loginRequired';
+import { ProductsModule } from './modules/products/products.module';
 
 @Module({
-  imports: [UsersModule, PrismaModule, TokenModule],
+  imports: [UsersModule, PrismaModule, TokenModule, ProductsModule],
   controllers: [AppController],
   providers: [AppService],
 })

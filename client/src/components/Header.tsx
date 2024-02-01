@@ -16,8 +16,8 @@ export function Header() {
   const Links: IHeaderLink[] = [];
 
   Links.push({ name: 'Home', path: '/' });
+  Links.push({ name: 'Products', path: '/products' });
   Links.push({ name: 'Contact', path: '/contact' });
-  Links.push({ name: 'About', path: '/about' });
 
   const [isOpen, setIsOpen] = useState(false);
   const { name } = useUserStore().userData;

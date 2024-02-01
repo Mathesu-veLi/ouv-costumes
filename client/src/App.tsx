@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { About } from './containers/About';
 import { Header } from './components/Header';
 import { Login } from './containers/Login';
 import { Register } from './containers/Register';
@@ -21,18 +20,17 @@ function App() {
     path: '/',
     element: <Home />,
   });
-  routes.push({
-    path: '/about',
-    element: <About />,
-  });
+
   routes.push({
     path: '/login',
     element: <Login />,
   });
+
   routes.push({
     path: '/register',
     element: <Register />,
   });
+
   routes.push({
     path: '/edit',
     element: <EditUserData />,

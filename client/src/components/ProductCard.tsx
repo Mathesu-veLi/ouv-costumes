@@ -1,11 +1,7 @@
 import { IProduct } from '@/interfaces/IProduct';
-import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 export function ProductCard(props: IProduct) {
-  useEffect(() => {
-    console.log(props.name.length);
-  });
   return (
     <Link to={`/product/${props.id}`}>
       <div className="rounded-lg shadow-lg flex flex-col justify-center items-center px-2 py-5 border flex-1 flex-grow my-4">

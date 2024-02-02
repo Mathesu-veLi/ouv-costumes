@@ -11,7 +11,11 @@ export class ProductsService {
   }
 
   findAll() {
-    return this.prismaService.product.findMany();
+    return this.prismaService.product.findMany({
+      orderBy: {
+        name: 'asc',
+      },
+    });
   }
 
   findOne(id: number) {

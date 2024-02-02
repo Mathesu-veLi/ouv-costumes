@@ -50,7 +50,7 @@ export function Header() {
 
         <div
           className={`flex flex-col lg:flex-row lg:border-none items-center justify-center gap-4 lg:gap-20 absolute lg:static z-10 lg:opacity-100 transition-all duration-500 ease-in-out border-x border-b lg:p-0 p-3 bg-zinc-950 left-0 w-full rounded-b-md ${
-            isOpen ? 'top-12 opacity-100' : 'opacity-0 -top-56'
+            isOpen ? 'top-12 opacity-100' : 'opacity-100 -top-80'
           }`}
         >
           <ul className="flex flex-col lg:flex-row lg:gap-20 justify-center items-center">

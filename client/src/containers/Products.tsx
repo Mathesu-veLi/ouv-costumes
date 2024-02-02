@@ -1,4 +1,4 @@
-import { Product } from '@/components/Product';
+import { Product } from '@/components/ProductCard';
 import { IProduct } from '@/interfaces/IProduct';
 import { api } from '@/lib/axios';
 import { useEffect, useState } from 'react';
@@ -17,7 +17,6 @@ export function Products() {
 
     getProduct().then((response) => {
       setProducts(response);
-      console.log(products);
     });
   }, []);
 

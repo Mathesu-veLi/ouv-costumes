@@ -2,7 +2,7 @@ import { IProduct } from '@/interfaces/IProduct';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-export function Product(props: IProduct) {
+export function ProductCard(props: IProduct) {
   useEffect(() => {
     console.log(props.name.length);
   });

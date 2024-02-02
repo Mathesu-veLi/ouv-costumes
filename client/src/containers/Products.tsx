@@ -1,4 +1,4 @@
-import { Product } from '@/components/ProductCard';
+import { ProductCard } from '@/components/ProductCard';
 import { IProduct } from '@/interfaces/IProduct';
 import { api } from '@/lib/axios';
 import { useEffect, useState } from 'react';
@@ -26,7 +26,7 @@ export function Products() {
       <div className="flex justify-around lg:justify-center items-start mt-10 flex-wrap lg:max-w-6xl lg:gap-10">
         {products.map((product) => {
           return (
-            <Product
+            <ProductCard
               key={product.id}
               id={product.id}
               name={product.name}

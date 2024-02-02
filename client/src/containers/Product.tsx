@@ -34,19 +34,8 @@ export function Product() {
 
   return (
     <div className="flex flex-col justify-center items-center h-screen pt-10">
-      <div className="flex gap-5 flex-col w-64">
-        <div className="flex flex-col-reverse gap-3">
-          <div className="flex justify-between w-64 items-center">
-            <h1 className="max-w-40">{product?.name}</h1>
-            <p className="font-semibold">
-              {product?.price
-                .toLocaleString('pt-BR', {
-                  style: 'currency',
-                  currency: 'BRL',
-                })
-                .replace(',', '.')}
-            </p>
-          </div>
+      <div className="flex gap-5 flex-col w-64 lg:w-auto">
+        <div className="flex flex-col lg:flex-row-reverse gap-3">
           <div className="flex flex-col justify-center items-center">
             <img
               src={`${API_URL}/uploads/${product?.img}`}
@@ -54,28 +43,44 @@ export function Product() {
               className="w-64 border border-slate-400"
             />
           </div>
-        </div>
+          <div className="flex flex-col gap-5">
+            <div className="flex justify-between w-64 lg:w-auto items-center">
+              <h1 className="max-w-40">{product?.name}</h1>
+              <p className="font-semibold">
+                {product?.price
+                  .toLocaleString('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                  })
+                  .replace(',', '.')}
+              </p>
+            </div>
 
-        <form className="flex mt-2 justify-between items-center">
-          <div>
-            <Label htmlFor="qtd">Quantity ({product?.stock})</Label>
-            <Input
-              type="number"
-              id="qtd"
-              className="h-11 w-20 mt-2"
-              min={1}
-              max={product?.stock}
-            />
+            <form className="flex justify-between items-center">
+              <div>
+                <Label htmlFor="qtd">Quantity ({product?.stock})</Label>
+                <Input
+                  type="number"
+                  id="qtd"
+                  className="h-11 mt-2"
+                  min={1}
+                  max={product?.stock}
+                  defaultValue={1}
+                />
+              </div>
+
+              <div className="flex h-full items-end">
+                <Button
+                  variant="ghost"
+                  className="p-5 h-11 tracking-widest uppercase rounded-sm border"
+                  type="submit"
+                >
+                  Add to cart
+                </Button>
+              </div>
+            </form>
           </div>
-          <div className="flex h-full items-end">
-            <Button
-              variant="ghost"
-              className="p-5 h-11 tracking-widest uppercase rounded-sm border"
-            >
-              Add to cart
-            </Button>
-          </div>
-        </form>
+        </div>
       </div>
     </div>
   );

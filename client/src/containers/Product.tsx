@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { PageNotFound } from './PageNotFound';
 import { IProduct } from '@/interfaces/IProduct';
@@ -7,15 +7,33 @@ import { api } from '@/lib/axios';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useCartStore } from '@/store/useCartStore';
 
 export function Product() {
   const { id } = useParams();
   const [productExists, setProductExists] = useState<number>();
   const [product, setProduct] = useState<IProduct>();
+  const { products, addProduct } = useCartStore();
+
+  function addToCart(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    if (!product) return;
+    const quantity = document.querySelector('#qtd') as HTMLInputElement;
+
+    addProduct({
+      id: product.id,
+      name: product.name,
+      price: Number(product.price),
+      img: product.img,
+      quantity: Number(quantity.value),
+    });
+  }
 
   useEffect(() => {
     async function getProduct() {
       const { data } = await api.get(`/products/${id}`);
+      
       setProduct(data);
     }
 
@@ -46,7 +64,9 @@ export function Product() {
 
           <div className="flex flex-col gap-5 justify-between">
             <div className="flex lg:flex-col justify-between w-64 lg:w-auto items-center lg:items-baseline lg:gap-4">
-              <h1 className="max-w-40 lg:max-w-none lg:text-xl">{product?.name}</h1>
+              <h1 className="max-w-40 lg:max-w-none lg:text-xl">
+                {product?.name}
+              </h1>
               <p className="font-semibold lg:text-lg">
                 {product?.price
                   .toLocaleString('pt-BR', {
@@ -57,9 +77,14 @@ export function Product() {
               </p>
             </div>
 
-            <form className="flex justify-between items-center lg:gap-6">
+            <form
+              onSubmit={addToCart}
+              className="flex justify-between items-center lg:gap-6"
+            >
               <div>
-                <Label htmlFor="qtd" className='ms-1'>Quantity ({product?.stock})</Label>
+                <Label htmlFor="qtd" className="ms-1">
+                  Quantity ({product?.stock})
+                </Label>
                 <Input
                   type="number"
                   id="qtd"

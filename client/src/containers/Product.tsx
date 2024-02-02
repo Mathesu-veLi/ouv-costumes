@@ -33,8 +33,8 @@ export function Product() {
   if (productExists === 1) return <PageNotFound />;
 
   return (
-    <div className="flex flex-col justify-center items-center gap-9 h-screen pt-10">
-      <div className="flex gap-9 flex-col w-64">
+    <div className="flex flex-col justify-center items-center h-screen pt-10">
+      <div className="flex gap-5 flex-col w-64">
         <div className="flex flex-col-reverse gap-3">
           <div className="flex justify-between w-64 items-center">
             <h1 className="max-w-40">{product?.name}</h1>
@@ -56,25 +56,26 @@ export function Product() {
           </div>
         </div>
 
-        <div>
-          <Label htmlFor="qtd">Quantity ({product?.stock})</Label>
-          <form className="flex mt-2 justify-between items-center">
+        <form className="flex mt-2 justify-between items-center">
+          <div>
+            <Label htmlFor="qtd">Quantity ({product?.stock})</Label>
             <Input
               type="number"
               id="qtd"
-              className="h-11 w-20"
+              className="h-11 w-20 mt-2"
               min={1}
               max={product?.stock}
             />
-
+          </div>
+          <div className="flex h-full items-end">
             <Button
               variant="ghost"
               className="p-5 h-11 tracking-widest uppercase rounded-sm border"
             >
               Add to cart
             </Button>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
     </div>
   );

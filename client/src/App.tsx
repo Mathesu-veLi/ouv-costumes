@@ -7,6 +7,7 @@ import { Home } from './containers/Home';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Products } from './containers/Products';
 
 interface IRoute {
   path: string;
@@ -19,6 +20,11 @@ function App() {
   routes.push({
     path: '/',
     element: <Home />,
+  });
+
+  routes.push({
+    path: '/products',
+    element: <Products />,
   });
 
   routes.push({

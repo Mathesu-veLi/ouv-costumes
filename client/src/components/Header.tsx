@@ -1,9 +1,9 @@
 import favicon from '@/assets/favicon.png';
 import { FaBars } from 'react-icons/fa';
 import { MdClose } from 'react-icons/md';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from './ui/button';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useUserStore } from '@/store/useUserStore';
 import { HeaderDropdown } from './HeaderDropdown';
 
@@ -20,7 +20,13 @@ export function Header() {
   Links.push({ name: 'Contact', path: '/contact' });
 
   const [isOpen, setIsOpen] = useState(false);
+
+  const location = useLocation();
   const { name } = useUserStore().userData;
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location]);
 
   return (
     <header className="flex absolute justify-center w-full">

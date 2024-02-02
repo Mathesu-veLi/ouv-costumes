@@ -8,6 +8,7 @@ import { Home } from './containers/Home';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Products } from './containers/Products';
+import { PageNotFound } from './containers/PageNotFound';
 
 interface IRoute {
   path: string;
@@ -41,6 +42,11 @@ function App() {
     path: '/edit',
     element: <EditUserData />,
   });
+
+  routes.push({
+    path: '*',
+    element: <PageNotFound />,
+  })
 
   return (
     <>

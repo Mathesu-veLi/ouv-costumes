@@ -8,11 +8,7 @@ export function Products() {
 
   useEffect(() => {
     async function getProduct() {
-      const products = await api.get('products', {
-        data: {
-          
-        }
-      }).then((response) => {
+      const products = await api.get('products').then((response) => {
         return response.data;
       });
 
@@ -26,9 +22,9 @@ export function Products() {
   }, []);
 
   return (
-    <div className="pt-32">
-      <h1 className="text-center text-xl">Products</h1>
-      <div className="flex justify-around items-start mt-10 flex-wrap">
+    <div className="pt-32 lg:pt-40 lg:flex lg:justify-center lg:items-center lg:flex-col">
+      <h1 className="text-center text-xl lg:text-2xl">Products</h1>
+      <div className="flex justify-around lg:justify-center items-start mt-10 flex-wrap lg:max-w-6xl lg:gap-10">
         {products.map((product) => {
           return (
             <Product

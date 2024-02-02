@@ -13,7 +13,7 @@ export function Product() {
   const { id } = useParams();
   const [productExists, setProductExists] = useState<number>();
   const [product, setProduct] = useState<IProduct>();
-  const { products, addProduct } = useCartStore();
+  const { addProduct } = useCartStore();
 
   function addToCart(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -33,7 +33,7 @@ export function Product() {
   useEffect(() => {
     async function getProduct() {
       const { data } = await api.get(`/products/${id}`);
-      
+
       setProduct(data);
     }
 

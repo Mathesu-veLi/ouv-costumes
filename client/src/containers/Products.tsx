@@ -1,6 +1,7 @@
 import { ProductCard } from '@/components/ProductCard';
 import { IProduct } from '@/interfaces/IProduct';
 import { api } from '@/lib/axios';
+import { API_URL } from '@/utils/globals';
 import { useEffect, useState } from 'react';
 
 export function Products() {
@@ -30,9 +31,7 @@ export function Products() {
               key={product.id}
               id={product.id}
               name={product.name}
-              img={`${process.env.API_URL || 'http://localhost:3110'}/uploads/${
-                product.img
-              }`}
+              img={`${API_URL}/uploads/${product.img}`}
               price={product.price}
               stock={product.stock}
             />

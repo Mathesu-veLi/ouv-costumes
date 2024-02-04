@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Products } from './containers/Products';
 import { Product } from './containers/Product';
 import { PageNotFound } from './containers/PageNotFound';
+import { Cart } from './containers/Cart';
 
 interface IRoute {
   path: string;
@@ -32,6 +33,11 @@ function App() {
   routes.push({
     path: '/product/:id',
     element: <Product />,
+  });
+
+  routes.push({
+    path: '/cart',
+    element: <Cart />,
   })
 
   routes.push({
@@ -52,7 +58,7 @@ function App() {
   routes.push({
     path: '*',
     element: <PageNotFound />,
-  })
+  });
 
   return (
     <>

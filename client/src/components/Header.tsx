@@ -1,5 +1,6 @@
 import favicon from '@/assets/favicon.png';
 import { FaBars } from 'react-icons/fa';
+import { FaCartShopping } from 'react-icons/fa6';
 import { MdClose } from 'react-icons/md';
 import { useEffect, useState } from 'react';
 import { Button } from './ui/button';
@@ -66,19 +67,33 @@ export function Header() {
             })}
           </ul>
 
-          {!name ? (
-            <div className="flex gap-2 lg:gap-7 p-1">
-              <Link to="/login">
-                <Button variant="outline">Login</Button>
-              </Link>
+          <div className="flex gap-2 lg:gap-3 p-1">
+            {!name ? (
+              <>
+                <Link to="/login">
+                  <Button variant="outline">Login</Button>
+                </Link>
 
-              <Link to="/register">
-                <Button variant="outline">Register</Button>
-              </Link>
-            </div>
-          ) : (
-            <HeaderDropdown userName={name} />
-          )}
+                <Link to="/register">
+                  <Button variant="outline">Register</Button>
+                </Link>
+              </>
+            ) : (
+              <>
+                <HeaderDropdown userName={name} />
+
+                <Link to="/cart">
+                  <Button variant="link">
+                    <FaCartShopping
+                      className="h-6 w-6"
+                      title="Cart"
+                      color="white"
+                    />
+                  </Button>
+                </Link>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </header>

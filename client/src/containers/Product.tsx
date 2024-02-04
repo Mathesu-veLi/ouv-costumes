@@ -62,7 +62,7 @@ export function Product() {
   return (
     <div className="flex flex-col justify-center items-center h-screen pt-10 lg:pt-0">
       <div className="flex gap-5 flex-col w-64 lg:w-auto">
-        <div className="flex flex-col lg:flex-row gap-3">
+        <div className="flex flex-col lg:flex-row gap-3 lg:gap-5">
           <div className="flex flex-col justify-center items-center">
             <img
               src={`${API_URL}/uploads/${product?.img}`}

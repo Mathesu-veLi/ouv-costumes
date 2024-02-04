@@ -48,10 +48,26 @@ export function Cart() {
                         <div className="flex gap-2 justify-center items-center w-16">
                           <FiMinusCircle
                             onClick={() => decrementQuantity(product.id)}
+                            className={
+                              product.quantity == 1
+                                ? 'cursor-not-allowed'
+                                : 'cursor-pointer'
+                            }
+                            color={product.quantity == 1 ? 'gray' : 'white'}
                           />
                           <span>{product.quantity}</span>
                           <FiPlusCircle
                             onClick={() => incrementQuantity(product.id)}
+                            className={
+                              product.quantity == product.stock
+                                ? 'cursor-not-allowed'
+                                : 'cursor-pointer'
+                            }
+                            color={
+                              product.quantity == product.stock
+                                ? 'gray'
+                                : 'white'
+                            }
                           />
                         </div>
                       </div>

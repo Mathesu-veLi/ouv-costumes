@@ -1,4 +1,6 @@
 import { ICartItem } from '@/interfaces/ICartItem';
+import { calculateNumberOfProducts } from '@/utils/calculateNumberOfProducts';
+import { calculateTotalPrice } from '@/utils/calculateTotalPrice';
 import { updateProductQuantity } from '@/utils/updateProductQuantity';
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
@@ -35,20 +37,12 @@ export const useCartStore = create<CartState>()(
 
               return product;
             });
-          }
+          } else products = [...state.products, newProduct];
 
-          const totalPrice = state.products.length
-            ? state.products.reduce((sum, product) => sum + product.subTotal, 0)
-            : newProduct.subTotal;
-          const quantityOfProducts = state.products.reduce(
-            (sum, product) => sum + product.quantity,
-            0,
-          );
-
-          return  {
-            products: productExists ? products : [...state.products, newProduct],
-            totalPrice,
-            quantityOfProducts,
+          return {
+            products,
+            totalPrice: calculateTotalPrice(products),
+            quantityOfProducts: calculateNumberOfProducts(products),
           };
         }),
 

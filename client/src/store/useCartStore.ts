@@ -1,4 +1,5 @@
 import { ICartItem } from '@/interfaces/ICartItem';
+import { updateProductQuantity } from '@/utils/updateProductQuantity';
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
@@ -24,7 +25,19 @@ export const useCartStore = create<CartState>()(
           const productExists = state.products.find(
             (p) => p.id === newProduct.id,
           );
-          let totalPrice = state.products.length
+
+          let products = state.products;
+
+          if (productExists) {
+            products = products.map((product) => {
+              if (product.id === productExists.id)
+                updateProductQuantity(product, newProduct.quantity);
+
+              return product;
+            });
+          }
+
+          const totalPrice = state.products.length
             ? state.products.reduce((sum, product) => sum + product.subTotal, 0)
             : newProduct.subTotal;
           const quantityOfProducts = state.products.reduce(
@@ -32,37 +45,8 @@ export const useCartStore = create<CartState>()(
             0,
           );
 
-          if (productExists) {
-            const productsWithUpdatedProduct = state.products.map((product) => {
-              if (product.id === productExists.id) {
-                const updatedProduct = {
-                  ...product,
-                  quantity: product.quantity + newProduct.quantity,
-                };
-
-                updatedProduct.subTotal =
-                  updatedProduct.price * updatedProduct.quantity;
-
-                return updatedProduct;
-              }
-
-              return product;
-            });
-
-            totalPrice = productsWithUpdatedProduct.reduce(
-              (sum, product) => sum + product.subTotal,
-              0,
-            );
-
-            return {
-              products: productsWithUpdatedProduct,
-              totalPrice,
-              quantityOfProducts,
-            };
-          }
-
-          return {
-            products: [...state.products, newProduct],
+          return  {
+            products: productExists ? products : [...state.products, newProduct],
             totalPrice,
             quantityOfProducts,
           };

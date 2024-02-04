@@ -11,7 +11,7 @@ export function PageNotFound() {
           <Link to="/">Go back to home page</Link>
         </Button>
       </div>
-      <img src={cat404} className="absolute bottom-0 w-80" alt="" />
+      <img src={cat404} className="absolute bottom-0 w-80 lg:w-3/12" alt="" />
     </div>
   );
 }

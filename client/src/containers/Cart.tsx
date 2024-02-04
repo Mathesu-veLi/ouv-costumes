@@ -28,7 +28,7 @@ export function Cart() {
           <h1>My Cart</h1>
         </div>
 
-        <div className="px-3">
+        <div className="px-3 flex flex-col gap-4">
           {products.map((product) => {
             return (
               <div key={product.id} className="flex gap-4">
@@ -70,7 +70,10 @@ export function Cart() {
         <div>
           {products.map((product) => {
             return (
-              <div className="flex justify-between gap-3 text-gray-300">
+              <div
+                key={product.id}
+                className="flex justify-between gap-3 text-gray-300"
+              >
                 <div className="flex gap-3">
                   <span>x{product.quantity}</span>
                   <span>{product.name}</span>

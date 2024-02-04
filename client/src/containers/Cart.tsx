@@ -8,8 +8,13 @@ import { FiPlusCircle } from 'react-icons/fi';
 import { FiMinusCircle } from 'react-icons/fi';
 
 export function Cart() {
-  const { products, totalPrice, incrementQuantity, decrementQuantity } =
-    useCartStore();
+  const {
+    products,
+    totalPrice,
+    incrementQuantity,
+    decrementQuantity,
+    removeProduct,
+  } = useCartStore();
 
   if (!products.length)
     return (
@@ -44,7 +49,10 @@ export function Cart() {
                     <h1>{product.name}</h1>
                     <div className="flex flex-col gap-2 lg:flex-row-reverse justify-between">
                       <div className="flex gap-4 justify-end items-center">
-                        <FaRegTrashCan title="Delete" />
+                        <FaRegTrashCan
+                          title="Delete"
+                          onClick={() => removeProduct(product.id)}
+                        />
                         <div className="flex gap-2 justify-center items-center w-16">
                           <FiMinusCircle
                             onClick={() => decrementQuantity(product.id)}

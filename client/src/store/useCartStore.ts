@@ -49,7 +49,8 @@ export const useCartStore = create<CartState>()(
       incrementQuantity: (productId: number) =>
         set((state: CartState) => {
           const products = state.products.map((product) => {
-            if (product.id === productId && product.quantity < product.stock) updateProductQuantity(product, 1);
+            if (product.id === productId && product.quantity < product.stock)
+              updateProductQuantity(product, 1);
 
             return product;
           });
@@ -78,11 +79,17 @@ export const useCartStore = create<CartState>()(
         }),
 
       removeProduct: (productId: number) =>
-        set((state: CartState) => ({
-          products: state.products.filter(
-            (product: ICartItem) => product.id !== productId,
-          ),
-        })),
+        set((state: CartState) => {
+          const products = state.products.filter(
+            (product) => product.id !== productId,
+          );
+
+          return {
+            products,
+            totalPrice: calculateTotalPrice(products),
+            quantityOfProducts: calculateNumberOfProducts(products),
+          };
+        }),
     }),
     {
       name: 'cart',

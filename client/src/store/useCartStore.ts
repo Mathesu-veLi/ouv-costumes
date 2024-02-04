@@ -4,6 +4,7 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 
 interface CartState {
   products: ICartItem[];
+  quantityOfProducts: number;
   totalPrice: number;
   addProduct: (newProduct: ICartItem) => void;
   removeProduct: (productId: number) => void;
@@ -14,6 +15,7 @@ export const useCartStore = create<CartState>()(
     (set) => ({
       products: [],
       totalPrice: 0,
+      quantityOfProducts: 0,
 
       addProduct: (newProduct: ICartItem) =>
         set((state) => {
@@ -23,6 +25,10 @@ export const useCartStore = create<CartState>()(
           let totalPrice = state.products.length
             ? state.products.reduce((sum, product) => sum + product.subTotal, 0)
             : newProduct.subTotal;
+          const quantityOfProducts = state.products.reduce(
+            (sum, product) => sum + product.quantity,
+            0,
+          );
 
           if (productExists) {
             const productsWithUpdatedProduct = state.products.map((product) => {
@@ -46,10 +52,18 @@ export const useCartStore = create<CartState>()(
               0,
             );
 
-            return { products: productsWithUpdatedProduct, totalPrice };
+            return {
+              products: productsWithUpdatedProduct,
+              totalPrice,
+              quantityOfProducts,
+            };
           }
 
-          return { products: [...state.products, newProduct], totalPrice };
+          return {
+            products: [...state.products, newProduct],
+            totalPrice,
+            quantityOfProducts,
+          };
         }),
 
       removeProduct: (productId: number) =>

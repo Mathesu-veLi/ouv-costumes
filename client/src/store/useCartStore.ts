@@ -7,6 +7,8 @@ interface CartState {
   quantityOfProducts: number;
   totalPrice: number;
   addProduct: (newProduct: ICartItem) => void;
+  incrementQuantity: (productId: number) => void;
+  decrementQuantity: (productId: number) => void;
   removeProduct: (productId: number) => void;
 }
 
@@ -65,6 +67,34 @@ export const useCartStore = create<CartState>()(
             quantityOfProducts,
           };
         }),
+
+      incrementQuantity: (productId: number) =>
+        set((state: CartState) => ({
+          products: state.products.map((product) => {
+            if (product.id === productId) {
+              return {
+                ...product,
+                quantity: product.quantity + 1,
+              };
+            }
+
+            return product;
+          }),
+        })),
+
+      decrementQuantity: (productId: number) =>
+        set((state: CartState) => ({
+          products: state.products.map((product) => {
+            if (product.id === productId) {
+              return {
+                ...product,
+                quantity: product.quantity - 1,
+              };
+            }
+
+            return product;
+          }),
+        })),
 
       removeProduct: (productId: number) =>
         set((state: CartState) => ({

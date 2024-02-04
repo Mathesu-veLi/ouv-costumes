@@ -3,5 +3,6 @@ export interface ICartItem {
   name: string;
   img: string;
   price: number;
+  subTotal: number;
   quantity: number;
 }

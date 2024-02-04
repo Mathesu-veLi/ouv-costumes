@@ -19,14 +19,18 @@ export function Product() {
     e.preventDefault();
 
     if (!product) return;
-    const quantity = document.querySelector('#qtd') as HTMLInputElement;
+    const quantity = Number(
+      (document.querySelector('#qtd') as HTMLInputElement).value,
+    );
+    const price = Number(product.price);
 
     addProduct({
       id: product.id,
       name: product.name,
-      price: Number(product.price),
+      price,
       img: product.img,
-      quantity: Number(quantity.value),
+      quantity,
+      subTotal: quantity * price,
     });
   }
 

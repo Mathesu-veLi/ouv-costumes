@@ -49,7 +49,7 @@ export const useCartStore = create<CartState>()(
       incrementQuantity: (productId: number) =>
         set((state: CartState) => {
           const products = state.products.map((product) => {
-            if (product.id === productId) updateProductQuantity(product, 1);
+            if (product.id === productId && product.quantity < product.stock) updateProductQuantity(product, 1);
 
             return product;
           });
@@ -64,7 +64,8 @@ export const useCartStore = create<CartState>()(
       decrementQuantity: (productId: number) =>
         set((state: CartState) => {
           const products = state.products.map((product) => {
-            if (product.id === productId) updateProductQuantity(product, 1, false);
+            if (product.id === productId && product.quantity > 1)
+              updateProductQuantity(product, 1, false);
 
             return product;
           });

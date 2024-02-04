@@ -5,4 +5,5 @@ export interface ICartItem {
   price: number;
   subTotal: number;
   quantity: number;
+  stock: number;
 }

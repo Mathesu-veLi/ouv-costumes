@@ -17,11 +17,12 @@ export const useCartStore = create<CartState>()(
 
       addProduct: (newProduct: ICartItem) =>
         set((state) => {
-          const productExists = state.products.find((p) => p.id === newProduct.id);
-          let totalPrice = state.products.reduce(
-            (sum, product) => sum + product.subTotal,
-            0,
+          const productExists = state.products.find(
+            (p) => p.id === newProduct.id,
           );
+          let totalPrice = state.products.length
+            ? state.products.reduce((sum, product) => sum + product.subTotal, 0)
+            : newProduct.subTotal;
 
           if (productExists) {
             const productsWithUpdatedProduct = state.products.map((product) => {
@@ -48,7 +49,7 @@ export const useCartStore = create<CartState>()(
             return { products: productsWithUpdatedProduct, totalPrice };
           }
 
-          return { products: [...state.products, newProduct] };
+          return { products: [...state.products, newProduct], totalPrice };
         }),
 
       removeProduct: (productId: number) =>

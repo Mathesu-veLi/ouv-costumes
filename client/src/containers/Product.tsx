@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { PageNotFound } from './PageNotFound';
 import { IProduct } from '@/interfaces/IProduct';
 import { API_URL } from '@/utils/globals';
@@ -8,12 +8,14 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useCartStore } from '@/store/useCartStore';
+import { toast } from 'react-toastify';
 
 export function Product() {
   const { id } = useParams();
   const [productExists, setProductExists] = useState<number>();
   const [product, setProduct] = useState<IProduct>();
   const { addProduct } = useCartStore();
+  const navigate = useNavigate();
 
   function addToCart(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -32,6 +34,9 @@ export function Product() {
       quantity,
       subTotal: quantity * price,
     });
+
+    navigate('/cart');
+    toast.success('Item added to cart');
   }
 
   useEffect(() => {

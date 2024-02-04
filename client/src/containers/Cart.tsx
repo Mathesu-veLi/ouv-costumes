@@ -31,20 +31,20 @@ export function Cart() {
         <div className="px-3 flex flex-col gap-4">
           {products.map((product) => {
             return (
-              <div key={product.id} className="flex gap-4">
+              <div key={product.id} className="flex gap-4 w-80">
                 <img
                   src={`${API_URL}/uploads/${product.img}`}
                   alt={product.name}
                   className="w-36 border rounded-sm"
                 />
 
-                <div className="flex flex-col justify-between">
+                <div className="flex flex-col justify-between w-full">
                   <h1>{product.name}</h1>
                   <div className="flex flex-col gap-2 lg:flex-row justify-between">
                     <div className="flex gap-4 justify-end items-center">
                       <FaRegTrashCan title="Delete" />
 
-                      <div className="flex gap-2 justify-center items-center">
+                      <div className="flex gap-2 justify-center items-center w-16">
                         <FiMinusCircle
                           onClick={() => decrementQuantity(product.id)}
                         />

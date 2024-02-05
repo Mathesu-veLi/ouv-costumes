@@ -36,7 +36,7 @@ export function Login() {
           setToken(response.data.token);
           setUserData(response.data.user);
           api.defaults.headers.Authorization = `Beather ${response.data.token}`;
-          
+
           toast.success('User logged in successfully!');
           return navigate('/');
         }
@@ -55,7 +55,7 @@ export function Login() {
 
   return (
     <div className="flex justify-center items-center w-full h-screen">
-      <div className="p-5 lg:p-10 flex flex-col justify-center items-center gap-8">
+      <div className="p-5 lg:p-10 flex flex-col justify-center items-center gap-8 lg:w-2/6">
         <h1 className="font-bold text-2xl">Login</h1>
         <p className="text-sm text-gray-500 max-w-72 lg:max-w-lg text-center">
           Enter your email and password below to login in your account

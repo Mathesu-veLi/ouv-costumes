@@ -18,7 +18,7 @@ export class ProductsService {
       },
     });
     const prismaProduct = await this.prismaService.product.create({
-      data: createProductDto,
+      data: { ...createProductDto, priceId: strapiProduct.id },
     });
 
     return {

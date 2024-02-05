@@ -38,7 +38,7 @@ function App() {
   routes.push({
     path: '/cart',
     element: <Cart />,
-  })
+  });
 
   routes.push({
     path: '/login',
@@ -64,7 +64,7 @@ function App() {
     <>
       <BrowserRouter>
         <Header />
-        <ToastContainer />
+        <ToastContainer theme="dark" />
         <Routes>
           {routes.map((route) => {
             return (

@@ -41,7 +41,7 @@ export function Register() {
 
   return (
     <div className="flex flex-col justify-center items-center w-full h-screen pt-52 lg:pt-0">
-      <div className="p-5 lg:p-10 flex flex-col justify-center items-center gap-8">
+      <div className="p-5 lg:p-10 flex flex-col justify-center items-center gap-8 lg:w-2/6">
         <h1 className="font-bold text-2xl">Register</h1>
         <p className="text-sm text-gray-500 max-w-72 lg:max-w-md text-center">
           Enter your email and password below and confirm your password to

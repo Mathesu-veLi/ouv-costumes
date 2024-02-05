@@ -12,7 +12,6 @@ import { toast } from 'react-toastify';
 
 export function Product() {
   const { id } = useParams();
-  const [productExists, setProductExists] = useState<number>();
   const [product, setProduct] = useState<IProduct>();
   const { addProduct } = useCartStore();
   const navigate = useNavigate();
@@ -47,18 +46,10 @@ export function Product() {
       setProduct(data);
     }
 
-    async function getQuantityOfProducts(): Promise<number> {
-      return (await api.get('/products')).data.length;
-    }
-
-    getQuantityOfProducts().then((quantityOfProducts) => {
-      if (quantityOfProducts < Number(id)) return setProductExists(1);
-
-      getProduct();
-    });
+    getProduct();
   }, [id]);
 
-  if (productExists === 1) return <PageNotFound />;
+  if (!product) return <PageNotFound />;
 
   return (
     <div className="flex flex-col justify-center items-center h-screen pt-10 lg:pt-0">

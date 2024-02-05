@@ -34,7 +34,7 @@ export function Header() {
       <div
         className={`relative flex justify-center lg:gap-40 gap-10 items-center mt-5 mb-8 py-3 ${
           isOpen ? 'border-x border-t rounded-t-lg' : 'border rounded-lg'
-        } px-12 lg:border lg:shadow-lg lg:shadow-violet-900 lg:rounded-2xl`}
+        } px-12 lg:border lg:shadow-lg lg:shadow-blue-700 lg:rounded-2xl`}
       >
         <div className="z-20 flex gap-10 items-center bg-inherit bg-zinc-950">
           <Link to="/" className="lg:w-20 lg:mx-8">

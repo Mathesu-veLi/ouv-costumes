@@ -33,6 +33,7 @@ export function Product() {
       quantity,
       subTotal: quantity * price,
       stock: product.stock,
+      priceId: product.priceId,
     });
 
     navigate('/cart');

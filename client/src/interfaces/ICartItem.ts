@@ -6,4 +6,5 @@ export interface ICartItem {
   subTotal: number;
   quantity: number;
   stock: number;
+  priceId: string;
 }

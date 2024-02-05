@@ -28,7 +28,7 @@ export function Cart() {
 
   return (
     <div className="flex w-full justify-center items-center h-screen pt-80 lg:p-0">
-      <div className="flex flex-col lg:flex-row gap-14 justify-center lg:justify-around items-center pb-10 lg:p-0 lg:w-11/12">
+      <div className="flex flex-col lg:flex-row gap-14 justify-center lg:justify-around items-start pb-10 lg:p-0 lg:w-11/12">
         <div className="mx-3 w-[340px] lg:w-full flex flex-col gap-5">
           <div className="w-full p-3 border">
             <h1>My Cart</h1>
@@ -38,50 +38,50 @@ export function Cart() {
               return (
                 <div
                   key={product.id}
-                  className="flex gap-4 lg:gap-6 w-80 lg:w-auto"
+                  className="flex w-80 lg:w-auto justify-between"
                 >
-                  <img
-                    src={`${API_URL}/uploads/${product.img}`}
-                    alt={product.name}
-                    className="w-36 lg:w-48 border rounded-sm"
-                  />
-                  <div className="flex flex-col justify-between w-full">
-                    <h1>{product.name}</h1>
-                    <div className="flex flex-col gap-2 lg:flex-row-reverse justify-between">
-                      <div className="flex gap-4 justify-end items-center">
-                        <FaRegTrashCan
-                          title="Delete"
-                          onClick={() => removeProduct(product.id)}
-                        />
-                        <div className="flex gap-2 justify-center items-center w-16">
-                          <FiMinusCircle
-                            onClick={() => decrementQuantity(product.id)}
-                            className={
-                              product.quantity == 1
-                                ? 'cursor-not-allowed'
-                                : 'cursor-pointer'
-                            }
-                            color={product.quantity == 1 ? 'gray' : 'white'}
-                          />
-                          <span>{product.quantity}</span>
-                          <FiPlusCircle
-                            onClick={() => incrementQuantity(product.id)}
-                            className={
-                              product.quantity == product.stock
-                                ? 'cursor-not-allowed'
-                                : 'cursor-pointer'
-                            }
-                            color={
-                              product.quantity == product.stock
-                                ? 'gray'
-                                : 'white'
-                            }
-                          />
-                        </div>
-                      </div>
+                  <Link to={`/product/${product.id}`} className="flex gap-4 lg:gap-6">
+                    <img
+                      src={`${API_URL}/uploads/${product.img}`}
+                      alt={product.name}
+                      className="w-36 lg:w-48 border rounded-sm"
+                    />
+                    <div className="flex flex-col justify-between w-full">
+                      <h1>{product.name}</h1>
                       <h1 className="font-bold">
                         {formatToPrice(product.price)}
                       </h1>
+                    </div>
+                  </Link>
+                  <div className="flex flex-col gap-2 lg:flex-row-reverse justify-between items-end">
+                    <div className="flex gap-4 justify-end items-center">
+                      <FaRegTrashCan
+                        title="Delete"
+                        onClick={() => removeProduct(product.id)}
+                      />
+                      <div className="flex gap-2 justify-center items-center w-16">
+                        <FiMinusCircle
+                          onClick={() => decrementQuantity(product.id)}
+                          className={
+                            product.quantity == 1
+                              ? 'cursor-not-allowed'
+                              : 'cursor-pointer'
+                          }
+                          color={product.quantity == 1 ? 'gray' : 'white'}
+                        />
+                        <span>{product.quantity}</span>
+                        <FiPlusCircle
+                          onClick={() => incrementQuantity(product.id)}
+                          className={
+                            product.quantity == product.stock
+                              ? 'cursor-not-allowed'
+                              : 'cursor-pointer'
+                          }
+                          color={
+                            product.quantity == product.stock ? 'gray' : 'white'
+                          }
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>

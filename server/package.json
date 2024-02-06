@@ -49,6 +49,7 @@
     "prettier": "^3.0.0",
     "prisma": "^5.9.0",
     "source-map-support": "^0.5.21",
+    "stripe": "^14.15.0",
     "supertest": "^6.3.3",
     "ts-jest": "^29.1.0",
     "ts-loader": "^9.4.3",

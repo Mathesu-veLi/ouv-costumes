@@ -1,12 +1,14 @@
 import banner from '@/assets/banner.png';
 import topQualityShirts from '@/assets/topQualityShirts.png';
 import tShirts from '@/assets/tShirts.png';
+import { useCartStore } from '@/store/useCartStore';
 import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 export function Home() {
   const [queryParameters] = useSearchParams();
+  const { reset } = useCartStore();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -15,6 +17,7 @@ export function Home() {
 
     if (success) {
       toast.success('Payment success');
+      reset();
       return navigate('/');
     }
     if (canceled) {

@@ -1,8 +1,31 @@
 import banner from '@/assets/banner.png';
 import topQualityShirts from '@/assets/topQualityShirts.png';
 import tShirts from '@/assets/tShirts.png';
+import { useCartStore } from '@/store/useCartStore';
+import { useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export function Home() {
+  const [queryParameters] = useSearchParams();
+  const { reset } = useCartStore();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const success = queryParameters.get('success');
+    const canceled = queryParameters.get('canceled');
+
+    if (success) {
+      toast.success('Payment success');
+      reset();
+      return navigate('/');
+    }
+    if (canceled) {
+      toast.error('Payment canceled');
+      return navigate('/');
+    }
+  }, [navigate, queryParameters, reset]);
+
   return (
     <div className="mx-5 mb-10 pt-32 lg:pt-40 flex gap-20 flex-col">
       <div className="flex justify-center items-center">

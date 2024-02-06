@@ -6,8 +6,25 @@ import { PrismaService } from '@/prisma/prisma.service';
 @Injectable()
 export class ProductsService {
   constructor(private prismaService: PrismaService) {}
-  create(createProductDto: CreateProductDto) {
-    return this.prismaService.product.create({ data: createProductDto });
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  private stripe = require('stripe')(process.env.STRAPI_KEY);
+
+  async create(createProductDto: CreateProductDto) {
+    const strapiProduct = await this.stripe.prices.create({
+      currency: 'brl',
+      unit_amount_decimal: createProductDto.price.toString().replace('.', ''),
+      product_data: {
+        name: createProductDto.name,
+      },
+    });
+    const prismaProduct = await this.prismaService.product.create({
+      data: { ...createProductDto, priceId: strapiProduct.id },
+    });
+
+    return {
+      prismaProduct,
+      strapiProduct,
+    };
   }
 
   findAll() {

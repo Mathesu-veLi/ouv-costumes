@@ -11,9 +11,10 @@ import { PrismaModule } from './prisma/prisma.module';
 import { TokenModule } from './modules/token/token.module';
 import { LoginRequiredMiddleware } from './middlewares/loginRequired';
 import { ProductsModule } from './modules/products/products.module';
+import { CheckoutsModule } from './modules/checkouts/checkouts.module';
 
 @Module({
-  imports: [UsersModule, PrismaModule, TokenModule, ProductsModule],
+  imports: [UsersModule, PrismaModule, TokenModule, ProductsModule, CheckoutsModule],
   controllers: [AppController],
   providers: [AppService],
 })

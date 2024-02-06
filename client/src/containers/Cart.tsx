@@ -6,6 +6,12 @@ import { Link } from 'react-router-dom';
 import { FaRegTrashCan } from 'react-icons/fa6';
 import { FiPlusCircle } from 'react-icons/fi';
 import { FiMinusCircle } from 'react-icons/fi';
+import { api } from '@/lib/axios';
+
+interface ILineItem {
+  price: string;
+  quantity: number;
+}
 
 export function Cart() {
   const {
@@ -15,6 +21,16 @@ export function Cart() {
     decrementQuantity,
     removeProduct,
   } = useCartStore();
+
+  async function checkoutCart() {
+    const lineItems: ILineItem[] = [];
+    products.forEach((product) => {
+      lineItems.push({ price: product.priceId, quantity: product.quantity });
+    });
+
+    const sessionUrl = (await api.post('/checkouts', { lineItems })).data;
+    window.location.replace(sessionUrl);
+  }
 
   if (!products.length)
     return (
@@ -27,7 +43,7 @@ export function Cart() {
     );
 
   return (
-    <div className="flex w-full justify-center items-center h-screen pt-80 lg:p-0">
+    <div className="flex w-full justify-center items-center h-screen pt-80 lg:pt-20">
       <div className="flex flex-col lg:flex-row gap-14 justify-center lg:justify-around items-start pb-10 lg:p-0 lg:w-11/12">
         <div className="mx-3 w-[340px] lg:w-full flex flex-col gap-5">
           <div className="w-full p-3 border">
@@ -40,7 +56,10 @@ export function Cart() {
                   key={product.id}
                   className="flex w-80 lg:w-auto justify-between"
                 >
-                  <Link to={`/product/${product.id}`} className="flex gap-4 lg:gap-6">
+                  <Link
+                    to={`/product/${product.id}`}
+                    className="flex gap-4 lg:gap-6"
+                  >
                     <img
                       src={`${API_URL}/uploads/${product.img}`}
                       alt={product.name}
@@ -113,6 +132,7 @@ export function Cart() {
             <p>Order Total</p>
             <p>{formatToPrice(totalPrice)}</p>
           </div>
+          <Button onClick={checkoutCart}>Checkout</Button>
         </div>
       </div>
     </div>

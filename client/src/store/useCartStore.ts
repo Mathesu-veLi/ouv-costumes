@@ -13,14 +13,19 @@ interface CartState {
   incrementQuantity: (productId: number) => void;
   decrementQuantity: (productId: number) => void;
   removeProduct: (productId: number) => void;
+  reset: () => void;
 }
+
+const initialState = {
+  products: [],
+  quantityOfProducts: 0,
+  totalPrice: 0,
+};
 
 export const useCartStore = create<CartState>()(
   persist(
     (set) => ({
-      products: [],
-      totalPrice: 0,
-      quantityOfProducts: 0,
+      ...initialState,
 
       addProduct: (newProduct: ICartItem) =>
         set((state) => {
@@ -90,6 +95,8 @@ export const useCartStore = create<CartState>()(
             quantityOfProducts: calculateNumberOfProducts(products),
           };
         }),
+
+      reset: () => set(initialState),
     }),
     {
       name: 'cart',

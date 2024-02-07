@@ -24,7 +24,7 @@ export function Contact() {
         </a>
       </div>
 
-      <div className="bg-gray-900 p-5 mx-3 rounded-md flex flex-col gap-5">
+      <div className="bg-gray-950 border p-5 mx-3 rounded-md flex flex-col gap-5">
         <h1 className="text-xl font-semibold">Send us a message</h1>
         <form action="" className=" flex flex-col gap-5">
           <div className="flex gap-3 border-none">

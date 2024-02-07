@@ -11,6 +11,7 @@ import { Products } from './containers/Products';
 import { Product } from './containers/Product';
 import { PageNotFound } from './containers/PageNotFound';
 import { Cart } from './containers/Cart';
+import { Contact } from './containers/Contact';
 
 interface IRoute {
   path: string;
@@ -23,6 +24,11 @@ function App() {
   routes.push({
     path: '/',
     element: <Home />,
+  });
+
+  routes.push({
+    path: '/contact',
+    element: <Contact />,
   });
 
   routes.push({

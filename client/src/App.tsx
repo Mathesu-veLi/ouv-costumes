@@ -4,7 +4,6 @@ import { Login } from './containers/Login';
 import { Register } from './containers/Register';
 import { EditUserData } from './containers/EditUserData';
 import { Home } from './containers/Home';
-
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Products } from './containers/Products';

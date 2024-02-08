@@ -39,7 +39,6 @@ export function HeaderDropdown({ userName }: IHeaderDropdown) {
         <DropdownMenuLabel>My account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>Purchases</DropdownMenuItem>
           <DropdownMenuItem onClick={redirectToEditPage}>
             Edit account
           </DropdownMenuItem>

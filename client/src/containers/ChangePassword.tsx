@@ -1,55 +1,43 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { useUserStore } from '@/store/useUserStore';
-import emailjs from '@emailjs/browser';
-import { toast } from 'react-toastify';
+import { Label } from '@/components/ui/label';
+
+//import { useParams } from 'react-router-dom';
 
 export function ChangePassword() {
-  const { name, id } = useUserStore().userData;
+  //const { id } = useParams();
 
-  function sendChangePasswordLink() {
-    if (!process.env.SERVICE_KEY)
-      return console.log('Set SERVICE_KEY in the .env');
-
-    if (!process.env.PASSWORD_TEMPLATE_KEY)
-      return console.log('Set PASSWORD_TEMPLATE_KEY in the .env');
-
-    if (!process.env.PUBLIC_KEY)
-      return console.log('Set PUBLIC_KEY in the.env');
-
-    const email = (document.querySelector('#email') as HTMLInputElement).value;
-
-    if (!email) return toast.error('Please enter a valid email address');
-
-    const template_params = {
-      to_email: email,
-      to_name: name,
-      url: `${window.location.origin}/${id}/password`,
-    };
-
-    emailjs
-      .send(
-        process.env.SERVICE_KEY,
-        process.env.PASSWORD_TEMPLATE_KEY,
-        template_params,
-        {
-          publicKey: process.env.PUBLIC_KEY,
-        },
-      )
-      .then(() => toast.success('Change link successfully sent'));
-  }
   return (
-    <div className="flex mx-5 justify-center items-center h-screen">
-      <div className="bg-zinc-800 p-5 flex flex-col gap-5 rounded-lg border">
-        <h1>Change password</h1>
-        <div className="flex gap-5">
-          <Input
-            placeholder="Your email"
-            className="border border-slate-700"
-            id="email"
-          />
-          <Button onClick={sendChangePasswordLink}>Send link</Button>
-        </div>
+    <div className="flex flex-col justify-center items-center w-full h-screen pt-52 lg:pt-0">
+      <div className="p-5 lg:p-10 flex flex-col justify-center items-center gap-8 lg:w-2/6">
+        <h1 className="font-bold text-2xl">Change Password</h1>
+        <form action="" className="w-full">
+          <div className="grid gap-9">
+            <div className="grid gap-2">
+              <Label htmlFor="password" className="text-md text-gray-100">
+                New Password
+              </Label>
+              <Input
+                id="password"
+                name="password"
+                placeholder="password1234"
+                type="password"
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="password" className="text-md text-gray-100">
+                Confirm Password
+              </Label>
+              <Input
+                id="confirmPassword"
+                name="confirmPassword"
+                placeholder="password1234"
+                type="password"
+              />
+            </div>
+            <Button>Change</Button>
+          </div>
+        </form>
       </div>
     </div>
   );

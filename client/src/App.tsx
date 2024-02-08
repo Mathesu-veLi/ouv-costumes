@@ -12,6 +12,7 @@ import { PageNotFound } from './containers/PageNotFound';
 import { Cart } from './containers/Cart';
 import { Contact } from './containers/Contact';
 import { ChangePassword } from './containers/ChangePassword';
+import { SentPasswordLink } from './containers/SentPasswordLink';
 
 interface IRoute {
   path: string;
@@ -63,6 +64,11 @@ function App() {
 
   routes.push({
     path: '/password',
+    element: <SentPasswordLink />,
+  });
+
+  routes.push({
+    path: '/password/:id',
     element: <ChangePassword />,
   });
 

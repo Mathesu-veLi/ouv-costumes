@@ -9,10 +9,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 export function ChangePassword() {
-  const id = useParams().id as string;
   const navigate = useNavigate();
   const { reset, token } = useUserStore();
-  const { id: userId } = useUserStore().userData;
+  const { id } = useUserStore().userData;
+  const { token: tokenParam } = useParams();
 
   async function changePassword(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -29,13 +29,17 @@ export function ChangePassword() {
     if (!(await form.isValid())) return await form.showErrors();
 
     await api
-      .patch(`/users/${id}`, {
-        password: formElements.password.value,
-      }, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      .patch(
+        `/users/${id}`,
+        {
+          password: formElements.password.value,
         },
-      })
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      )
       .then(() => {
         toast.success('User password successfully changed!');
         reset();
@@ -47,11 +51,18 @@ export function ChangePassword() {
   }
 
   useEffect(() => {
-    if (!userId) {
+    if (!id) {
       toast.error('Please log in first');
       return navigate('/login');
     }
 
+    if (tokenParam !== token) {
+      toast.error('Invalid token');
+      reset();
+
+      toast('Please log in again');
+      navigate('/login');
+    }
     (async function () {
       await api.get(`/users/${id}`).then((response) => {
         const user = response.data;

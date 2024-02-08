@@ -5,7 +5,8 @@ import { useUserStore } from '@/store/useUserStore';
 import emailjs from '@emailjs/browser';
 
 export function SentPasswordLink() {
-  const { name, id: userId } = useUserStore().userData;
+  const { name } = useUserStore().userData;
+  const { token } = useUserStore();
 
   function sendChangePasswordLink() {
     if (!process.env.SERVICE_KEY)
@@ -24,7 +25,7 @@ export function SentPasswordLink() {
     const template_params = {
       to_email: email,
       to_name: name,
-      url: `${window.location.origin}/password/${userId}`,
+      url: `${window.location.origin}/password/${token}`,
     };
 
     emailjs

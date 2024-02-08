@@ -68,7 +68,7 @@ function App() {
   });
 
   routes.push({
-    path: '/password/:id',
+    path: '/password/:token',
     element: <ChangePassword />,
   });
 

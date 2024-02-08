@@ -33,7 +33,7 @@ export function Contact() {
       return;
     }
 
-    if (!process.env.TEMPLATE_KEY) {
+    if (!process.env.EDIT_TEMPLATE_KEY) {
       console.log('Set TEMPLATE_KEY in the .env');
       return;
     }
@@ -46,7 +46,7 @@ export function Contact() {
     emailjs
       .send(
         process.env.SERVICE_KEY,
-        process.env.TEMPLATE_KEY,
+        process.env.EDIT_TEMPLATE_KEY,
         template_params,
         {
           publicKey: process.env.PUBLIC_KEY,

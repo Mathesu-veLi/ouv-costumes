@@ -54,6 +54,7 @@ export function EditUserData() {
         }
       });
   }
+
   return (
     <div className="flex justify-center items-center w-full h-screen">
       <div className="p-5 lg:p-10 flex flex-col justify-center items-center gap-8">
@@ -101,7 +102,9 @@ export function EditUserData() {
                 disabled
               />
               <div className="flex justify-end">
-                <Button className="">Change password</Button>
+                <Button onClick={() => navigate('/password')}>
+                  Change password
+                </Button>
               </div>
             </div>
             <Button>Edit</Button>

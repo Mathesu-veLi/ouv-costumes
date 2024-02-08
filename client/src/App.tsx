@@ -11,6 +11,7 @@ import { Product } from './containers/Product';
 import { PageNotFound } from './containers/PageNotFound';
 import { Cart } from './containers/Cart';
 import { Contact } from './containers/Contact';
+import { ChangePassword } from './containers/ChangePassword';
 
 interface IRoute {
   path: string;
@@ -58,6 +59,11 @@ function App() {
   routes.push({
     path: '/edit',
     element: <EditUserData />,
+  });
+
+  routes.push({
+    path: '/password',
+    element: <ChangePassword />,
   });
 
   routes.push({

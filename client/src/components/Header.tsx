@@ -99,5 +99,3 @@ export function Header() {
     </header>
   );
 }
-
-//TODO: add user name with a dropdown to logout

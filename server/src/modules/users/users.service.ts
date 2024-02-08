@@ -32,8 +32,13 @@ export class UsersService {
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
+    const passwordHash = generatePasswordHash(updateUserDto.password);
     const user = await this.prismaService.user.update({
-      data: { ...updateUserDto },
+      data: {
+        name: updateUserDto.name,
+        email: updateUserDto.email,
+        password_hash: passwordHash,
+      },
       where: { id },
     });
     if (!user) userNotExist();

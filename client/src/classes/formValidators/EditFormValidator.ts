@@ -11,7 +11,7 @@ export class EditFormValidator extends UserFormValidator {
     super(form);
   }
 
-  protected email = this.form.email;
+  protected email = this.form.email as HTMLInputElement;
   protected password = this.form.password as HTMLInputElement;
 
   public async isValid(): Promise<boolean> {

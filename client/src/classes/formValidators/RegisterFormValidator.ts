@@ -7,7 +7,7 @@ export class RegisterFormValidator extends UserFormValidator {
   }
 
   protected name = this.form.name;
-  protected email = this.form.email;
+  protected email = this.form.email as HTMLInputElement;
   protected password = this.form.password as HTMLInputElement;
   protected confirmPassword = this.form.confirmPassword;
 

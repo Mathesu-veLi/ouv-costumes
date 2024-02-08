@@ -5,6 +5,6 @@ export class LoginFormValidator extends UserFormValidator {
     super(form);
   }
 
-  protected email = this.form.email;
+  protected email = this.form.email as HTMLInputElement;
   protected password = this.form.password as HTMLInputElement;
 }

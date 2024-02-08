@@ -14,7 +14,13 @@ import { ProductsModule } from './modules/products/products.module';
 import { CheckoutsModule } from './modules/checkouts/checkouts.module';
 
 @Module({
-  imports: [UsersModule, PrismaModule, TokenModule, ProductsModule, CheckoutsModule],
+  imports: [
+    UsersModule,
+    PrismaModule,
+    TokenModule,
+    ProductsModule,
+    CheckoutsModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

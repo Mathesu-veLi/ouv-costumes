@@ -29,24 +29,29 @@ export function Contact() {
     };
 
     if (!process.env.SERVICE_KEY) {
-      console.log('Set SERVICE_KEY in the .env')
-      return
+      console.log('Set SERVICE_KEY in the .env');
+      return;
     }
 
-    if(!process.env.TEMPLATE_KEY) {
-      console.log('Set TEMPLATE_KEY in the .env')
-      return
+    if (!process.env.TEMPLATE_KEY) {
+      console.log('Set TEMPLATE_KEY in the .env');
+      return;
     }
 
-    if(!process.env.PUBLIC_KEY) {
-      console.log('Set PUBLIC_KEY in the.env')
-      return
+    if (!process.env.PUBLIC_KEY) {
+      console.log('Set PUBLIC_KEY in the.env');
+      return;
     }
 
     emailjs
-      .send(process.env.SERVICE_KEY, process.env.TEMPLATE_KEY, template_params, {
-        publicKey: process.env.PUBLIC_KEY,
-      })
+      .send(
+        process.env.SERVICE_KEY,
+        process.env.TEMPLATE_KEY,
+        template_params,
+        {
+          publicKey: process.env.PUBLIC_KEY,
+        },
+      )
       .then(() => {
         toast.success('Message sent successfully');
       });
@@ -54,7 +59,7 @@ export function Contact() {
 
   return (
     <div className="flex justify-center items-center lg:h-screen pt-32 lg:p-0 mb-10 lg:m-0">
-      <div className="flex flex-col lg:flex-row justify-center items-center gap-10 lg:gap-24 lg:p-10 lg:border rounded-md">
+      <div className="flex flex-col lg:flex-row justify-center items-center gap-10 lg:gap-24 lg:p-10">
         <div className="max-w-72 flex gap-7 flex-col tracking-wider leading-relaxed p-2">
           <h1 className="text-3xl font-semibold">Contact Us</h1>
           <p className="text-lg text-gray-400">
@@ -71,7 +76,7 @@ export function Contact() {
             +55 71 98507-6263
           </a>
         </div>
-        <div className="bg-zinc-900 border p-5 mx-3 rounded-md flex flex-col gap-5 lg:shadow-lg lg:shadow-zinc-500">
+        <div className=" border p-5 mx-3 rounded-md flex flex-col gap-5 ">
           <form onSubmit={sendEmail} className="flex flex-col gap-5">
             <h1 className="text-xl font-semibold">Send us a message</h1>
             <div className="flex gap-5 border-none">
@@ -79,7 +84,7 @@ export function Contact() {
               <Input placeholder="Last name" id="lastName" />
             </div>
             <Input placeholder="Your email" id="email" />
-            <Textarea placeholder="How can we help?" id="message" />
+            <Textarea placeholder="How can we help?" id="message" className='max-h-80' />
             <Button type="submit">Send</Button>
           </form>
         </div>

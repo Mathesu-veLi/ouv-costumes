@@ -11,7 +11,7 @@ import { toast } from 'react-toastify';
 export function ChangePassword() {
   const id = useParams().id as string;
   const navigate = useNavigate();
-  const { reset } = useUserStore();
+  const { reset, token } = useUserStore();
   const { id: userId } = useUserStore().userData;
 
   async function changePassword(e: FormEvent<HTMLFormElement>) {
@@ -31,6 +31,10 @@ export function ChangePassword() {
     await api
       .patch(`/users/${id}`, {
         password: formElements.password.value,
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       })
       .then(() => {
         toast.success('User password successfully changed!');

@@ -1,5 +1,4 @@
 import { IUserData } from '@/interfaces/IUserData';
-import { api } from '@/lib/axios';
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
@@ -28,7 +27,6 @@ export const useUserStore = create<UserState>()(
       setUserData: (userData: IUserData) => set({ userData }),
       reset: () => {
         set(initialState);
-        delete api.defaults.headers.Authorization;
       },
     }),
     {

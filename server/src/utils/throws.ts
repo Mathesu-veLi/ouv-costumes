@@ -11,3 +11,11 @@ export function userAlreadyExist() {
 export function passwordIsNotValid() {
   throw new HttpException('Password is not valid', HttpStatus.UNAUTHORIZED);
 }
+
+export function productAlreadyExists() {
+  throw new HttpException('Product already exist', HttpStatus.CONFLICT);
+}
+
+export function productNotExists() {
+  throw new HttpException('Product not found', HttpStatus.NOT_FOUND);
+}

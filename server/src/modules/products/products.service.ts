@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { PrismaService } from '@/prisma/prisma.service';
+import { productAlreadyExists, productNotExists } from '@/utils/throws';
 
 @Injectable()
 export class ProductsService {
@@ -10,6 +11,12 @@ export class ProductsService {
   private stripe = require('stripe')(process.env.STRAPI_KEY);
 
   async create(createProductDto: CreateProductDto) {
+    await this.prismaService.product
+      .findUniqueOrThrow({
+        where: { name: createProductDto.name },
+      })
+      .then(() => productAlreadyExists());
+
     const strapiProduct = await this.stripe.prices.create({
       currency: 'brl',
       unit_amount_decimal: createProductDto.price.toString().replace('.', ''),
@@ -35,18 +42,28 @@ export class ProductsService {
     });
   }
 
-  findOne(id: number) {
-    return this.prismaService.product.findUnique({ where: { id } });
+  async findOne(id: number) {
+    return await this.prismaService.product
+      .findUniqueOrThrow({ where: { id } })
+      .catch(() => productNotExists());
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return this.prismaService.product.update({
-      where: { id },
-      data: updateProductDto,
-    });
+  async update(id: number, updateProductDto: UpdateProductDto) {
+    return await this.prismaService.product
+      .update({
+        where: { id },
+        data: updateProductDto,
+      })
+      .catch((e) => {
+        if (e.code === 'P2025') productNotExists();
+      });
   }
 
-  remove(id: number) {
-    return this.prismaService.product.delete({ where: { id } });
+  async remove(id: number) {
+    return await this.prismaService.product
+      .delete({ where: { id } })
+      .catch((e) => {
+        if (e.code === 'P2025') productNotExists();
+      });
   }
 }

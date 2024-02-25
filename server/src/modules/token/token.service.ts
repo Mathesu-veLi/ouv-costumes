@@ -10,12 +10,12 @@ export class TokenService {
   constructor(private prismaService: PrismaService) {}
 
   async create(createTokenDto: CreateTokenDto) {
-    const user = await this.prismaService.user.findUnique({
+    const user = await this.prismaService.users.findUnique({
       where: { email: createTokenDto.email },
     });
     if (!user) return userNotExists();
 
-    if (!passwordIsValid(createTokenDto.password, user.password_hash))
+    if (!passwordIsValid(createTokenDto.password, user.password))
       return passwordIsNotValid();
 
     const token = sign(

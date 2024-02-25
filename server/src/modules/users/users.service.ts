@@ -11,12 +11,11 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto) {
     const passwordHash = generatePasswordHash(createUserDto.password);
-    const user = await this.prismaService.user
+    const user = await this.prismaService.users
       .create({
         data: {
-          name: createUserDto.name,
-          email: createUserDto.email,
-          password_hash: passwordHash,
+          ...createUserDto,
+          password: passwordHash,
         },
       })
       .catch((e) => {
@@ -27,11 +26,11 @@ export class UsersService {
   }
 
   findAll() {
-    return this.prismaService.user.findMany();
+    return this.prismaService.users.findMany();
   }
 
   async findOne(id: number) {
-    const user = await this.prismaService.user
+    const user = await this.prismaService.users
       .findUniqueOrThrow({
         where: { id },
       })
@@ -42,25 +41,25 @@ export class UsersService {
 
   async update(id: number, updateUserDto: UpdateUserDto) {
     const passwordHash = generatePasswordHash(updateUserDto.password);
-    await this.prismaService.user
+    await this.prismaService.users
       .findUniqueOrThrow({
         where: { id },
       })
       .catch(() => userNotExists());
 
-    return await this.prismaService.user.update({
+    return await this.prismaService.users.update({
       where: { id },
-      data: { ...updateUserDto, password_hash: passwordHash },
+      data: { ...updateUserDto, password: passwordHash },
     });
   }
 
   async remove(id: number) {
-    await this.prismaService.user
+    await this.prismaService.users
       .findUniqueOrThrow({
         where: { id },
       })
       .catch(() => userNotExists());
 
-    return this.prismaService.user.delete({ where: { id } });
+    return this.prismaService.users.delete({ where: { id } });
   }
 }

@@ -11,7 +11,7 @@ export class ProductsService {
   private stripe = require('stripe')(process.env.STRAPI_KEY);
 
   async create(createProductDto: CreateProductDto) {
-    await this.prismaService.product
+    await this.prismaService.products
       .findUniqueOrThrow({
         where: { name: createProductDto.name },
       })
@@ -24,7 +24,7 @@ export class ProductsService {
         name: createProductDto.name,
       },
     });
-    const prismaProduct = await this.prismaService.product.create({
+    const prismaProduct = await this.prismaService.products.create({
       data: { ...createProductDto, priceId: strapiProduct.id },
     });
 
@@ -35,7 +35,7 @@ export class ProductsService {
   }
 
   findAll() {
-    return this.prismaService.product.findMany({
+    return this.prismaService.products.findMany({
       orderBy: {
         name: 'asc',
       },
@@ -43,13 +43,13 @@ export class ProductsService {
   }
 
   async findOne(id: number) {
-    return await this.prismaService.product
+    return await this.prismaService.products
       .findUniqueOrThrow({ where: { id } })
       .catch(() => productNotExists());
   }
 
   async update(id: number, updateProductDto: UpdateProductDto) {
-    return await this.prismaService.product
+    return await this.prismaService.products
       .update({
         where: { id },
         data: updateProductDto,
@@ -60,7 +60,7 @@ export class ProductsService {
   }
 
   async remove(id: number) {
-    return await this.prismaService.product
+    return await this.prismaService.products
       .delete({ where: { id } })
       .catch((e) => {
         if (e.code === 'P2025') productNotExists();

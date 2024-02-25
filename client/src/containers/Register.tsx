@@ -1,36 +1,52 @@
-import { RegisterFormValidator } from '@/classes/formValidators/RegisterFormValidator';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { api } from '@/lib/axios';
-import { FormEvent } from 'react';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+
+const formSchema = z
+  .object({
+    name: z.string().min(1),
+    email: z.string().email(),
+    password: z.string().min(5).max(25),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ['confirmPassword'],
+  });
+
+type TFormSchema = z.infer<typeof formSchema>;
 
 export function Register() {
+  const form = useForm<TFormSchema>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+    },
+  });
   const navigate = useNavigate();
 
-  async function register(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-
-    const formElements = {
-      name: document.querySelector('#name') as HTMLInputElement,
-      email: document.querySelector('#email') as HTMLInputElement,
-      password: document.querySelector('#password') as HTMLInputElement,
-      confirmPassword: document.querySelector(
-        '#confirmPassword',
-      ) as HTMLInputElement,
-    };
-
-    const form = new RegisterFormValidator(formElements);
-
-    if (!(await form.isValid())) return await form.showErrors();
-
+  async function registerUser(registerForm: TFormSchema) {
     await api
       .post('/users', {
-        name: formElements.name.value,
-        email: formElements.email.value,
-        password: formElements.password.value,
+        name: registerForm.name,
+        email: registerForm.email.toLowerCase(),
+        password: registerForm.password,
       })
       .then(() => {
         toast.success('User successfully registered!');
@@ -47,57 +63,66 @@ export function Register() {
           Enter your email and password below and confirm your password to
           create your account
         </p>
-        <form onSubmit={register} action="" className="w-full">
-          <div className="grid gap-9">
-            <div className="grid gap-2">
-              <Label htmlFor="email" className="text-md text-gray-100">
-                Name
-              </Label>
-              <Input
-                id="name"
-                name="name"
-                placeholder="Name"
-                type="text"
-                autoComplete="off"
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="email" className="text-md text-gray-100">
-                Email
-              </Label>
-              <Input
-                id="email"
-                name="email"
-                placeholder="name@example.com"
-                type="email"
-                autoComplete="off"
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="password" className="text-md text-gray-100">
-                Password
-              </Label>
-              <Input
-                id="password"
-                name="password"
-                placeholder="password1234"
-                type="password"
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="password" className="text-md text-gray-100">
-                Confirm Password
-              </Label>
-              <Input
-                id="confirmPassword"
-                name="confirmPassword"
-                placeholder="password1234"
-                type="password"
-              />
-            </div>
-            <Button>Register</Button>
-          </div>
-        </form>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(registerUser)}
+            className="w-full flex flex-col gap-5"
+          >
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="John" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="example@example.com" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input placeholder="password123" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="confirmPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Confirm Password</FormLabel>
+                  <FormControl>
+                    <Input placeholder="password123" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button type="submit">Register</Button>
+          </form>
+        </Form>
       </div>
     </div>
   );

@@ -12,10 +12,10 @@ export class ProductsService {
 
   async create(createProductDto: CreateProductDto) {
     await this.prismaService.products
-      .findUniqueOrThrow({
+      .findUnique({
         where: { name: createProductDto.name },
       })
-      .then(() => productAlreadyExists());
+      .then((product) => product && productAlreadyExists());
 
     const strapiProduct = await this.stripe.prices.create({
       currency: 'brl',

@@ -36,7 +36,7 @@ export function Register() {
         toast.success('User successfully registered!');
         navigate('/login');
       })
-      .catch((e) => console.log(e));
+      .catch((e) => toast.error(e.response.data.message));
   }
 
   return (

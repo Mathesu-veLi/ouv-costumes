@@ -32,17 +32,13 @@ export function Login() {
         password: formElements.password.value,
       })
       .then((response) => {
-        if (response.data.user) {
-          setToken(response.data.token);
-          setUserData(response.data.user);
+        setToken(response.data.token);
+        setUserData(response.data.user);
 
-          toast.success('User logged in successfully!');
-          return navigate('/');
-        }
-
-        return toast.error(response.data.message);
+        toast.success('User logged in successfully!');
+        return navigate('/');
       })
-      .catch((e) => console.log(e));
+      .catch((e) => toast.error(e.response.data.message));
   }
 
   useEffect(() => {

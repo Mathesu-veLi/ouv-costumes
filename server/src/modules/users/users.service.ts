@@ -2,22 +2,28 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/prisma/prisma.module';
-import { userNotExist } from '../../utils/throws';
+import { userAlreadyExist, userNotExists } from '../../utils/throws';
 import { generatePasswordHash } from '../../utils/passwordUtils';
 
 @Injectable()
 export class UsersService {
   constructor(private prismaService: PrismaService) {}
 
-  create(createUserDto: CreateUserDto) {
+  async create(createUserDto: CreateUserDto) {
     const passwordHash = generatePasswordHash(createUserDto.password);
-    return this.prismaService.user.create({
-      data: {
-        name: createUserDto.name,
-        email: createUserDto.email,
-        password_hash: passwordHash,
-      },
-    });
+    const user = await this.prismaService.user
+      .create({
+        data: {
+          name: createUserDto.name,
+          email: createUserDto.email,
+          password_hash: passwordHash,
+        },
+      })
+      .catch((e) => {
+        if (e.code === 'P2002') userAlreadyExist();
+      });
+
+    return user;
   }
 
   findAll() {
@@ -25,31 +31,36 @@ export class UsersService {
   }
 
   async findOne(id: number) {
-    const user = await this.prismaService.user.findUnique({ where: { id } });
-    if (!user) userNotExist();
+    const user = await this.prismaService.user
+      .findUniqueOrThrow({
+        where: { id },
+      })
+      .catch(() => userNotExists());
 
     return user;
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
     const passwordHash = generatePasswordHash(updateUserDto.password);
-    const user = await this.prismaService.user.update({
-      data: {
-        name: updateUserDto.name,
-        email: updateUserDto.email,
-        password_hash: passwordHash,
-      },
-      where: { id },
-    });
-    if (!user) userNotExist();
+    await this.prismaService.user
+      .findUniqueOrThrow({
+        where: { id },
+      })
+      .catch(() => userNotExists());
 
-    return user;
+    return await this.prismaService.user.update({
+      where: { id },
+      data: { ...updateUserDto, password_hash: passwordHash },
+    });
   }
 
   async remove(id: number) {
-    const user = await this.prismaService.user.delete({ where: { id } });
-    if (!user) userNotExist();
+    await this.prismaService.user
+      .findUniqueOrThrow({
+        where: { id },
+      })
+      .catch(() => userNotExists());
 
-    return user;
+    return this.prismaService.user.delete({ where: { id } });
   }
 }

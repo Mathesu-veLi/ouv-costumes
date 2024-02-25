@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTokenDto } from './dto/create-token.dto';
 import { PrismaService } from '@/prisma/prisma.module';
-import { passwordIsNotValid, userNotExist } from '@/utils/throws';
+import { passwordIsNotValid, userNotExists } from '@/utils/throws';
 import { sign } from 'jsonwebtoken';
 import { passwordIsValid } from '@/utils/passwordUtils';
 
@@ -13,7 +13,7 @@ export class TokenService {
     const user = await this.prismaService.user.findUnique({
       where: { email: createTokenDto.email },
     });
-    if (!user) return userNotExist();
+    if (!user) return userNotExists();
     if (!(await passwordIsValid(createTokenDto.password, user.password_hash)))
       return passwordIsNotValid();
 

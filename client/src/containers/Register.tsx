@@ -66,7 +66,6 @@ export function Register() {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(registerUser)}
-            action=""
             className="w-full flex flex-col gap-5"
           >
             <FormField

@@ -63,7 +63,7 @@ export function ChangePassword() {
         toast('Please log in again');
         navigate('/login');
       })
-      .catch((e) => console.log(e));
+      .catch((err) => toast.error(err.response.data.message));
   }
 
   useEffect(() => {
@@ -79,16 +79,11 @@ export function ChangePassword() {
       toast('Please log in again');
       navigate('/login');
     }
-    (async function () {
-      await api.get(`/users/${id}`).then((response) => {
-        const user = response.data;
 
-        if (!user) {
-          toast.error('User not found');
-          return navigate('/');
-        }
-      });
-    })();
+    api.get(`/users/${id}`).catch((err) => {
+      toast.error(err.response.data.message);
+      return navigate('/dashboard');
+    });
   }, []);
 
   return (

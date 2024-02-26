@@ -28,28 +28,13 @@ export function Contact() {
       message: message,
     };
 
-    if (!process.env.SERVICE_KEY) {
-      console.log('Set SERVICE_KEY in the .env');
-      return;
-    }
-
-    if (!process.env.EDIT_TEMPLATE_KEY) {
-      console.log('Set TEMPLATE_KEY in the .env');
-      return;
-    }
-
-    if (!process.env.PUBLIC_KEY) {
-      console.log('Set PUBLIC_KEY in the.env');
-      return;
-    }
-
     emailjs
       .send(
-        process.env.SERVICE_KEY,
-        process.env.EDIT_TEMPLATE_KEY,
+        process.env.SERVICE_KEY as string,
+        process.env.CONTACT_TEMPLATE_KEY as string,
         template_params,
         {
-          publicKey: process.env.PUBLIC_KEY,
+          publicKey: process.env.PUBLIC_KEY as string,
         },
       )
       .then(() => {
@@ -84,7 +69,11 @@ export function Contact() {
               <Input placeholder="Last name" id="lastName" />
             </div>
             <Input placeholder="Your email" id="email" />
-            <Textarea placeholder="How can we help?" id="message" className='max-h-80' />
+            <Textarea
+              placeholder="How can we help?"
+              id="message"
+              className="max-h-80"
+            />
             <Button type="submit">Send</Button>
           </form>
         </div>

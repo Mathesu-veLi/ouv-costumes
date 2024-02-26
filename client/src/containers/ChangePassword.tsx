@@ -1,12 +1,33 @@
-import { ChangePasswordFormValidator } from '@/classes/formValidators/ChangePasswordFormValidator';
 import { Button } from '@/components/ui/button';
+import {
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+  Form,
+} from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { api } from '@/lib/axios';
 import { useUserStore } from '@/store/useUserStore';
-import { FormEvent, useEffect } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { z } from 'zod';
+
+const formSchema = z
+  .object({
+    password: z.string().min(5).max(25),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ['confirmPassword'],
+  });
+
+type TFormSchema = z.infer<typeof formSchema>;
 
 export function ChangePassword() {
   const navigate = useNavigate();
@@ -14,25 +35,20 @@ export function ChangePassword() {
   const { id } = useUserStore().userData;
   const { token: tokenParam } = useParams();
 
-  async function changePassword(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  const form = useForm<TFormSchema>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      password: '',
+      confirmPassword: '',
+    },
+  });
 
-    const formElements = {
-      password: document.querySelector('#password') as HTMLInputElement,
-      confirmPassword: document.querySelector(
-        '#confirmPassword',
-      ) as HTMLInputElement,
-    };
-
-    const form = new ChangePasswordFormValidator(formElements, Number(id));
-
-    if (!(await form.isValid())) return await form.showErrors();
-
+  async function changePassword(editPasswordForm: TFormSchema) {
     await api
       .patch(
         `/users/${id}`,
         {
-          password: formElements.password.value,
+          password: editPasswordForm.password,
         },
         {
           headers: {
@@ -79,33 +95,41 @@ export function ChangePassword() {
     <div className="flex flex-col justify-center items-center w-full h-screen lg:pt-0">
       <div className="p-5 lg:p-10 flex flex-col justify-center items-center gap-8 lg:w-2/6">
         <h1 className="font-bold text-2xl">Change Password</h1>
-        <form onSubmit={changePassword} action="" className="w-full">
-          <div className="grid gap-9">
-            <div className="grid gap-2">
-              <Label htmlFor="password" className="text-md text-gray-100">
-                New Password
-              </Label>
-              <Input
-                id="password"
-                name="password"
-                placeholder="password1234"
-                type="password"
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="password" className="text-md text-gray-100">
-                Confirm Password
-              </Label>
-              <Input
-                id="confirmPassword"
-                name="confirmPassword"
-                placeholder="password1234"
-                type="password"
-              />
-            </div>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(changePassword)}
+            action=""
+            className="w-full flex flex-col gap-5"
+          >
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input placeholder="password123" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="confirmPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Confirm Password</FormLabel>
+                  <FormControl>
+                    <Input placeholder="password123" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <Button type="submit">Change</Button>
-          </div>
-        </form>
+          </form>
+        </Form>
       </div>
     </div>
   );

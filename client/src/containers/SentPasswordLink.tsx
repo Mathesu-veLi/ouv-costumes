@@ -3,38 +3,49 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useUserStore } from '@/store/useUserStore';
 import emailjs from '@emailjs/browser';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+const formSchema = z.object({
+  email: z.string().email(),
+});
+
+type TFormSchema = z.infer<typeof formSchema>;
 
 export function SentPasswordLink() {
   const { name } = useUserStore().userData;
   const { token } = useUserStore();
 
-  function sendChangePasswordLink() {
-    if (!process.env.SERVICE_KEY)
-      return console.log('Set SERVICE_KEY in the .env');
+  const form = useForm<TFormSchema>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: '',
+    },
+  });
 
-    if (!process.env.PASSWORD_TEMPLATE_KEY)
-      return console.log('Set PASSWORD_TEMPLATE_KEY in the .env');
-
-    if (!process.env.PUBLIC_KEY)
-      return console.log('Set PUBLIC_KEY in the.env');
-
-    const email = (document.querySelector('#email') as HTMLInputElement).value;
-
-    if (!email) return toast.error('Please enter a valid email address');
-
+  function sendChangePasswordLink(form: TFormSchema) {
     const template_params = {
-      to_email: email,
+      to_email: form.email,
       to_name: name,
       url: `${window.location.origin}/password/${token}`,
     };
 
     emailjs
       .send(
-        process.env.SERVICE_KEY,
-        process.env.PASSWORD_TEMPLATE_KEY,
+        process.env.SERVICE_KEY as string,
+        process.env.PASSWORD_TEMPLATE_KEY as string,
         template_params,
         {
-          publicKey: process.env.PUBLIC_KEY,
+          publicKey: process.env.PUBLIC_KEY as string,
         },
       )
       .then(() => toast.success('Change link successfully sent'));
@@ -44,14 +55,29 @@ export function SentPasswordLink() {
     <div className="flex mx-5 justify-center items-center h-screen">
       <div className="bg-zinc-800 p-5 flex flex-col gap-5 rounded-lg border">
         <h1>Change password</h1>
-        <div className="flex gap-5">
-          <Input
-            placeholder="Your email"
-            className="border border-slate-700"
-            id="email"
-          />
-          <Button onClick={sendChangePasswordLink}>Send link</Button>
-        </div>
+
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(sendChangePasswordLink)}
+            className="flex gap-5"
+            action=""
+          >
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="example@example.com" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button type="submit">Send link</Button>
+          </form>
+        </Form>
       </div>
     </div>
   );

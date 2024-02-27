@@ -11,7 +11,7 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto) {
     const passwordHash = generatePasswordHash(createUserDto.password);
-    const user = await this.prismaService.users
+    return await this.prismaService.users
       .create({
         data: {
           ...createUserDto,
@@ -21,8 +21,6 @@ export class UsersService {
       .catch((e) => {
         if (e.code === 'P2002') userAlreadyExist();
       });
-
-    return user;
   }
 
   findAll() {
@@ -30,36 +28,31 @@ export class UsersService {
   }
 
   async findOne(id: number) {
-    const user = await this.prismaService.users
+    return await this.prismaService.users
       .findUniqueOrThrow({
         where: { id },
       })
       .catch(() => userNotExists());
-
-    return user;
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
     const passwordHash = generatePasswordHash(updateUserDto.password);
-    await this.prismaService.users
-      .findUniqueOrThrow({
-        where: { id },
-      })
-      .catch(() => userNotExists());
 
-    return await this.prismaService.users.update({
-      where: { id },
-      data: { ...updateUserDto, password: passwordHash },
-    });
+    return await this.prismaService.users
+      .update({
+        where: { id },
+        data: { ...updateUserDto, password: passwordHash },
+      })
+      .catch((e) => {
+        if (e.code === 'P2025') userNotExists();
+      });
   }
 
   async remove(id: number) {
-    await this.prismaService.users
-      .findUniqueOrThrow({
-        where: { id },
-      })
-      .catch(() => userNotExists());
-
-    return this.prismaService.users.delete({ where: { id } });
+    return await this.prismaService.users
+      .delete({ where: { id } })
+      .catch((e) => {
+        if (e.code === 'P2025') userNotExists();
+      });
   }
 }

@@ -1,14 +1,24 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { IProduct } from '@/interfaces/IProduct';
 import { API_URL } from '@/utils/globals';
 import { api } from '@/lib/axios';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { useCartStore } from '@/store/useCartStore';
 import { toast } from 'react-toastify';
 import { Loading } from '@/components/Loading';
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from '@/components/ui/form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 export function Product() {
   const { id } = useParams();
@@ -18,13 +28,24 @@ export function Product() {
   const { addProduct } = useCartStore();
   const navigate = useNavigate();
 
-  function addToCart(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  const formSchema = z.object({
+    quantity: z.coerce
+      .number()
+      .min(1)
+      .max(product?.stock as number),
+  });
 
+  type TFormSchema = z.infer<typeof formSchema>;
+
+  const form = useForm<TFormSchema>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      quantity: 1,
+    },
+  });
+
+  function addToCart(productForm: TFormSchema) {
     if (!product) return;
-    const quantity = Number(
-      (document.querySelector('#qtd') as HTMLInputElement).value,
-    );
     const price = Number(product.price);
 
     addProduct({
@@ -32,8 +53,8 @@ export function Product() {
       name: product.name,
       price,
       img: product.img,
-      quantity,
-      subTotal: quantity * price,
+      quantity: productForm.quantity,
+      subTotal: productForm.quantity * price,
       stock: product.stock,
       priceId: product.priceId as string,
     });
@@ -44,6 +65,7 @@ export function Product() {
 
   useEffect(() => {
     setIsLoading(true);
+
     api
       .get<IProduct>(`/products/${id}`)
       .then((response) => {
@@ -89,34 +111,45 @@ export function Product() {
               </p>
             </div>
 
-            <form
-              onSubmit={addToCart}
-              className="flex justify-between items-center lg:gap-6"
-            >
-              <div>
-                <Label htmlFor="qtd" className="ms-1">
-                  Quantity ({product?.stock})
-                </Label>
-                <Input
-                  type="number"
-                  id="qtd"
-                  className="h-11 mt-2 px-4 w-24"
-                  min={1}
-                  max={product?.stock}
-                  defaultValue={1}
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(addToCart)}
+                className="flex justify-between items-center lg:gap-6"
+              >
+                <FormField
+                  control={form.control}
+                  name="quantity"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="ms-1">
+                        Quantity ({product?.stock})
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="number"
+                          id="qtd"
+                          className="h-11 mt-2 px-4 w-24"
+                          min={1}
+                          max={product?.stock}
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
-              </div>
 
-              <div className="flex h-full items-end">
-                <Button
-                  variant="ghost"
-                  className="p-5 h-11 tracking-widest uppercase rounded-sm border"
-                  type="submit"
-                >
-                  Add to cart
-                </Button>
-              </div>
-            </form>
+                <div className="flex h-full items-end">
+                  <Button
+                    variant="ghost"
+                    className="p-5 h-11 tracking-widest uppercase rounded-sm border"
+                    type="submit"
+                  >
+                    Add to cart
+                  </Button>
+                </div>
+              </form>
+            </Form>
           </div>
         </div>
       </div>

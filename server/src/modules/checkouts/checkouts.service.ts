@@ -5,7 +5,7 @@ import Stripe from 'stripe';
 @Injectable()
 export class CheckoutsService {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
-  private stripe = new Stripe(process.env.STRAPI_KEY);
+  private stripe = new Stripe(process.env.STRIPE_KEY);
   async create(createCheckoutDto: CreateCheckoutDto) {
     const session = await this.stripe.checkout.sessions.create({
       line_items: createCheckoutDto.lineItems,

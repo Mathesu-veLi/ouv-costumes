@@ -8,7 +8,7 @@ import { productAlreadyExists, productNotExists } from '@/utils/throws';
 export class ProductsService {
   constructor(private prismaService: PrismaService) {}
   // eslint-disable-next-line @typescript-eslint/no-var-requires
-  private stripe = require('stripe')(process.env.STRAPI_KEY);
+  private stripe = require('stripe')(process.env.STRIPE_KEY);
 
   async create(createProductDto: CreateProductDto) {
     await this.prismaService.products
@@ -17,7 +17,7 @@ export class ProductsService {
       })
       .then((product) => product && productAlreadyExists());
 
-    const strapiProduct = await this.stripe.prices.create({
+    const stripeProduct = await this.stripe.prices.create({
       currency: 'brl',
       unit_amount_decimal: createProductDto.price.toString().replace('.', ''),
       product_data: {
@@ -25,12 +25,12 @@ export class ProductsService {
       },
     });
     const prismaProduct = await this.prismaService.products.create({
-      data: { ...createProductDto, priceId: strapiProduct.id },
+      data: { ...createProductDto, priceId: stripeProduct.id },
     });
 
     return {
       prismaProduct,
-      strapiProduct,
+      stripeProduct,
     };
   }
 

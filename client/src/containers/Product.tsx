@@ -1,6 +1,5 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { PageNotFound } from './PageNotFound';
 import { IProduct } from '@/interfaces/IProduct';
 import { API_URL } from '@/utils/globals';
 import { api } from '@/lib/axios';
@@ -9,10 +8,13 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useCartStore } from '@/store/useCartStore';
 import { toast } from 'react-toastify';
+import { Loading } from '@/components/Loading';
 
 export function Product() {
   const { id } = useParams();
   const [product, setProduct] = useState<IProduct>();
+  const [isLoading, setIsLoading] = useState(false);
+
   const { addProduct } = useCartStore();
   const navigate = useNavigate();
 
@@ -41,16 +43,24 @@ export function Product() {
   }
 
   useEffect(() => {
-    async function getProduct() {
-      const { data } = await api.get(`/products/${id}`);
+    setIsLoading(true);
+    api
+      .get<IProduct>(`/products/${id}`)
+      .then((response) => {
+        setIsLoading(false);
+        setProduct(response.data);
+      })
+      .catch((e) => {
+        setIsLoading(false);
 
-      setProduct(data);
-    }
+        if (e.response.status === 404) {
+          toast.error(e.response.data.message);
+          return navigate('/');
+        }
+      });
+  }, []);
 
-    getProduct();
-  }, [id]);
-
-  if (!product) return <PageNotFound />;
+  if (isLoading) return <Loading />;
 
   return (
     <div className="flex flex-col justify-center items-center h-screen pt-10 lg:pt-0">

@@ -1,3 +1,4 @@
+import { ButtonLoading } from '@/components/ButtonLoading';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -11,7 +12,7 @@ import { Input } from '@/components/ui/input';
 import { api } from '@/lib/axios';
 import { useUserStore } from '@/store/useUserStore';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -43,10 +44,12 @@ export function EditUserData() {
   });
 
   const { token, setUserData, reset } = useUserStore();
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
   async function editUserData(editDataForm: TFormSchema) {
+    setIsLoading(true);
     editDataForm.email = editDataForm.email.toLowerCase();
 
     await api
@@ -66,6 +69,7 @@ export function EditUserData() {
           return navigate('/login');
         }
       });
+      setIsLoading(false);
   }
 
   useEffect(() => {
@@ -131,7 +135,11 @@ export function EditUserData() {
                 Change Password
               </Button>
             </div>
-            <Button type="submit">Edit</Button>
+            {isLoading ? (
+              <ButtonLoading />
+            ) : (
+              <Button type="submit">Edit</Button>
+            )}
           </form>
         </Form>
       </div>

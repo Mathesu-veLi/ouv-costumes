@@ -14,6 +14,8 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import { ButtonLoading } from '@/components/ButtonLoading';
+import { useState } from 'react';
 
 const formSchema = z
   .object({
@@ -40,8 +42,10 @@ export function Register() {
     },
   });
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   async function registerUser(registerForm: TFormSchema) {
+    setIsLoading(true);
     await api
       .post('/users', {
         name: registerForm.name,
@@ -53,6 +57,7 @@ export function Register() {
         navigate('/login');
       })
       .catch((e) => toast.error(e.response.data.message));
+    setIsLoading(false);
   }
 
   return (
@@ -120,7 +125,11 @@ export function Register() {
                 </FormItem>
               )}
             />
-            <Button type="submit">Register</Button>
+            {isLoading ? (
+              <ButtonLoading />
+            ) : (
+              <Button type="submit">Register</Button>
+            )}
           </form>
         </Form>
       </div>

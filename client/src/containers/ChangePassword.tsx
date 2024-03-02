@@ -1,3 +1,4 @@
+import { ButtonLoading } from '@/components/ButtonLoading';
 import { Button } from '@/components/ui/button';
 import {
   FormField,
@@ -11,7 +12,7 @@ import { Input } from '@/components/ui/input';
 import { api } from '@/lib/axios';
 import { useUserStore } from '@/store/useUserStore';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -34,6 +35,7 @@ export function ChangePassword() {
   const { reset, token } = useUserStore();
   const { id } = useUserStore().userData;
   const { token: tokenParam } = useParams();
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<TFormSchema>({
     resolver: zodResolver(formSchema),
@@ -44,6 +46,7 @@ export function ChangePassword() {
   });
 
   async function changePassword(editPasswordForm: TFormSchema) {
+    setIsLoading(true);
     await api
       .patch(
         `/users/${id}`,
@@ -64,6 +67,7 @@ export function ChangePassword() {
         navigate('/login');
       })
       .catch((err) => toast.error(err.response.data.message));
+    setIsLoading(false);
   }
 
   useEffect(() => {
@@ -122,7 +126,11 @@ export function ChangePassword() {
                 </FormItem>
               )}
             />
-            <Button type="submit">Change</Button>
+            {isLoading ? (
+              <ButtonLoading />
+            ) : (
+              <Button type="submit">Change</Button>
+            )}
           </form>
         </Form>
       </div>

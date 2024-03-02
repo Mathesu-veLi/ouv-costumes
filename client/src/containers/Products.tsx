@@ -1,25 +1,31 @@
+import { Loading } from '@/components/Loading';
 import { ProductCard } from '@/components/ProductCard';
 import { IProduct } from '@/interfaces/IProduct';
 import { api } from '@/lib/axios';
 import { API_URL } from '@/utils/globals';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 export function Products() {
   const [products, setProducts] = useState<IProduct[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    async function getProduct() {
-      const products = await api.get('products').then((response) => {
-        return response.data;
+    setIsLoading(true);
+    api
+      .get('products')
+      .then((response) => {
+        setProducts(response.data);
+        setIsLoading(false);
+      })
+      .catch((e) => {
+        toast.error('Internal Server Error');
+        console.log(e);
+        setIsLoading(false);
       });
-
-      return products;
-    }
-
-    getProduct().then((response) => {
-      setProducts(response);
-    });
   }, []);
+
+  if (isLoading) return <Loading />;
 
   return (
     <div className="pt-32 lg:pt-40 lg:flex lg:justify-center lg:items-center lg:flex-col">

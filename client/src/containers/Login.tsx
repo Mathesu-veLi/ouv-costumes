@@ -1,3 +1,4 @@
+import { ButtonLoading } from '@/components/ButtonLoading';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -11,7 +12,7 @@ import { Input } from '@/components/ui/input';
 import { api } from '@/lib/axios';
 import { useUserStore } from '@/store/useUserStore';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -35,10 +36,12 @@ export function Login() {
 
   const { setToken, setUserData } = useUserStore();
   const { id } = useUserStore().userData;
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
   async function loginUser(loginForm: TFormSchema) {
+    setIsLoading(true);
     await api
       .post('/token', {
         email: loginForm.email,
@@ -49,9 +52,10 @@ export function Login() {
         setUserData(response.data.user);
 
         toast.success('User logged in successfully!');
-        return navigate('/');
+        navigate('/');
       })
       .catch((e) => toast.error(e.response.data.message));
+    setIsLoading(false);
   }
 
   useEffect(() => {
@@ -99,7 +103,11 @@ export function Login() {
                 </FormItem>
               )}
             />
-            <Button type="submit">Login</Button>
+            {isLoading ? (
+              <ButtonLoading />
+            ) : (
+              <Button type="submit">Login</Button>
+            )}
           </form>
         </Form>
       </div>

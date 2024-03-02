@@ -1,4 +1,4 @@
-# OUV-Trajes (Front-end)
+# OUV Costumes (Front-end)
 
 ## Environment Variables
 

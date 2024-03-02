@@ -1,5 +1,5 @@
 
-# OUV Trajes
+# OUV Costumes
 
 A team shirt e-commerce
 
@@ -15,7 +15,7 @@ A team shirt e-commerce
 
 ## Demo
 
-Website: https://ouv-trajes.vercel.app
+Website: https://ouv.vercel.app
 
 API: https://ouv.onrender.com
 

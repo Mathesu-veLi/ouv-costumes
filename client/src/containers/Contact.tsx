@@ -1,12 +1,16 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
 import emailjs from '@emailjs/browser';
 import { toast } from 'react-toastify';
+import { ButtonLoading } from '@/components/ButtonLoading';
 
 export function Contact() {
-  function sendEmail(e: FormEvent<HTMLFormElement>) {
+  const [isLoading, setIsLoading] = useState(false);
+
+  async function sendEmail(e: FormEvent<HTMLFormElement>) {
+    setIsLoading(true);
     e.preventDefault();
     const firstName = (document.querySelector('#firstName') as HTMLInputElement)
       .value;
@@ -28,7 +32,7 @@ export function Contact() {
       message: message,
     };
 
-    emailjs
+    await emailjs
       .send(
         process.env.SERVICE_KEY as string,
         process.env.CONTACT_TEMPLATE_KEY as string,
@@ -40,6 +44,7 @@ export function Contact() {
       .then(() => {
         toast.success('Message sent successfully');
       });
+    setIsLoading(false);
   }
 
   return (
@@ -74,7 +79,11 @@ export function Contact() {
               id="message"
               className="max-h-80"
             />
-            <Button type="submit">Send</Button>
+            {isLoading ? (
+              <ButtonLoading />
+            ) : (
+              <Button type="submit">Send</Button>
+            )}
           </form>
         </div>
       </div>

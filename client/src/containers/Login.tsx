@@ -1,4 +1,5 @@
 import { ButtonLoading } from '@/components/ButtonLoading';
+import { PasswordInput } from '@/components/PasswordInput';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -97,7 +98,7 @@ export function Login() {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="password123" {...field} />
+                    <PasswordInput placeholder="password123" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/form';
 import { ButtonLoading } from '@/components/ButtonLoading';
 import { useState } from 'react';
+import { PasswordInput } from '@/components/PasswordInput';
 
 const formSchema = z
   .object({
@@ -106,7 +107,7 @@ export function Register() {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="password123" {...field} />
+                    <PasswordInput placeholder="password123" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -119,7 +120,7 @@ export function Register() {
                 <FormItem>
                   <FormLabel>Confirm Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="password123" {...field} />
+                    <PasswordInput placeholder="password123" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

@@ -1,4 +1,5 @@
 import { ButtonLoading } from '@/components/ButtonLoading';
+import { PasswordInput } from '@/components/PasswordInput';
 import { Button } from '@/components/ui/button';
 import {
   FormField,
@@ -8,7 +9,6 @@ import {
   FormMessage,
   Form,
 } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
 import { api } from '@/lib/axios';
 import { useUserStore } from '@/store/useUserStore';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -107,7 +107,7 @@ export function ChangePassword() {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="password123" {...field} />
+                    <PasswordInput placeholder="password123" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -120,7 +120,7 @@ export function ChangePassword() {
                 <FormItem>
                   <FormLabel>Confirm Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="password123" {...field} />
+                    <PasswordInput placeholder="password123" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

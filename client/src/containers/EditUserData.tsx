@@ -1,4 +1,5 @@
 import { ButtonLoading } from '@/components/ButtonLoading';
+import { PasswordInput } from '@/components/PasswordInput';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -125,7 +126,7 @@ export function EditUserData() {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input placeholder="password123" {...field} disabled />
+                      <PasswordInput placeholder="password123" {...field} disabled />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

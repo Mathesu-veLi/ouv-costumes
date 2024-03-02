@@ -1,8 +1,7 @@
-
-# OUV-Costumes (Back-end)
-
+# OUV-Trajes (Back-end)
 
 ## API Reference
+
 
 ### User
 
@@ -186,3 +185,15 @@
 | Response        | Description        |
 | :-------------- | :----------------- |
 | `404 Not Found` | Product not exists |
+
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env
+
+`DATABASE_URL`: URL to connect to the database
+
+`TOKEN_SECRET`: Key for creating user token
+
+`TOKEN_EXPIRATION`: Token expiration time (e.g.: "4d")
+
+`STRIPE_KEY`: Secret key to the store in the stripe

@@ -1,35 +1,62 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { FormEvent, useState } from 'react';
+import { useState } from 'react';
 import emailjs from '@emailjs/browser';
 import { toast } from 'react-toastify';
 import { ButtonLoading } from '@/components/ButtonLoading';
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormControl,
+  FormMessage,
+} from '@/components/ui/form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+
+import { z } from 'zod';
+
+const formSchema = z.object({
+  firstName: z.string().min(1),
+  lastName: z.string().min(1),
+  email: z.string().email(),
+  message: z.string().min(1),
+});
+
+type TFormSchema = z.infer<typeof formSchema>;
 
 export function Contact() {
+  const form = useForm<TFormSchema>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      message: '',
+    },
+  });
+
   const [isLoading, setIsLoading] = useState(false);
 
-  async function sendEmail(e: FormEvent<HTMLFormElement>) {
+  async function sendEmail(messageForm: TFormSchema) {
     setIsLoading(true);
-    e.preventDefault();
-    const firstName = (document.querySelector('#firstName') as HTMLInputElement)
-      .value;
-    const lastName = (document.querySelector('#lastName') as HTMLInputElement)
-      .value;
-    const email = (document.querySelector('#email') as HTMLInputElement).value;
-    const message = (document.querySelector('#message') as HTMLTextAreaElement)
-      .value;
 
-    if (!firstName || !lastName || !email || !message) {
+    if (
+      !messageForm.firstName ||
+      !messageForm.lastName ||
+      !messageForm.email ||
+      !messageForm.message
+    ) {
       toast.error('Please fill in all fields');
       return;
     }
 
     const template_params = {
-      from_name: `${firstName} ${lastName}`,
+      from_name: `${messageForm.firstName} ${messageForm.lastName}`,
       to_name: 'OUV',
-      from_email: email,
-      message: message,
+      from_email: messageForm.email,
+      message: messageForm.message,
     };
 
     await emailjs
@@ -44,6 +71,7 @@ export function Contact() {
       .then(() => {
         toast.success('Message sent successfully');
       });
+
     setIsLoading(false);
   }
 
@@ -66,25 +94,76 @@ export function Contact() {
             +55 71 98507-6263
           </a>
         </div>
-        <div className=" border p-5 mx-3 rounded-md flex flex-col gap-5 ">
-          <form onSubmit={sendEmail} className="flex flex-col gap-5">
-            <h1 className="text-xl font-semibold">Send us a message</h1>
-            <div className="flex gap-5 border-none">
-              <Input placeholder="First name" id="firstName" />
-              <Input placeholder="Last name" id="lastName" />
-            </div>
-            <Input placeholder="Your email" id="email" />
-            <Textarea
-              placeholder="How can we help?"
-              id="message"
-              className="max-h-80"
-            />
-            {isLoading ? (
-              <ButtonLoading />
-            ) : (
-              <Button type="submit">Send</Button>
-            )}
-          </form>
+        <div className="border p-5 mx-3 rounded-md grid gap-5 ">
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(sendEmail)}
+              className="flex flex-col gap-5"
+            >
+              <h1 className="text-xl font-semibold">Send us a message</h1>
+              <div className="flex gap-5 border-none">
+                <FormField
+                  control={form.control}
+                  name="firstName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input placeholder="First Name" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="lastName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input placeholder="Last Name" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input placeholder="Your Email" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="message"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Textarea
+                        placeholder="How can we help?"
+                        id="message"
+                        className="max-h-80"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {isLoading ? (
+                <ButtonLoading />
+              ) : (
+                <Button type="submit">Send</Button>
+              )}
+            </form>
+          </Form>
         </div>
       </div>
     </div>

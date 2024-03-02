@@ -14,6 +14,8 @@ import {
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { ButtonLoading } from '@/components/ButtonLoading';
+import { useState } from 'react';
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -25,6 +27,8 @@ export function SentPasswordLink() {
   const { name } = useUserStore().userData;
   const { token } = useUserStore();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const form = useForm<TFormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -32,14 +36,16 @@ export function SentPasswordLink() {
     },
   });
 
-  function sendChangePasswordLink(form: TFormSchema) {
+  async function sendChangePasswordLink(form: TFormSchema) {
+    setIsLoading(true);
+
     const template_params = {
       to_email: form.email,
       to_name: name,
       url: `${window.location.origin}/password/${token}`,
     };
 
-    emailjs
+    await emailjs
       .send(
         process.env.SERVICE_KEY as string,
         process.env.PASSWORD_TEMPLATE_KEY as string,
@@ -48,7 +54,14 @@ export function SentPasswordLink() {
           publicKey: process.env.PUBLIC_KEY as string,
         },
       )
-      .then(() => toast.success('Change link successfully sent'));
+      .then(() => {
+        toast.success('Change link successfully sent');
+      })
+      .catch((e) => {
+        toast.error('Internal server error');
+        console.log(e);
+      });
+    setIsLoading(false);
   }
 
   return (
@@ -75,7 +88,11 @@ export function SentPasswordLink() {
                 </FormItem>
               )}
             />
-            <Button type="submit">Send link</Button>
+            {isLoading ? (
+              <ButtonLoading />
+            ) : (
+              <Button type="submit">Send Link</Button>
+            )}
           </form>
         </Form>
       </div>

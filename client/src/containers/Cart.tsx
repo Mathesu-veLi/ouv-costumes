@@ -2,11 +2,14 @@ import { Button } from '@/components/ui/button';
 import { useCartStore } from '@/store/useCartStore';
 import { formatToPrice } from '@/utils/formatToPrice';
 import { API_URL } from '@/utils/globals';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaRegTrashCan } from 'react-icons/fa6';
 import { FiPlusCircle } from 'react-icons/fi';
 import { FiMinusCircle } from 'react-icons/fi';
 import { api } from '@/lib/axios';
+import { useUserStore } from '@/store/useUserStore';
+import { toast } from 'react-toastify';
+import { useEffect } from 'react';
 
 interface ILineItem {
   price: string;
@@ -22,6 +25,9 @@ export function Cart() {
     removeProduct,
   } = useCartStore();
 
+  const { id } = useUserStore().userData;
+  const navigate = useNavigate();
+
   async function checkoutCart() {
     const lineItems: ILineItem[] = [];
     products.forEach((product) => {
@@ -31,6 +37,14 @@ export function Cart() {
     const sessionUrl = (await api.post('/checkouts', { lineItems })).data;
     window.location.replace(sessionUrl);
   }
+
+  useEffect(() => {
+    if (!id) {
+      toast.error('Please log in first');
+      navigate('/login');
+      return;
+    }
+  });
 
   if (!products.length)
     return (

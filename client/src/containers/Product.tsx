@@ -19,6 +19,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { useUserStore } from '@/store/useUserStore';
 
 export function Product() {
   const { id } = useParams();
@@ -26,6 +27,7 @@ export function Product() {
   const [isLoading, setIsLoading] = useState(false);
 
   const { addProduct } = useCartStore();
+  const { id: userId } = useUserStore().userData;
   const navigate = useNavigate();
 
   const formSchema = z.object({
@@ -46,6 +48,11 @@ export function Product() {
 
   function addToCart(productForm: TFormSchema) {
     if (!product) return;
+    if (!userId) {
+      navigate('/login');
+      toast.error('Please log in first.');
+      return;
+    }
     const price = Number(product.price);
 
     addProduct({

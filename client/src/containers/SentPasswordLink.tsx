@@ -72,7 +72,7 @@ export function SentPasswordLink() {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(sendChangePasswordLink)}
-            className="flex gap-5"
+            className="flex gap-5 items-end"
             action=""
           >
             <FormField

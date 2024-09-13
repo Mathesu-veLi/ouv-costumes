@@ -20,6 +20,7 @@ export function HeaderDropdown({ userName }: IHeaderDropdown) {
 
   function logout() {
     localStorage.removeItem('user');
+    localStorage.removeItem('cart');
     window.location.reload();
   }
 

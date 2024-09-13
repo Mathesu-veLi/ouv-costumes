@@ -15,8 +15,9 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { ButtonLoading } from '@/components/ButtonLoading';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PasswordInput } from '@/components/PasswordInput';
+import { useUserStore } from '@/store/useUserStore';
 
 const formSchema = z
   .object({
@@ -43,6 +44,7 @@ export function Register() {
     },
   });
   const navigate = useNavigate();
+  const { id } = useUserStore().userData;
   const [isLoading, setIsLoading] = useState(false);
 
   async function registerUser(registerForm: TFormSchema) {
@@ -60,6 +62,13 @@ export function Register() {
       .catch((e) => toast.error(e.response.data.message));
     setIsLoading(false);
   }
+
+  useEffect(() => {
+    if (id) {
+      toast('You already logged in');
+      return navigate('/');
+    }
+  }, []);
 
   return (
     <div className="flex flex-col justify-center items-center w-full h-screen pt-52 lg:pt-0">

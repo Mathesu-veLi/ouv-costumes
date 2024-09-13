@@ -53,7 +53,7 @@ export function Login() {
         setUserData(response.data.user);
 
         toast.success('User logged in successfully!');
-        navigate('/');
+        navigate(-1);
       })
       .catch((e) => toast.error(e.response.data.message));
     setIsLoading(false);

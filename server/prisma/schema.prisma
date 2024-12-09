@@ -12,12 +12,13 @@ datasource db {
 }
 
 model Users {
-  id       Int        @id @default(autoincrement())
+  id       Int    @id @default(autoincrement())
   name     String
-  email    String     @unique
+  email    String @unique
   password String
-  roles    Role[] @default([])
+  role     Role   @default(User)
 }
+
 enum Role {
   User
   Admin

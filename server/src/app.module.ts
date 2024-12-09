@@ -14,6 +14,7 @@ import { ProductsModule } from './modules/products/products.module';
 import { CheckoutsModule } from './modules/checkouts/checkouts.module';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './guards/roles.guard';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { RolesGuard } from './guards/roles.guard';
     TokenModule,
     ProductsModule,
     CheckoutsModule,
+    JwtModule,
   ],
   controllers: [AppController],
   providers: [

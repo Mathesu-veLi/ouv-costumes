@@ -1,4 +1,4 @@
-import { Role } from '@/modules/users/enum/user-type.enum';
+import { Role } from '@prisma/client';
 
 export class LoginPayload {
   email: string;

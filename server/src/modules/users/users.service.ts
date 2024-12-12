@@ -4,6 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/prisma/prisma.module';
 import { userAlreadyExist, userNotExists } from '../../utils/throws';
 import { generatePasswordHash } from '../../utils/passwordUtils';
+import { Role } from '@prisma/client';
 
 @Injectable()
 export class UsersService {
@@ -16,6 +17,7 @@ export class UsersService {
         data: {
           ...createUserDto,
           password: passwordHash,
+          role: Role.User,
         },
       })
       .catch((e) => {

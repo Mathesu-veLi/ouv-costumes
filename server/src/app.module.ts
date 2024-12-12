@@ -12,6 +12,9 @@ import { TokenModule } from './modules/token/token.module';
 import { LoginRequiredMiddleware } from './middlewares/loginRequired';
 import { ProductsModule } from './modules/products/products.module';
 import { CheckoutsModule } from './modules/checkouts/checkouts.module';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './guards/roles.guard';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -20,9 +23,16 @@ import { CheckoutsModule } from './modules/checkouts/checkouts.module';
     TokenModule,
     ProductsModule,
     CheckoutsModule,
+    JwtModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

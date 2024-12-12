@@ -19,13 +19,21 @@ export class TokenService {
       return passwordIsNotValid();
 
     const token = sign(
-      { id: user.id, email: user.email },
+      { id: user.id, email: user.email, role: user.role },
       process.env.TOKEN_SECRET,
       {
         expiresIn: process.env.TOKEN_EXPIRATION,
       },
     );
 
-    return { token, user: { id: user.id, name: user.name, email: user.email } };
+    return {
+      token,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+    };
   }
 }

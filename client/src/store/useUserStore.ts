@@ -1,3 +1,4 @@
+import { UserRole } from '@/enums/UserRole';
 import { IUserData } from '@/interfaces/IUserData';
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
@@ -10,12 +11,18 @@ interface UserState {
   reset: () => void;
 }
 
-const initialState = {
+interface InitialState {
+  token: string;
+  userData: IUserData;
+}
+
+const initialState: InitialState = {
   token: '',
   userData: {
     id: 0,
     name: '',
     email: '',
+    role: UserRole.User,
   },
 };
 

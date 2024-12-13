@@ -28,7 +28,7 @@ const formSchema = z.object({
 type TFormSchema = z.infer<typeof formSchema>;
 
 export function EditUserData() {
-  const { id, name, email } = useUserStore().userData;
+  const { id, name, email, role } = useUserStore().userData;
 
   const form = useForm<TFormSchema>({
     resolver: zodResolver(formSchema),
@@ -61,7 +61,7 @@ export function EditUserData() {
       })
       .then(() => {
         toast.success('User data uploaded successfully!');
-        setUserData({ id, ...editDataForm });
+        setUserData({ id, ...editDataForm, role });
 
         if (email !== editDataForm.email) {
           reset();
@@ -70,7 +70,7 @@ export function EditUserData() {
           return navigate('/login');
         }
       });
-      setIsLoading(false);
+    setIsLoading(false);
   }
 
   useEffect(() => {
@@ -126,7 +126,11 @@ export function EditUserData() {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <PasswordInput placeholder="password123" {...field} disabled />
+                      <PasswordInput
+                        placeholder="password123"
+                        {...field}
+                        disabled
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

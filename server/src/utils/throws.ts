@@ -19,3 +19,7 @@ export function productAlreadyExists() {
 export function productNotExists() {
   throw new HttpException('Product not found', HttpStatus.NOT_FOUND);
 }
+
+export function accessUnauthorized() {
+  throw new HttpException('Access unauthorized', HttpStatus.UNAUTHORIZED);
+}

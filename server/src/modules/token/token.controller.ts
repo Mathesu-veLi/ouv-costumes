@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Get, Headers } from '@nestjs/common';
 import { TokenService } from './token.service';
 import { CreateTokenDto } from './dto/create-token.dto';
 
@@ -9,5 +9,10 @@ export class TokenController {
   @Post()
   create(@Body() createTokenDto: CreateTokenDto) {
     return this.tokenService.create(createTokenDto);
+  }
+
+  @Get()
+  decode(@Headers('authorization') authorization: string) {
+    return this.tokenService.decode(authorization);
   }
 }

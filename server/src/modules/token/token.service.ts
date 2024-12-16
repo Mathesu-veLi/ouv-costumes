@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { HttpCode, Injectable, Response } from '@nestjs/common';
 import { CreateTokenDto } from './dto/create-token.dto';
 import { PrismaService } from '@/prisma/prisma.module';
 import { passwordIsNotValid, userNotExists } from '@/utils/throws';
-import { sign } from 'jsonwebtoken';
+import { sign, verify } from 'jsonwebtoken';
 import { passwordIsValid } from '@/utils/passwordUtils';
 
 @Injectable()
@@ -35,5 +35,12 @@ export class TokenService {
         role: user.role,
       },
     };
+  }
+
+  decode(authorization: string) {
+    const token = authorization.slice(7, authorization.length);
+
+    const decoded = verify(token, process.env.TOKEN_SECRET);
+    return decoded;
   }
 }

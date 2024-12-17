@@ -12,7 +12,7 @@ export class TokenController {
   }
 
   @Get()
-  decode(@Headers('authorization') authorization: string) {
-    return this.tokenService.decode(authorization);
+  authorize(@Headers('authorization') authorization: string) {
+    return this.tokenService.authorize(authorization);
   }
 }

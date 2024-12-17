@@ -8,6 +8,8 @@ import {
 } from '@/utils/throws';
 import { sign, verify } from 'jsonwebtoken';
 import { passwordIsValid } from '@/utils/passwordUtils';
+import { IUserData } from '@/interfaces/IUserData';
+import { Role } from '@prisma/client';
 
 @Injectable()
 export class TokenService {
@@ -40,14 +42,21 @@ export class TokenService {
     };
   }
 
-  decode(authorization: string) {
+  authorize(authorization: string) {
     if (!authorization) {
       accessUnauthorized();
     }
 
     const token = authorization.slice(7, authorization.length);
+    const decoded = this.decode(token);
+    if (decoded.role !== Role.Admin) {
+      accessUnauthorized();
+    }
 
-    const decoded = verify(token, process.env.TOKEN_SECRET);
-    return decoded;
+    return 'Access authorized';
+  }
+
+  private decode(token: string): IUserData {
+    return verify(token, process.env.TOKEN_SECRET) as IUserData;
   }
 }

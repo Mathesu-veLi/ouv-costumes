@@ -1,14 +1,9 @@
-import { UserRole } from '@/enums/UserRole';
-import { IUserData } from '@/interfaces/IUserData';
 import { api } from '@/lib/axios';
 import { useUserStore } from '@/store/useUserStore';
+import { AxiosResponse } from 'axios';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-
-interface LocalUserData extends IUserData {
-  role: UserRole;
-}
 
 export function Dashboard() {
   const navigate = useNavigate();
@@ -17,17 +12,16 @@ export function Dashboard() {
 
   async function authorizeAdmin() {
     await api
-      .get<LocalUserData>('/token')
-      .then((userData) => {
-        if (userData.data.role !== UserRole.Admin) {
-          toast.error('Access Unauthorized');
-          return navigate('/');
-        }
+      .get('/token', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       })
       .catch((e) => {
         toast.error(e.response.data.message);
         return navigate('/');
-      });
+      })
+      .then(() => toast.success('Access authorized'))
   }
 
   useEffect(() => {
@@ -35,7 +29,7 @@ export function Dashboard() {
       toast.error('Please log in first');
       return navigate('/login');
     }
-    
+
     authorizeAdmin();
   }, []);
 

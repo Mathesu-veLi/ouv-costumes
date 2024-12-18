@@ -53,7 +53,7 @@ export class TokenService {
       accessUnauthorized();
     }
 
-    return 'Access authorized';
+    return { message: 'Access authorized' };
   }
 
   private decode(token: string): IUserData {

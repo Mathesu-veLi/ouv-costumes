@@ -105,8 +105,15 @@ export function Dashboard() {
                   {product.name.length > 25
                     ? `${product.name.substring(0, 26)}...`
                     : product.name}
+                <td>
+                  {product.price
+                    .toLocaleString('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL',
+                    })
+                    .replace(',', '.')}
                 </td>
-                <td>R${product.price}</td>
+                <td className="max-[1000px]:hidden">{product.stock}</td>
                 <td>
                   <span className="flex flex-col lg:flex-row justify-center items-center gap-3">
                     <Button

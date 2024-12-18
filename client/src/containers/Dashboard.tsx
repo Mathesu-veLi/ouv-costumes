@@ -93,10 +93,26 @@ export function Dashboard() {
                 </td>
                 <td>R${product.price}</td>
                 <td>
-                  <div className="flex justify-center gap-3">
-                    <FaPen />
-                    <FaTrash />
-                  </div>
+                  <span className="flex flex-col lg:flex-row justify-center items-center gap-3">
+                    <Button
+                      variant="secondary"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate(`/edit/${product.id}`);
+                      }}
+                    >
+                      <FaPen />
+                    </Button>
+                    <Button
+                      variant="destructive"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        deleteProduct(product.id);
+                      }}
+                    >
+                      <FaTrash />
+                    </Button>
+                  </span>
                 </td>
               </tr>
             );

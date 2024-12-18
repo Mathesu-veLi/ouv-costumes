@@ -1,7 +1,6 @@
 import { api } from '@/lib/axios';
 import { useUserStore } from '@/store/useUserStore';
-import { AxiosResponse } from 'axios';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -9,6 +8,7 @@ export function Dashboard() {
   const navigate = useNavigate();
 
   const { token } = useUserStore();
+  const [authorized, setAuthorized] = useState(false);
 
   async function authorizeAdmin() {
     await api
@@ -30,7 +30,7 @@ export function Dashboard() {
       return navigate('/login');
     }
 
-    authorizeAdmin();
+    if (!authorized) authorizeAdmin();
   }, []);
 
   return (

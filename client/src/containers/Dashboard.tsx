@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { FaPen } from 'react-icons/fa6';
 import { FaTrash } from 'react-icons/fa';
+import { Button } from '@/components/ui/button';
 
 export function Dashboard() {
   const navigate = useNavigate();
@@ -85,6 +86,7 @@ export function Dashboard() {
             <th>Image</th>
             <th>Name</th>
             <th>Price</th>
+            <th className="max-[1000px]:hidden">Stock</th>
             <th>Actions</th>
           </tr>
           {products.map((product) => {

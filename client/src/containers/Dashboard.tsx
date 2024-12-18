@@ -47,6 +47,21 @@ export function Dashboard() {
       .finally(() => setIsLoading(false));
   }
 
+  async function deleteProduct(id: number) {
+    await api
+      .delete('/products/' + id, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        setProducts(products.filter((p) => p.id !== id));
+        toast.success('Product deleted successfully');
+      }).catch((e) => {
+        toast.error(e.response.data.message);
+      });
+  }
+
   useEffect(() => {
     if (!token) {
       toast.error('Please log in first');

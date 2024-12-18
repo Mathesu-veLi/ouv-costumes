@@ -5,6 +5,8 @@ import { useUserStore } from '@/store/useUserStore';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { FaPen } from 'react-icons/fa6';
+import { FaTrash } from 'react-icons/fa';
 
 export function Dashboard() {
   const navigate = useNavigate();
@@ -58,9 +60,49 @@ export function Dashboard() {
   if (isLoading) return <Loading />;
 
   return (
-    <div className="flex flex-col justify-center items-center w-full h-screen pt-52 lg:pt-0">
-      <h1>Dashboard</h1>
-      <p>Welcome to the dashboard!</p>
+    <div className="w-full h-screen flex flex-col justify-center items-center text-center">
+      <h1 className="text-2xl">Dashboard</h1>
+      <div className="lg:w-3/4 w-full rounded-sm lg:p-10 p-3 m-10">
+        <h2 className="text-xl font-thin">Products</h2>
+        <table className="lg:w-full mt-10">
+          <tr>
+            <th>Id</th>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Actions</th>
+          </tr>
+          {products.map((product) => {
+            return (
+              <tr
+                key={product.id}
+                className="lg:[&>td]:px-10 [&>td]:px-3 [&>td]:py-5 text-center"
+              >
+                <td>{product.id}</td>
+                <td className="flex justify-center">
+                  <img
+                    src={`${process.env.API_URL}/uploads/${product.img}`}
+                    alt={`${product.name} image`}
+                    className="lg:w-20 lg:h-20"
+                  />
+                </td>
+                <td>
+                  {product.name.length > 25
+                    ? `${product.name.substring(0, 26)}...`
+                    : product.name}
+                </td>
+                <td>R${product.price}</td>
+                <td>
+                  <div className="flex justify-center gap-3">
+                    <FaPen />
+                    <FaTrash />
+                  </div>
+                </td>
+              </tr>
+            );
+          })}
+        </table>
+      </div>
     </div>
   );
 }

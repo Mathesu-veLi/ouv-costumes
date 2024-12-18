@@ -102,9 +102,18 @@ export function Dashboard() {
                   />
                 </td>
                 <td>
-                  {product.name.length > 25
-                    ? `${product.name.substring(0, 26)}...`
-                    : product.name}
+                  <p className="max-[800px]:hidden">
+                    {product.name.length > 40
+                      ? `${product.name.substring(0, 41)}...`
+                      : product.name}
+                  </p>
+
+                  <p className="lg:hidden max-w-20">
+                    {product.name.length > 25
+                      ? `${product.name.substring(0, 26)}...`
+                      : product.name}
+                  </p>
+                </td>
                 <td>
                   {product.price
                     .toLocaleString('pt-BR', {

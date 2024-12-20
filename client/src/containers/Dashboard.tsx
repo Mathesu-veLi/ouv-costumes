@@ -49,6 +49,7 @@ export function Dashboard() {
   }
 
   async function deleteProduct(id: number) {
+    setIsLoading(true);
     await api
       .delete('/products/' + id, {
         headers: {
@@ -58,9 +59,9 @@ export function Dashboard() {
       .then(() => {
         setProducts(products.filter((p) => p.id !== id));
         toast.success('Product deleted successfully');
-      }).catch((e) => {
-        toast.error(e.response.data.message);
-      });
+      })
+      .catch((e) => toast.error(e.response.data.message))
+      .finally(() => setIsLoading(false));
   }
 
   useEffect(() => {

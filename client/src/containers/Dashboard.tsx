@@ -78,9 +78,9 @@ export function Dashboard() {
   return (
     <div className="w-full h-screen flex flex-col justify-center items-center text-center">
       <h1 className="text-2xl">Dashboard</h1>
-      <div className="lg:w-3/4 w-full rounded-sm lg:p-10 p-3 m-10">
+      <div className="w-full rounded-sm lg:p-10 p-3 m-10">
         <h2 className="text-xl font-thin">Products</h2>
-        <table className="lg:w-full mt-10">
+        <table className="w-full mt-10">
           <tr>
             <th>Id</th>
             <th>Image</th>
@@ -101,7 +101,7 @@ export function Dashboard() {
                   <img
                     src={`${process.env.API_URL}/uploads/${product.img}`}
                     alt={`${product.name} image`}
-                    className="lg:w-20 lg:h-20"
+                    className="max-w-28 max-h-28 max-[800px]:w-20 max-[800px]:h-20 rounded-sm"
                   />
                 </td>
                 <td>

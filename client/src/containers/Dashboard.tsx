@@ -93,7 +93,8 @@ export function Dashboard() {
             return (
               <tr
                 key={product.id}
-                className="lg:[&>td]:px-10 [&>td]:px-3 [&>td]:py-5 text-center"
+                className="lg:[&>td]:px-10 [&>td]:py-3 [&>td]:my-5 text-center hover:cursor-pointer hover:border hover:bg-zinc-900"
+                onClick={() => navigate('/product/' + product.id)}
               >
                 <td>{product.id}</td>
                 <td className="flex justify-center">

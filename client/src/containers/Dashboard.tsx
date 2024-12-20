@@ -5,9 +5,9 @@ import { useUserStore } from '@/store/useUserStore';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { FaPen } from 'react-icons/fa6';
-import { FaTrash } from 'react-icons/fa';
 import { Button } from '@/components/ui/button';
+import { NewProduct } from '@/components/NewProduct';
+import { ProductsTable } from '@/components/ProductsTable';
 
 export function Dashboard() {
   const navigate = useNavigate();
@@ -48,22 +48,6 @@ export function Dashboard() {
       .finally(() => setIsLoading(false));
   }
 
-  async function deleteProduct(id: number) {
-    setIsLoading(true);
-    await api
-      .delete('/products/' + id, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then(() => {
-        setProducts(products.filter((p) => p.id !== id));
-        toast.success('Product deleted successfully');
-      })
-      .catch((e) => toast.error(e.response.data.message))
-      .finally(() => setIsLoading(false));
-  }
-
   useEffect(() => {
     if (!token) {
       toast.error('Please log in first');
@@ -98,61 +82,6 @@ export function Dashboard() {
                 onClick={() => navigate('/product/' + product.id)}
               >
                 <td>{product.id}</td>
-                <td className="flex justify-center">
-                  <img
-                    src={`${process.env.API_URL}/uploads/${product.img}`}
-                    alt={`${product.name} image`}
-                    className="max-w-28 max-h-28 max-[800px]:w-20 max-[800px]:h-20 rounded-sm"
-                  />
-                </td>
-                <td>
-                  <p className="max-[800px]:hidden">
-                    {product.name.length > 40
-                      ? `${product.name.substring(0, 41)}...`
-                      : product.name}
-                  </p>
-
-                  <p className="lg:hidden max-w-20">
-                    {product.name.length > 25
-                      ? `${product.name.substring(0, 26)}...`
-                      : product.name}
-                  </p>
-                </td>
-                <td>
-                  {product.price
-                    .toLocaleString('pt-BR', {
-                      style: 'currency',
-                      currency: 'BRL',
-                    })
-                    .replace(',', '.')}
-                </td>
-                <td className="max-[1000px]:hidden">{product.stock}</td>
-                <td>
-                  <span className="flex flex-col lg:flex-row justify-center items-center gap-3">
-                    <Button
-                      variant="secondary"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        navigate(`/edit/${product.id}`);
-                      }}
-                    >
-                      <FaPen />
-                    </Button>
-                    <Button
-                      variant="destructive"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        deleteProduct(product.id);
-                      }}
-                    >
-                      <FaTrash />
-                    </Button>
-                  </span>
-                </td>
-              </tr>
-            );
-          })}
-        </table>
       </div>
     </div>
   );

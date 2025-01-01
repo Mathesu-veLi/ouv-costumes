@@ -25,6 +25,7 @@ export function HeaderDropdown({ userName }: IHeaderDropdown) {
   function logout() {
     userStoreReset();
     cartStoreReset();
+    window.location.reload();
   }
 
   function redirectToEditPage() {

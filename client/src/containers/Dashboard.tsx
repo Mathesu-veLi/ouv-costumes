@@ -6,18 +6,29 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { NewProduct } from '@/components/NewProduct';
 import { ProductsTable } from '@/components/ProductsTable';
+import { useCartStore } from '@/store/useCartStore';
 
 export function Dashboard() {
   const navigate = useNavigate();
 
   const { token } = useUserStore();
+  const userStoreReset = useUserStore().reset;
+  const cartStoreReset = useCartStore().reset;
+
   const [products, setProducts] = useState<IProduct[]>([]);
   const [authorized, setAuthorized] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   async function authorizeAdmin() {
+    if (!token) {
+      setAuthorized(false);
+      toast.error('You must be logged in');
+      return navigate('/login');
+    }
+
     await api
       .get('/token', {
         headers: {
@@ -26,12 +37,24 @@ export function Dashboard() {
       })
       .catch((e) => {
         toast.error(e.response.data.message);
-        return navigate('/');
+        setAuthorized(false);
+
+        if (e.response.status === 498) {
+          logout();
+          return navigate('/login');
+        } else {
+          return navigate('/');
+        }
       })
       .then(() => {
         toast.success('Access authorized');
         setAuthorized(true);
       });
+  }
+
+  function logout() {
+    userStoreReset();
+    cartStoreReset();
   }
 
   async function fetchProducts() {
@@ -49,11 +72,6 @@ export function Dashboard() {
   }
 
   useEffect(() => {
-    if (!token) {
-      toast.error('Please log in first');
-      return navigate('/login');
-    }
-
     if (!authorized) authorizeAdmin();
     if (!products.length) fetchProducts();
   }, []);

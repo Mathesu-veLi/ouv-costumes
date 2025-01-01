@@ -90,16 +90,16 @@ export function Dashboard() {
           userToken={token}
         />
 
-            <th>Actions</th>
-          </tr>
-          {products.map((product) => {
-            return (
-              <tr
-                key={product.id}
-                className="lg:[&>td]:px-10 [&>td]:py-3 [&>td]:my-5 text-center hover:cursor-pointer hover:border hover:bg-zinc-900"
-                onClick={() => navigate('/product/' + product.id)}
-              >
-                <td>{product.id}</td>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button className="w-2/3" type="button">
+              Add Product
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <NewProduct />
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );

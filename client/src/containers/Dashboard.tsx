@@ -83,13 +83,13 @@ export function Dashboard() {
       <h1 className="text-2xl">Dashboard</h1>
       <div className="w-full rounded-sm lg:p-10 p-3 m-10">
         <h2 className="text-xl font-thin">Products</h2>
-        <table className="w-full mt-10">
-          <tr>
-            <th>Id</th>
-            <th>Image</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th className="max-[1000px]:hidden">Stock</th>
+        <ProductsTable
+          products={products}
+          setIsLoadingState={setIsLoading}
+          setProductsState={setProducts}
+          userToken={token}
+        />
+
             <th>Actions</th>
           </tr>
           {products.map((product) => {

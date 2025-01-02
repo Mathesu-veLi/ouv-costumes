@@ -1,8 +1,21 @@
 import { useState } from 'react';
 import { Button } from './ui/button';
 import { FaPlus } from 'react-icons/fa';
+import { ControllerRenderProps } from 'react-hook-form';
 
-export function InputImg() {
+interface IProps {
+  field: ControllerRenderProps<
+    {
+      name: string;
+      image: File;
+      price: number;
+      stock: number;
+    },
+    'image'
+  >;
+}
+
+export function InputImg(props: IProps) {
   const [productImg, setProductImg] = useState<File | null>(null);
 
   return (
@@ -14,6 +27,8 @@ export function InputImg() {
         id="productImg"
         onChange={(e) => {
           if (e.target.files) setProductImg(e.target.files[0]);
+          const file = e.target.files?.[0];
+          props.field.onChange(file);
         }}
       />
       <Button

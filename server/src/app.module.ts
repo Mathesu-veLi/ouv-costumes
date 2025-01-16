@@ -15,6 +15,7 @@ import { CheckoutsModule } from './modules/checkouts/checkouts.module';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './guards/roles.guard';
 import { JwtModule } from '@nestjs/jwt';
+import { UploadModule } from './modules/upload/upload.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { JwtModule } from '@nestjs/jwt';
     ProductsModule,
     CheckoutsModule,
     JwtModule,
+    UploadModule,
   ],
   controllers: [AppController],
   providers: [

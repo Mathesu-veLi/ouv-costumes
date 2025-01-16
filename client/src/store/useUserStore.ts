@@ -1,3 +1,4 @@
+import { UserRole } from '@/enums/UserRole';
 import { IUserData } from '@/interfaces/IUserData';
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
@@ -21,6 +22,7 @@ const initialState: InitialState = {
     id: 0,
     name: '',
     email: '',
+    role: UserRole.User,
   },
 };
 

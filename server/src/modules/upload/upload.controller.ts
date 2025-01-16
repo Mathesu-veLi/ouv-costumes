@@ -1,7 +1,5 @@
 import {
   Controller,
-  FileTypeValidator,
-  ParseFilePipe,
   Post,
   UploadedFile,
   UseInterceptors,
@@ -13,11 +11,7 @@ export class UploadController {
   @Post()
   @UseInterceptors(FileInterceptor('image'))
   uploadFile(
-    @UploadedFile(
-      new ParseFilePipe({
-        validators: [new FileTypeValidator({ fileType: 'image/*' })],
-      }),
-    )
+    @UploadedFile()
     file: Express.Multer.File,
   ) {
     if (!file) {

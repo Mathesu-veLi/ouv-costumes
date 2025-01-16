@@ -1,3 +1,4 @@
+import { noImageProvided } from '@/utils/throws';
 import {
   Controller,
   Post,
@@ -15,7 +16,7 @@ export class UploadController {
     file: Express.Multer.File,
   ) {
     if (!file) {
-      throw new Error('No file provided.');
+      noImageProvided();
     }
 
     console.log(file);

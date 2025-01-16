@@ -27,3 +27,7 @@ export function accessDenied() {
 export function tokenExpired() {
   throw new HttpException('Token expired, please log in again', 498);
 }
+
+export function noImageProvided() {
+  throw new HttpException('No image provided', HttpStatus.BAD_REQUEST);
+}

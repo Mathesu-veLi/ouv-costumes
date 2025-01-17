@@ -3,6 +3,7 @@ import { CreateTokenDto } from './dto/create-token.dto';
 import { PrismaService } from '@/prisma/prisma.module';
 import {
   accessDenied,
+  noTokenProvided,
   passwordIsNotValid,
   tokenExpired,
   userNotExists,
@@ -46,16 +47,13 @@ export class TokenService {
 
   authorize(authorization: string) {
     if (!authorization) {
-      accessDenied();
+      noTokenProvided();
     }
 
     const token = authorization.slice(7, authorization.length);
+    let decoded;
     try {
-      const decoded = this.decode(token);
-
-      if (decoded.role !== Role.Admin) {
-        accessDenied();
-      }
+      decoded = this.decode(token);
     } catch (e) {
       if (e instanceof TokenExpiredError) {
         tokenExpired();
@@ -63,7 +61,9 @@ export class TokenService {
         console.log(e);
       }
     }
-
+    if (decoded.role !== Role.Admin) {
+      accessDenied();
+    }
     return { message: 'Access authorized' };
   }
 

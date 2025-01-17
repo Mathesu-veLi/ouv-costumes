@@ -81,7 +81,12 @@ export function Dashboard() {
   return (
     <div className="w-full h-screen flex flex-col justify-center items-center text-center">
       <h1 className="text-2xl">Dashboard</h1>
-      <div className="w-full rounded-sm lg:p-10 p-3 m-10">
+      <div
+        className={
+          'w-full rounded-sm lg:p-10 p-3 ' +
+          (products.length <= 4 ? 'mt-10' : 'mt-[400px] sm:mt-[600px]')
+        }
+      >
         <h2 className="text-xl font-thin">Products</h2>
         <ProductsTable
           products={products}

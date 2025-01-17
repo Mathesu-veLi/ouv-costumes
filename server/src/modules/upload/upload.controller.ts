@@ -19,8 +19,6 @@ export class UploadController {
       noImageProvided();
     }
 
-    console.log(file);
-
-    return { message: 'File uploaded successfully' };
+    return { message: 'File uploaded successfully', filename: file.filename };
   }
 }

@@ -10,6 +10,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { UserRole } from '@/enums/UserRole';
 import { api } from '@/lib/axios';
 import { useUserStore } from '@/store/useUserStore';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -50,7 +51,12 @@ export function Login() {
       })
       .then((response) => {
         setToken(response.data.token);
-        setUserData(response.data.user);
+        setUserData({
+          id: response.data.user.id,
+          name: response.data.user.name,
+          email: response.data.user.email,
+          isAdmin: response.data.user.role == UserRole.Admin,
+        });
 
         toast.success('User logged in successfully!');
         navigate(-1);

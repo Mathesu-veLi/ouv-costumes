@@ -19,6 +19,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Input } from './ui/input';
 import { InputImg } from './InputImg';
+import { api } from '@/lib/axios';
+import { toast } from 'react-toastify';
 
 function checkFileType(file: File) {
   const validMimeTypes = ['image/jpeg', 'image/png', 'image/jpg'];
@@ -48,6 +50,24 @@ export function NewProduct() {
       stock: 1,
     },
   });
+  interface UploadResponse {
+    filename: string;
+  }
+
+  async function uploadProductImage(image: File) {
+    const formData = new FormData();
+    formData.append('image', image);
+
+    if (image) {
+      const res = await api
+        .post<UploadResponse>('/upload', formData)
+        .catch((e) => {
+          toast.error(e.response.data.message);
+        });
+
+      return res?.data.filename;
+    }
+  }
 
   async function addProduct(productForm: TFormSchema) {
     console.log(productForm);

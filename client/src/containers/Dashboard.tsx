@@ -97,7 +97,12 @@ export function Dashboard() {
             </Button>
           </DialogTrigger>
           <DialogContent>
-            <NewProduct />
+            <NewProduct
+              setIsLoadingState={setIsLoading}
+              setProductsState={setProducts}
+              products={products}
+              token={token}
+            />
           </DialogContent>
         </Dialog>
       </div>

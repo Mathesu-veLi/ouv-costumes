@@ -21,7 +21,8 @@ import { Input } from './ui/input';
 import { InputImg } from './InputImg';
 import { api } from '@/lib/axios';
 import { toast } from 'react-toastify';
-import { useUserStore } from '@/store/useUserStore';
+
+import { IProduct } from '@/interfaces/IProduct';
 
 function checkFileType(file: File) {
   const validMimeTypes = ['image/jpeg', 'image/png', 'image/jpg'];
@@ -42,7 +43,14 @@ const formSchema = z.object({
 
 type TFormSchema = z.infer<typeof formSchema>;
 
-export function NewProduct() {
+interface IProps {
+  setIsLoadingState: (state: boolean) => void;
+  setProductsState: (products: IProduct[]) => void;
+  products: IProduct[];
+  token: string;
+}
+
+export function NewProduct(props: IProps) {
   const form = useForm<TFormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -51,8 +59,6 @@ export function NewProduct() {
       stock: 1,
     },
   });
-
-  const { token } = useUserStore();
 
   interface UploadResponse {
     filename: string;
@@ -74,24 +80,33 @@ export function NewProduct() {
   }
 
   async function addProduct(productForm: TFormSchema) {
-    console.log(productForm);
+    props.setIsLoadingState(true);
 
     const filename = await uploadProductImage(productForm.image);
 
-    await api.post(
-      '/products',
-      {
-        img: filename,
-        name: productForm.name,
-        price: productForm.price,
-        stock: productForm.stock,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
+    await api
+      .post(
+        '/products',
+        {
+          img: filename,
+          name: productForm.name,
+          price: productForm.price,
+          stock: productForm.stock,
         },
-      },
-    );
+        {
+          headers: {
+            Authorization: `Bearer ${props.token}`,
+          },
+        },
+      )
+      .then((res) => {
+        props.setProductsState([...props.products, res.data.prismaProduct]);
+        toast.success('Product added successfully');
+        form.reset();
+      })
+      .finally(() => {
+        props.setIsLoadingState(false);
+      });
   }
 
   return (

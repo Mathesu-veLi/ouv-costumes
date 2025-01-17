@@ -21,6 +21,7 @@ import { Input } from './ui/input';
 import { InputImg } from './InputImg';
 import { api } from '@/lib/axios';
 import { toast } from 'react-toastify';
+import { useUserStore } from '@/store/useUserStore';
 
 function checkFileType(file: File) {
   const validMimeTypes = ['image/jpeg', 'image/png', 'image/jpg'];
@@ -50,6 +51,9 @@ export function NewProduct() {
       stock: 1,
     },
   });
+
+  const { token } = useUserStore();
+
   interface UploadResponse {
     filename: string;
   }
@@ -71,6 +75,23 @@ export function NewProduct() {
 
   async function addProduct(productForm: TFormSchema) {
     console.log(productForm);
+
+    const filename = await uploadProductImage(productForm.image);
+
+    await api.post(
+      '/products',
+      {
+        img: filename,
+        name: productForm.name,
+        price: productForm.price,
+        stock: productForm.stock,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
   }
 
   return (

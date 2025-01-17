@@ -7,7 +7,6 @@ import { Button } from './ui/button';
 import { Link, useLocation } from 'react-router-dom';
 import { useUserStore } from '@/store/useUserStore';
 import { HeaderDropdown } from './HeaderDropdown';
-import { UserRole } from '@/enums/UserRole';
 
 interface IHeaderLink {
   name: string;
@@ -15,13 +14,13 @@ interface IHeaderLink {
 }
 
 export function Header() {
-  const { name, role } = useUserStore().userData;
+  const { name, isAdmin } = useUserStore().userData;
 
   const Links: IHeaderLink[] = [];
 
   Links.push({ name: 'Home', path: '/' });
   Links.push({ name: 'Products', path: '/products' });
-  if (role == UserRole.Admin) {
+  if (isAdmin) {
     Links.push({ name: 'Dashboard', path: '/dashboard' });
   }
   Links.push({ name: 'Contact', path: '/contact' });

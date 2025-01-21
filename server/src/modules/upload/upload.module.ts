@@ -4,6 +4,7 @@ import { MulterModule } from '@nestjs/platform-express';
 import { BadRequestException } from '@nestjs/common';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
+import { UploadService } from './upload.service';
 
 @Module({
   imports: [
@@ -27,5 +28,7 @@ import { extname } from 'path';
     }),
   ],
   controllers: [UploadController],
+  providers: [UploadService],
+  exports: [UploadService],
 })
 export class UploadModule {}

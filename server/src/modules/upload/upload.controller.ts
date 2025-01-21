@@ -1,4 +1,3 @@
-import { fileNotFound, noImageProvided } from '@/utils/throws';
 import {
   Controller,
   Delete,
@@ -8,16 +7,16 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { existsSync, unlinkSync } from 'fs';
+import { UploadService } from './upload.service';
+import { noImageProvided } from '@/utils/throws';
 
 @Controller('upload')
 export class UploadController {
+  constructor(private readonly uploadService: UploadService) {}
+
   @Post()
   @UseInterceptors(FileInterceptor('image'))
-  uploadFile(
-    @UploadedFile()
-    file: Express.Multer.File,
-  ) {
+  uploadFile(@UploadedFile() file: Express.Multer.File) {
     if (!file) {
       noImageProvided();
     }
@@ -27,17 +26,6 @@ export class UploadController {
 
   @Delete(':filename')
   deleteFile(@Param('filename') filename: string) {
-    const path = `./uploads/${filename}`;
-    if (!existsSync(path)) {
-      fileNotFound();
-    }
-
-    try {
-      unlinkSync(path);
-      return { message: 'File deleted successfully' };
-    } catch (e) {
-      console.error(e);
-      return { message: 'Failed to delete file' };
-    }
+    return this.uploadService.deleteFile(filename);
   }
 }

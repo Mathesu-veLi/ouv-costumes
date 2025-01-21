@@ -60,6 +60,15 @@ export class ProductsService {
   }
 
   async remove(id: number) {
+    const product = await this.prismaService.products
+      .findUnique({ where: { id } })
+      .catch((e) => {
+        if (e.code === 'P2025') productNotExists();
+      });
+    if (!product) return;
+
+    this.uploadService.deleteFile(product.img);
+
     return await this.prismaService.products
       .delete({ where: { id } })
       .catch((e) => {

@@ -35,3 +35,7 @@ export function noTokenProvided() {
 export function noImageProvided() {
   throw new HttpException('No image provided', HttpStatus.BAD_REQUEST);
 }
+
+export function fileNotFound() {
+  throw new HttpException('File not found', HttpStatus.NOT_FOUND);
+}

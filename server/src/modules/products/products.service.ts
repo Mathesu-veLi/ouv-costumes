@@ -3,10 +3,14 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { PrismaService } from '@/prisma/prisma.service';
 import { productAlreadyExists, productNotExists } from '@/utils/throws';
+import { UploadService } from '../upload/upload.service';
 
 @Injectable()
 export class ProductsService {
-  constructor(private prismaService: PrismaService) {}
+  constructor(
+    private prismaService: PrismaService,
+    private uploadService: UploadService,
+  ) {}
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   private stripe = require('stripe')(process.env.STRIPE_KEY);
 

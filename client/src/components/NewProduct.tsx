@@ -70,19 +70,37 @@ export function NewProduct(props: IProps) {
 
     if (image) {
       const res = await api
-        .post<UploadResponse>('/upload', formData)
+        .post<UploadResponse>('/upload', formData, {
+          headers: {
+            Authorization: `Bearer ${props.token}`,
+          },
+        })
         .catch((e) => {
           toast.error(e.response.data.message);
+          props.setIsLoadingState(false);
         });
 
       return res?.data.filename;
     }
   }
 
+  async function deleteImage(filename: string) {
+    await api
+      .delete(`/upload/${filename}`, {
+        headers: {
+          Authorization: `Bearer ${props.token}`,
+        },
+      })
+      .catch((e) => {
+        toast.error(e.response.data.message);
+      });
+  }
+
   async function addProduct(productForm: TFormSchema) {
     props.setIsLoadingState(true);
 
     const filename = await uploadProductImage(productForm.image);
+    if (!filename) return;
 
     await api
       .post(
@@ -103,6 +121,10 @@ export function NewProduct(props: IProps) {
         props.setProductsState([...props.products, res.data.prismaProduct]);
         toast.success('Product added successfully');
         form.reset();
+      })
+      .catch((e) => {
+        toast.error(e.response.data.message);
+        deleteImage(filename);
       })
       .finally(() => {
         props.setIsLoadingState(false);

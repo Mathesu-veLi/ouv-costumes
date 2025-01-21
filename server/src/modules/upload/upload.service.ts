@@ -1,9 +1,17 @@
 import { Injectable } from '@nestjs/common';
+import { fileNotFound, noImageProvided } from '@/utils/throws';
 import { existsSync, unlinkSync } from 'fs';
-import { fileNotFound } from '@/utils/throws';
 
 @Injectable()
 export class UploadService {
+  uploadFile(file: Express.Multer.File) {
+    if (!file) {
+      noImageProvided();
+    }
+
+    return { message: 'File uploaded successfully', filename: file.filename };
+  }
+
   deleteFile(filename: string) {
     const path = `./uploads/${filename}`;
     if (!existsSync(path)) {

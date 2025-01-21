@@ -8,7 +8,6 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UploadService } from './upload.service';
-import { noImageProvided } from '@/utils/throws';
 
 @Controller('upload')
 export class UploadController {
@@ -17,11 +16,7 @@ export class UploadController {
   @Post()
   @UseInterceptors(FileInterceptor('image'))
   uploadFile(@UploadedFile() file: Express.Multer.File) {
-    if (!file) {
-      noImageProvided();
-    }
-
-    return { message: 'File uploaded successfully', filename: file.filename };
+    return this.uploadService.uploadFile(file); // Delegando a lógica para o serviço
   }
 
   @Delete(':filename')

@@ -7,6 +7,17 @@ import { toast } from 'react-toastify';
 import { api } from '@/lib/axios';
 import { useProductContext } from '@/store/ProductContext';
 import { useUserStore } from '@/store/useUserStore';
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogCancel,
+  AlertDialogAction,
+  AlertDialogHeader,
+  AlertDialogFooter,
+} from './ui/alert-dialog';
 
 interface IProps {
   product: IProduct;
@@ -79,15 +90,38 @@ export function ProductRow(props: IProps) {
           >
             <FaPen />
           </Button>
-          <Button
-            variant="destructive"
-            onClick={(e) => {
-              e.stopPropagation();
-              deleteProduct(props.product.id);
-            }}
-          >
-            <FaTrash />
-          </Button>
+
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button
+                variant="destructive"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <FaTrash />
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone. This will permanently delete the
+                  product from the database. Are you sure?
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    deleteProduct(props.product.id);
+                  }}
+                  color="red"
+                >
+                  Continue
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </span>
       </td>
     </tr>

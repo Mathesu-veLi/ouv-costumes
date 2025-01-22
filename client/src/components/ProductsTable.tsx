@@ -1,31 +1,8 @@
-import { IProduct } from '@/interfaces/IProduct';
 import { ProductRow } from './ProductRow';
-import { api } from '@/lib/axios';
-import { toast } from 'react-toastify';
+import { useProductContext } from '@/store/ProductContext';
 
-interface IProps {
-  products: IProduct[];
-  setProductsState: React.Dispatch<React.SetStateAction<IProduct[]>>;
-  setIsLoadingState: React.Dispatch<React.SetStateAction<boolean>>;
-  userToken: string;
-}
-
-export function ProductsTable(props: IProps) {
-  async function deleteProduct(id: number) {
-    props.setIsLoadingState(true);
-    await api
-      .delete('/products/' + id, {
-        headers: {
-          Authorization: `Bearer ${props.userToken}`,
-        },
-      })
-      .then(() => {
-        props.setProductsState(props.products.filter((p) => p.id !== id));
-        toast.success('Product deleted successfully');
-      })
-      .catch((e) => toast.error(e.response.data.message))
-      .finally(() => props.setIsLoadingState(false));
-  }
+export function ProductsTable() {
+  const { products } = useProductContext();
 
   return (
     <table className="w-full mt-10 mb-5">
@@ -37,14 +14,8 @@ export function ProductsTable(props: IProps) {
         <th className="max-[1000px]:hidden">Stock</th>
         <th>Actions</th>
       </tr>
-      {props.products.map((product) => {
-        return (
-          <ProductRow
-            product={product}
-            deleteProductFunc={deleteProduct}
-            key={product.id}
-          />
-        );
+      {products.map((product) => {
+        return <ProductRow product={product} key={product.id} />;
       })}
     </table>
   );

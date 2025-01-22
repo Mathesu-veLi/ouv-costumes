@@ -21,8 +21,8 @@ import { Input } from './ui/input';
 import { InputImg } from './InputImg';
 import { api } from '@/lib/axios';
 import { toast } from 'react-toastify';
-
-import { IProduct } from '@/interfaces/IProduct';
+import { useProductContext } from '@/store/ProductContext';
+import { useUserStore } from '@/store/useUserStore';
 
 function checkFileType(file: File) {
   const validMimeTypes = ['image/jpeg', 'image/png', 'image/jpg'];
@@ -43,14 +43,10 @@ const formSchema = z.object({
 
 type TFormSchema = z.infer<typeof formSchema>;
 
-interface IProps {
-  setIsLoadingState: (state: boolean) => void;
-  setProductsState: (products: IProduct[]) => void;
-  products: IProduct[];
-  token: string;
-}
+export function NewProduct() {
+  const { token } = useUserStore();
+  const { setProducts, products, setIsLoading } = useProductContext();
 
-export function NewProduct(props: IProps) {
   const form = useForm<TFormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -72,12 +68,12 @@ export function NewProduct(props: IProps) {
       const res = await api
         .post<UploadResponse>('/upload', formData, {
           headers: {
-            Authorization: `Bearer ${props.token}`,
+            Authorization: `Bearer ${token}`,
           },
         })
         .catch((e) => {
           toast.error(e.response.data.message);
-          props.setIsLoadingState(false);
+          setIsLoading(false);
         });
 
       return res?.data.filename;
@@ -88,7 +84,7 @@ export function NewProduct(props: IProps) {
     await api
       .delete(`/upload/${filename}`, {
         headers: {
-          Authorization: `Bearer ${props.token}`,
+          Authorization: `Bearer ${token}`,
         },
       })
       .catch((e) => {
@@ -97,7 +93,7 @@ export function NewProduct(props: IProps) {
   }
 
   async function addProduct(productForm: TFormSchema) {
-    props.setIsLoadingState(true);
+    setIsLoading(true);
 
     const filename = await uploadProductImage(productForm.image);
     if (!filename) return;
@@ -113,12 +109,12 @@ export function NewProduct(props: IProps) {
         },
         {
           headers: {
-            Authorization: `Bearer ${props.token}`,
+            Authorization: `Bearer ${token}`,
           },
         },
       )
       .then((res) => {
-        props.setProductsState([...props.products, res.data.prismaProduct]);
+        setProducts([...products, res.data.prismaProduct]);
         toast.success('Product added successfully');
         form.reset();
       })
@@ -127,7 +123,7 @@ export function NewProduct(props: IProps) {
         deleteImage(filename);
       })
       .finally(() => {
-        props.setIsLoadingState(false);
+        setIsLoading(false);
       });
   }
 

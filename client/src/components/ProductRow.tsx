@@ -3,14 +3,35 @@ import { Button } from './ui/button';
 import { FaPen } from 'react-icons/fa6';
 import { FaTrash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { api } from '@/lib/axios';
+import { useProductContext } from '@/store/ProductContext';
+import { useUserStore } from '@/store/useUserStore';
 
 interface IProps {
   product: IProduct;
-  deleteProductFunc: (id: number) => void;
 }
 
 export function ProductRow(props: IProps) {
+  const { setProducts, products, setIsLoading } = useProductContext();
+  const { token } = useUserStore();
   const navigate = useNavigate();
+
+  async function deleteProduct(id: number) {
+    setIsLoading(true);
+    await api
+      .delete('/products/' + id, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        setProducts(products.filter((p) => p.id !== id));
+        toast.success('Product deleted successfully');
+      })
+      .catch((e) => toast.error(e.response.data.message))
+      .finally(() => setIsLoading(false));
+  }
 
   return (
     <tr
@@ -62,7 +83,7 @@ export function ProductRow(props: IProps) {
             variant="destructive"
             onClick={(e) => {
               e.stopPropagation();
-              props.deleteProductFunc(props.product.id);
+              deleteProduct(props.product.id);
             }}
           >
             <FaTrash />

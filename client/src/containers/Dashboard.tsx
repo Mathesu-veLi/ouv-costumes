@@ -1,5 +1,5 @@
 import { Loading } from '@/components/Loading';
-import { IProduct } from '@/interfaces/IProduct';
+
 import { api } from '@/lib/axios';
 import { useUserStore } from '@/store/useUserStore';
 import { useEffect, useState } from 'react';
@@ -10,17 +10,18 @@ import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { NewProduct } from '@/components/NewProduct';
 import { ProductsTable } from '@/components/ProductsTable';
 import { useCartStore } from '@/store/useCartStore';
+import { useProductContext } from '@/store/ProductContext';
 
 export function Dashboard() {
   const navigate = useNavigate();
+  const { products, setProducts, isLoading, setIsLoading } =
+    useProductContext();
 
   const { token } = useUserStore();
   const userStoreReset = useUserStore().reset;
   const cartStoreReset = useCartStore().reset;
 
-  const [products, setProducts] = useState<IProduct[]>([]);
   const [authorized, setAuthorized] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   async function authorizeAdmin() {
     if (!token) {
@@ -88,12 +89,7 @@ export function Dashboard() {
         }
       >
         <h2 className="text-xl font-thin">Products</h2>
-        <ProductsTable
-          products={products}
-          setIsLoadingState={setIsLoading}
-          setProductsState={setProducts}
-          userToken={token}
-        />
+        <ProductsTable />
 
         <Dialog>
           <DialogTrigger asChild>

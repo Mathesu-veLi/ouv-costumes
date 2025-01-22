@@ -14,6 +14,7 @@ import { Contact } from './containers/Contact';
 import { ChangePassword } from './containers/ChangePassword';
 import { SentPasswordLink } from './containers/SentPasswordLink';
 import { Dashboard } from './containers/Dashboard';
+import { ProductProvider } from './store/ProductContext';
 
 interface IRoute {
   path: string;
@@ -75,7 +76,11 @@ function App() {
 
   routes.push({
     path: '/dashboard',
-    element: <Dashboard />,
+    element: (
+      <ProductProvider>
+        <Dashboard />
+      </ProductProvider>
+    ),
   });
 
   routes.push({

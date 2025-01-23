@@ -50,7 +50,8 @@ export class TokenService {
       noTokenProvided();
     }
 
-    const token = authorization.slice(7, authorization.length);
+    const [, token] = authorization.split(' ');
+
     let decoded;
     try {
       decoded = this.decode(token);

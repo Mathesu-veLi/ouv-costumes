@@ -16,6 +16,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './guards/roles.guard';
 import { JwtModule } from '@nestjs/jwt';
 import { UploadModule } from './modules/upload/upload.module';
+import { AdminRequiredMiddleware } from './middlewares/adminRequired';
 
 @Module({
   imports: [
@@ -43,6 +44,15 @@ export class AppModule implements NestModule {
       .forRoutes(
         { path: 'users/:id', method: RequestMethod.PATCH },
         { path: 'users/:id', method: RequestMethod.DELETE },
+      );
+    consumer
+      .apply(AdminRequiredMiddleware)
+      .forRoutes(
+        { path: 'products', method: RequestMethod.POST },
+        { path: 'products/:id', method: RequestMethod.PUT },
+        { path: 'products/:id', method: RequestMethod.DELETE },
+        { path: 'upload', method: RequestMethod.POST },
+        { path: 'upload', method: RequestMethod.DELETE },
       );
   }
 }

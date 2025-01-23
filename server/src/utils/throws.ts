@@ -32,6 +32,10 @@ export function noTokenProvided() {
   throw new HttpException('No token provided', HttpStatus.UNAUTHORIZED);
 }
 
+export function invalidToken() {
+  throw new HttpException('Invalid token', HttpStatus.UNAUTHORIZED);
+}
+
 export function noImageProvided() {
   throw new HttpException('No image provided', HttpStatus.BAD_REQUEST);
 }

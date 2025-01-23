@@ -47,7 +47,7 @@ export function ProductRow(props: IProps) {
   return (
     <tr
       className="lg:[&>td]:px-10 [&>td]:py-3 [&>td]:my-5 text-center hover:cursor-pointer hover:border hover:bg-zinc-900"
-      onClick={() => navigate('/product/' + props.product.id)}
+      onClick={() => navigate(`/products/${props.product.id}`)}
     >
       <td>{props.product.id}</td>
       <td className="flex justify-center">
@@ -100,7 +100,7 @@ export function ProductRow(props: IProps) {
                 <FaTrash />
               </Button>
             </AlertDialogTrigger>
-            <AlertDialogContent>
+            <AlertDialogContent onClick={(e) => e.stopPropagation()}>
               <AlertDialogHeader>
                 <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                 <AlertDialogDescription>

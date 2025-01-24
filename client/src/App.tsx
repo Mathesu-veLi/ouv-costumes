@@ -15,6 +15,7 @@ import { ChangePassword } from './containers/ChangePassword';
 import { SentPasswordLink } from './containers/SentPasswordLink';
 import { Dashboard } from './containers/Dashboard';
 import { ProductProvider } from './store/ProductContext';
+import { EditProduct } from './containers/EditProduct';
 
 interface IRoute {
   path: string;
@@ -42,6 +43,11 @@ function App() {
   routes.push({
     path: '/product/:id',
     element: <Product />,
+  });
+
+  routes.push({
+    path: '/product/:id/edit',
+    element: <EditProduct />,
   });
 
   routes.push({

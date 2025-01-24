@@ -21,6 +21,11 @@ export function EditProduct() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    async function fetch() {
+      const product = await fetchProduct(Number(id), setIsLoading, setProduct);
+      if (product === 404) return navigate('/');
+    }
+
     async function authorize() {
       const authorized = await authorizeAdmin(token);
 
@@ -36,6 +41,7 @@ export function EditProduct() {
     }
 
     !authorized && authorize();
+    !product && fetch();
   }, []);
 
   if (isLoading) return <Loading />;

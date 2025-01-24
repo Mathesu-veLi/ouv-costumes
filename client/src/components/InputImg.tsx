@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from './ui/button';
 import { FaPlus } from 'react-icons/fa';
 import { ControllerRenderProps } from 'react-hook-form';
+import { createFileObjectFromImage } from '@/utils/fileFunctions';
 
 interface IProps {
   field: ControllerRenderProps<
@@ -13,10 +14,22 @@ interface IProps {
     },
     'image'
   >;
+  imagePath?: string;
 }
 
 export function InputImg(props: IProps) {
   const [productImg, setProductImg] = useState<File | null>(null);
+
+  async function setProductImgPromise() {
+    if (!productImg && props.imagePath) {
+      const imageFile = await createFileObjectFromImage(props.imagePath);
+      setProductImg(imageFile);
+    }
+  }
+
+  useEffect(() => {
+    setProductImgPromise();
+  }, []);
 
   return (
     <div>

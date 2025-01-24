@@ -11,6 +11,7 @@ import { NewProduct } from '@/components/NewProduct';
 import { ProductsTable } from '@/components/ProductsTable';
 import { useCartStore } from '@/store/useCartStore';
 import { useProductContext } from '@/store/ProductContext';
+import { AxiosError } from 'axios';
 
 export function Dashboard() {
   const navigate = useNavigate();
@@ -23,6 +24,10 @@ export function Dashboard() {
 
   const [authorized, setAuthorized] = useState(false);
 
+  interface ErrorResponseData {
+    message: string;
+  }
+
   async function authorizeAdmin() {
     if (!token) {
       setAuthorized(false);
@@ -30,27 +35,30 @@ export function Dashboard() {
       return navigate('/login');
     }
 
-    await api
-      .get('/token', {
+    try {
+      await api.get('/token', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      })
-      .catch((e) => {
-        toast.error(e.response.data.message);
-        setAuthorized(false);
-
-        if (e.response.status === 498) {
-          logout();
-          return navigate('/login');
-        } else {
-          return navigate('/');
-        }
-      })
-      .then(() => {
-        toast.success('Access authorized');
-        setAuthorized(true);
       });
+
+      // Somente exibe o toast e atualiza o estado se autorizado
+      toast.success('Access authorized');
+      setAuthorized(true);
+    } catch (error) {
+      const e = error as AxiosError<ErrorResponseData>;
+      setAuthorized(false);
+
+      // Garante que o erro seja tratado apropriadamente
+      if (e.response?.status === 498) {
+        toast.error('Session expired. Please log in again.');
+        logout();
+        return navigate('/login');
+      } else {
+        toast.error(e.response?.data?.message);
+        return navigate('/');
+      }
+    }
   }
 
   function logout() {
@@ -60,22 +68,27 @@ export function Dashboard() {
 
   async function fetchProducts() {
     setIsLoading(true);
-    await api
-      .get('products')
-      .then((response) => {
-        setProducts(response.data);
-      })
-      .catch((e) => {
-        toast.error('Internal Server Error');
-        console.log(e);
-      })
-      .finally(() => setIsLoading(false));
+
+    try {
+      const response = await api.get('products');
+      setProducts(response.data);
+    } catch (e) {
+      console.error(e);
+      toast.error('Internal Server Error');
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   useEffect(() => {
-    if (!authorized) authorizeAdmin();
-    if (!products.length) fetchProducts();
-  }, []);
+    if (!authorized) {
+      authorizeAdmin();
+    }
+
+    if (!products.length) {
+      fetchProducts();
+    }
+  }, [authorized, products.length]);
 
   if (isLoading) return <Loading />;
 

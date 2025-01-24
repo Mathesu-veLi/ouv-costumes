@@ -28,7 +28,7 @@ const formSchema = z.object({
 type TFormSchema = z.infer<typeof formSchema>;
 
 export function EditUserData() {
-  const { id, name, email, role } = useUserStore().userData;
+  const { id, name, email, isAdmin } = useUserStore().userData;
 
   const form = useForm<TFormSchema>({
     resolver: zodResolver(formSchema),
@@ -61,7 +61,7 @@ export function EditUserData() {
       })
       .then(() => {
         toast.success('User data uploaded successfully!');
-        setUserData({ id, ...editDataForm, role });
+        setUserData({ id, ...editDataForm, isAdmin });
 
         if (email !== editDataForm.email) {
           reset();

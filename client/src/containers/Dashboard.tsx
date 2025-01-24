@@ -1,10 +1,7 @@
 import { Loading } from '@/components/Loading';
-
-import { api } from '@/lib/axios';
 import { useUserStore } from '@/store/useUserStore';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { NewProduct } from '@/components/NewProduct';
@@ -12,6 +9,7 @@ import { ProductsTable } from '@/components/ProductsTable';
 import { useCartStore } from '@/store/useCartStore';
 import { useProductContext } from '@/store/ProductContext';
 import { authorizeAdmin, logout } from '@/utils/authorizationFunctions';
+import { fetchProducts } from '@/utils/productsFunctions';
 
 export function Dashboard() {
   const navigate = useNavigate();
@@ -23,19 +21,6 @@ export function Dashboard() {
   const cartStoreReset = useCartStore().reset;
 
   const [authorized, setAuthorized] = useState(false);
-
-  async function fetchProducts() {
-    setIsLoading(true);
-    try {
-      const response = await api.get('products');
-      setProducts(response.data);
-    } catch (e) {
-      console.error(e);
-      toast.error('Internal Server Error');
-    } finally {
-      setIsLoading(false);
-    }
-  }
 
   async function authorize() {
     const authorized = await authorizeAdmin(token);
@@ -53,7 +38,7 @@ export function Dashboard() {
 
   useEffect(() => {
     !authorized && authorize();
-    !products.length && fetchProducts();
+    !products.length && fetchProducts(setIsLoading, setProducts);
   }, []);
 
   if (isLoading) return <Loading />;

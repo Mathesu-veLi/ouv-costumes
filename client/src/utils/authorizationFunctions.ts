@@ -21,7 +21,6 @@ export async function authorizeAdmin(token: string): Promise<authorizeRes> {
       },
     });
 
-    toast.success('Access authorized');
     return true;
   } catch (error) {
     const e = error as AxiosError<ErrorResponseData>;

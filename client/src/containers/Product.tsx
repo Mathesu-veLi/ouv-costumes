@@ -20,6 +20,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { useUserStore } from '@/store/useUserStore';
+import { fetchProduct } from '@/utils/productsFunctions';
 
 export function Product() {
   const { id } = useParams();
@@ -71,22 +72,12 @@ export function Product() {
   }
 
   useEffect(() => {
-    setIsLoading(true);
+    async function fetch() {
+      const product = await fetchProduct(Number(id), setIsLoading, setProduct);
+      if (product === 404) return navigate('/');
+    }
 
-    api
-      .get<IProduct>(`/products/${id}`)
-      .then((response) => {
-        setIsLoading(false);
-        setProduct(response.data);
-      })
-      .catch((e) => {
-        setIsLoading(false);
-
-        if (e.response.status === 404) {
-          toast.error(e.response.data.message);
-          return navigate('/');
-        }
-      });
+    fetch();
   }, []);
 
   if (isLoading) return <Loading />;

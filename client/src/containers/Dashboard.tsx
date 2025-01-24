@@ -11,7 +11,7 @@ import { NewProduct } from '@/components/NewProduct';
 import { ProductsTable } from '@/components/ProductsTable';
 import { useCartStore } from '@/store/useCartStore';
 import { useProductContext } from '@/store/ProductContext';
-import { AxiosError } from 'axios';
+import { authorizeAdmin, logout } from '@/utils/authorizationFunctions';
 
 export function Dashboard() {
   const navigate = useNavigate();
@@ -24,51 +24,8 @@ export function Dashboard() {
 
   const [authorized, setAuthorized] = useState(false);
 
-  interface ErrorResponseData {
-    message: string;
-  }
-
-  async function authorizeAdmin() {
-    if (!token) {
-      setAuthorized(false);
-      toast.error('You must be logged in');
-      return navigate('/login');
-    }
-
-    try {
-      await api.get('/token', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      // Somente exibe o toast e atualiza o estado se autorizado
-      toast.success('Access authorized');
-      setAuthorized(true);
-    } catch (error) {
-      const e = error as AxiosError<ErrorResponseData>;
-      setAuthorized(false);
-
-      // Garante que o erro seja tratado apropriadamente
-      if (e.response?.status === 498) {
-        toast.error('Session expired. Please log in again.');
-        logout();
-        return navigate('/login');
-      } else {
-        toast.error(e.response?.data?.message);
-        return navigate('/');
-      }
-    }
-  }
-
-  function logout() {
-    userStoreReset();
-    cartStoreReset();
-  }
-
   async function fetchProducts() {
     setIsLoading(true);
-
     try {
       const response = await api.get('products');
       setProducts(response.data);
@@ -80,15 +37,24 @@ export function Dashboard() {
     }
   }
 
-  useEffect(() => {
+  async function authorize() {
+    const authorized = await authorizeAdmin(token);
+
     if (!authorized) {
-      authorizeAdmin();
+      return navigate('/');
+    }
+    if (authorized === 498) {
+      logout(userStoreReset, cartStoreReset);
+      return navigate('/login');
     }
 
-    if (!products.length) {
-      fetchProducts();
-    }
-  }, [authorized, products.length]);
+    setAuthorized(authorized);
+  }
+
+  useEffect(() => {
+    !authorized && authorize();
+    !products.length && fetchProducts();
+  }, []);
 
   if (isLoading) return <Loading />;
 

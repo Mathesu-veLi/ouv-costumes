@@ -2,7 +2,7 @@ import { Loading } from '@/components/Loading';
 import { IProduct } from '@/interfaces/IProduct';
 import { useCartStore } from '@/store/useCartStore';
 import { useUserStore } from '@/store/useUserStore';
-import { authorizeAdmin, logout } from '@/utils/authorizationFunctions';
+import { authorizeAdmin } from '@/utils/authorizationFunctions';
 import { fetchProduct } from '@/utils/productsFunctions';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -27,15 +27,12 @@ export function EditProduct() {
     }
 
     async function authorize() {
-      const authorized = await authorizeAdmin(token);
-
-      if (!authorized) {
-        return navigate('/');
-      }
-      if (authorized === 498) {
-        logout(userStoreReset, cartStoreReset);
-        return navigate('/login');
-      }
+      const authorized = await authorizeAdmin(
+        token,
+        navigate,
+        userStoreReset,
+        cartStoreReset,
+      );
 
       setAuthorized(authorized);
     }

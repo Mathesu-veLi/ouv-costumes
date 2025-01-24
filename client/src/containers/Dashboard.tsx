@@ -8,7 +8,7 @@ import { NewProduct } from '@/components/NewProduct';
 import { ProductsTable } from '@/components/ProductsTable';
 import { useCartStore } from '@/store/useCartStore';
 import { useProductContext } from '@/store/ProductContext';
-import { authorizeAdmin, logout } from '@/utils/authorizationFunctions';
+import { authorizeAdmin } from '@/utils/authorizationFunctions';
 import { fetchProducts } from '@/utils/productsFunctions';
 
 export function Dashboard() {
@@ -22,21 +22,18 @@ export function Dashboard() {
 
   const [authorized, setAuthorized] = useState(false);
 
-  async function authorize() {
-    const authorized = await authorizeAdmin(token);
-
-    if (!authorized) {
-      return navigate('/');
-    }
-    if (authorized === 498) {
-      logout(userStoreReset, cartStoreReset);
-      return navigate('/login');
-    }
-
-    setAuthorized(authorized);
-  }
-
   useEffect(() => {
+    async function authorize() {
+      const authorized = await authorizeAdmin(
+        token,
+        navigate,
+        userStoreReset,
+        cartStoreReset,
+      );
+
+      setAuthorized(authorized);
+    }
+    
     !authorized && authorize();
     !products.length && fetchProducts(setIsLoading, setProducts);
   }, []);

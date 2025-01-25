@@ -10,6 +10,8 @@ import {
 import { Button } from './ui/button';
 import { IoIosArrowDropdown } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
+import { useUserStore } from '@/store/useUserStore';
+import { useCartStore } from '@/store/useCartStore';
 
 interface IHeaderDropdown {
   userName: string;
@@ -17,10 +19,12 @@ interface IHeaderDropdown {
 
 export function HeaderDropdown({ userName }: IHeaderDropdown) {
   const navigate = useNavigate();
+  const userStoreReset = useUserStore().reset;
+  const cartStoreReset = useCartStore().reset;
 
   function logout() {
-    localStorage.removeItem('user');
-    localStorage.removeItem('cart');
+    userStoreReset();
+    cartStoreReset();
     window.location.reload();
   }
 

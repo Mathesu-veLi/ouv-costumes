@@ -14,16 +14,20 @@ interface IHeaderLink {
 }
 
 export function Header() {
+  const { name, isAdmin } = useUserStore().userData;
+
   const Links: IHeaderLink[] = [];
 
   Links.push({ name: 'Home', path: '/' });
   Links.push({ name: 'Products', path: '/products' });
+  if (isAdmin) {
+    Links.push({ name: 'Dashboard', path: '/dashboard' });
+  }
   Links.push({ name: 'Contact', path: '/contact' });
 
   const [isOpen, setIsOpen] = useState(false);
 
   const location = useLocation();
-  const { name } = useUserStore().userData;
 
   useEffect(() => {
     setIsOpen(false);

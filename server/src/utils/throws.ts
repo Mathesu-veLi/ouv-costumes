@@ -19,3 +19,27 @@ export function productAlreadyExists() {
 export function productNotExists() {
   throw new HttpException('Product not found', HttpStatus.NOT_FOUND);
 }
+
+export function accessDenied() {
+  throw new HttpException('Access denied', HttpStatus.UNAUTHORIZED);
+}
+
+export function tokenExpired() {
+  throw new HttpException('Token expired, please log in again', 498);
+}
+
+export function noTokenProvided() {
+  throw new HttpException('No token provided', HttpStatus.UNAUTHORIZED);
+}
+
+export function invalidToken() {
+  throw new HttpException('Invalid token', HttpStatus.UNAUTHORIZED);
+}
+
+export function noImageProvided() {
+  throw new HttpException('No image provided', HttpStatus.BAD_REQUEST);
+}
+
+export function fileNotFound() {
+  throw new HttpException('File not found', HttpStatus.NOT_FOUND);
+}

@@ -1,9 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTokenDto } from './dto/create-token.dto';
 import { PrismaService } from '@/prisma/prisma.module';
-import { passwordIsNotValid, userNotExists } from '@/utils/throws';
-import { sign } from 'jsonwebtoken';
+import {
+  accessDenied,
+  noTokenProvided,
+  passwordIsNotValid,
+  tokenExpired,
+  userNotExists,
+} from '@/utils/throws';
+import { sign, TokenExpiredError, verify } from 'jsonwebtoken';
 import { passwordIsValid } from '@/utils/passwordUtils';
+import { IUserData } from '@/interfaces/IUserData';
+import { Role } from '@prisma/client';
 
 @Injectable()
 export class TokenService {
@@ -35,5 +43,32 @@ export class TokenService {
         role: user.role,
       },
     };
+  }
+
+  authorize(authorization: string) {
+    if (!authorization) {
+      noTokenProvided();
+    }
+
+    const [, token] = authorization.split(' ');
+
+    let decoded;
+    try {
+      decoded = this.decode(token);
+    } catch (e) {
+      if (e instanceof TokenExpiredError) {
+        tokenExpired();
+      } else {
+        console.log(e);
+      }
+    }
+    if (decoded.role !== Role.Admin) {
+      accessDenied();
+    }
+    return { message: 'Access authorized' };
+  }
+
+  private decode(token: string): IUserData {
+    return verify(token, process.env.TOKEN_SECRET) as IUserData;
   }
 }

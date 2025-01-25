@@ -1,28 +1,16 @@
 import { Loading } from '@/components/Loading';
 import { ProductCard } from '@/components/ProductCard';
 import { IProduct } from '@/interfaces/IProduct';
-import { api } from '@/lib/axios';
 import { API_URL } from '@/utils/globals';
+import { fetchProducts } from '@/utils/productsFunctions';
 import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
 
 export function Products() {
   const [products, setProducts] = useState<IProduct[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    setIsLoading(true);
-    api
-      .get('products')
-      .then((response) => {
-        setProducts(response.data);
-        setIsLoading(false);
-      })
-      .catch((e) => {
-        toast.error('Internal Server Error');
-        console.log(e);
-        setIsLoading(false);
-      });
+    fetchProducts(setIsLoading, setProducts);
   }, []);
 
   if (isLoading) return <Loading />;

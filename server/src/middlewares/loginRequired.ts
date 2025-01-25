@@ -1,4 +1,6 @@
+import { invalidToken, noTokenProvided, tokenExpired } from '@/utils/throws';
 import { Injectable, NestMiddleware } from '@nestjs/common';
+import { TokenExpiredError } from '@nestjs/jwt';
 import { NextFunction, Request, Response } from 'express';
 import { verify } from 'jsonwebtoken';
 
@@ -7,10 +9,7 @@ export class LoginRequiredMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
     const { authorization } = req.headers;
 
-    if (!authorization)
-      return res.status(401).send({
-        message: 'Unauthorized. Create a token first!',
-      });
+    if (!authorization) noTokenProvided();
 
     const [, token] = authorization.split(' ');
 
@@ -18,10 +17,9 @@ export class LoginRequiredMiddleware implements NestMiddleware {
       verify(token, process.env.TOKEN_SECRET);
 
       return next();
-    } catch (error) {
-      return res.status(401).send({
-        message: 'Token expired or invalid',
-      });
+    } catch (e) {
+      if (e instanceof TokenExpiredError) tokenExpired();
+      else invalidToken();
     }
   }
 }

@@ -91,7 +91,9 @@ export function EditProduct() {
 
     async function setProductImgPromise() {
       if (!productImg && product?.img) {
-        const imageFile = await createFileObjectFromImage(product.img);
+        const imageFile = await createFileObjectFromImage(
+          `${process.env.API_URL}/uploads/${product.img}`,
+        );
         setProductImg(imageFile);
       }
     }

@@ -160,10 +160,10 @@ export function EditProduct() {
 
   return (
     <div className="w-full h-screen flex flex-col justify-center items-center text-center">
-      <h1 className="text-2xl">Edit Product {id}</h1>
+      <h1 className="text-2xl pt-52 lg:pt-40">Edit Product</h1>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(updateProduct)}>
-          <div className="flex justify-around items-center gap-10 mb-4">
+        <form onSubmit={form.handleSubmit(updateProduct)} className='m-10 pb-10 lg:pb-0 w-2/4'>
+          <div className="flex flex-col justify-around items-center gap-10 mb-4">
             <div>
               <FormField
                 control={form.control}
@@ -172,14 +172,14 @@ export function EditProduct() {
                   <FormItem>
                     <FormLabel>Image</FormLabel>
                     <FormControl>
-                      <InputImg field={field} initialImage={productImg} />
+                      <InputImg field={field} initialImage={productImg} w='56' h='56' />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
-            <div className="w-full">
+            <div className="w-full flex flex-col gap-3">
               <FormField
                 control={form.control}
                 name="name"

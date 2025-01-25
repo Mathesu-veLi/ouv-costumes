@@ -44,15 +44,6 @@ const formSchema = z.object({
 type TFormSchema = z.infer<typeof formSchema>;
 
 export function EditProduct() {
-  const form = useForm<TFormSchema>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: '',
-      price: 1,
-      stock: 1,
-    },
-  });
-
   const { id } = useParams();
 
   const [product, setProduct] = useState<IProduct>();
@@ -65,6 +56,27 @@ export function EditProduct() {
   const cartStoreReset = useCartStore().reset;
 
   const navigate = useNavigate();
+
+  const formDefaultValues = {
+    image: new File([], ''),
+    name: '',
+    price: 0,
+    stock: 0,
+  };
+
+  const form = useForm<TFormSchema>({
+    resolver: zodResolver(formSchema),
+    defaultValues: formDefaultValues,
+    values:
+      product && productImg
+        ? {
+            image: productImg,
+            name: product.name,
+            price: product.price,
+            stock: product.stock,
+          }
+        : formDefaultValues,
+  });
 
   async function updateProduct(productForm: TFormSchema) {
     setIsLoading(true);
@@ -111,7 +123,7 @@ export function EditProduct() {
 
     !authorized && authorize();
     !product && fetch();
-    product?.img && setProductImgPromise();
+    product?.img && !productImg && setProductImgPromise();
   }, [product, productImg]);
 
   if (isLoading) return <Loading />;

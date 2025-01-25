@@ -23,6 +23,7 @@ import { api } from '@/lib/axios';
 import { toast } from 'react-toastify';
 import { useProductContext } from '@/store/ProductContext';
 import { useUserStore } from '@/store/useUserStore';
+import { deleteImage, uploadProductImage } from '@/utils/fileFunctions';
 
 function checkFileType(file: File) {
   const validMimeTypes = ['image/jpeg', 'image/png', 'image/jpg'];
@@ -56,46 +57,10 @@ export function NewProduct() {
     },
   });
 
-  interface UploadResponse {
-    filename: string;
-  }
-
-  async function uploadProductImage(image: File) {
-    const formData = new FormData();
-    formData.append('image', image);
-
-    if (image) {
-      const res = await api
-        .post<UploadResponse>('/upload', formData, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .catch((e) => {
-          toast.error(e.response.data.message);
-          setIsLoading(false);
-        });
-
-      return res?.data.filename;
-    }
-  }
-
-  async function deleteImage(filename: string) {
-    await api
-      .delete(`/upload/${filename}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .catch((e) => {
-        toast.error(e.response.data.message);
-      });
-  }
-
   async function addProduct(productForm: TFormSchema) {
     setIsLoading(true);
 
-    const filename = await uploadProductImage(productForm.image);
+    const filename = await uploadProductImage(productForm.image, token, setIsLoading);
     if (!filename) return;
 
     await api
@@ -120,7 +85,7 @@ export function NewProduct() {
       })
       .catch((e) => {
         toast.error(e.response.data.message);
-        deleteImage(filename);
+        deleteImage(filename, token);
       })
       .finally(() => {
         setIsLoading(false);

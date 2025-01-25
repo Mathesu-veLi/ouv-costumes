@@ -31,12 +31,11 @@ export async function authorizeAdmin(
 
     if (e.response?.status === 498) {
       toast.error('Session expired. Please log in again.');
+      logout(userStoreReset, cartStoreReset);
       navigate('/login');
     } else {
       toast.error(e.response?.data?.message);
       navigate('/');
-
-      logout(userStoreReset, cartStoreReset);
     }
     return false;
   }

@@ -85,7 +85,7 @@ export function EditProduct() {
   async function updateProduct(productForm: TFormSchema) {
     setIsLoading(true);
     let filename;
-    if(productForm.image.name !== product?.img) {
+    if (productForm.image.name !== product?.img) {
       filename = await uploadProductImage(
         productForm.image,
         token,
@@ -162,7 +162,10 @@ export function EditProduct() {
     <div className="w-full h-screen flex flex-col justify-center items-center text-center">
       <h1 className="text-2xl pt-52 lg:pt-40">Edit Product</h1>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(updateProduct)} className='m-10 pb-10 lg:pb-0 w-2/4'>
+        <form
+          onSubmit={form.handleSubmit(updateProduct)}
+          className="m-10 pb-10 lg:pb-0 w-2/4"
+        >
           <div className="flex flex-col justify-around items-center gap-10 mb-4">
             <div>
               <FormField
@@ -172,7 +175,12 @@ export function EditProduct() {
                   <FormItem>
                     <FormLabel>Image</FormLabel>
                     <FormControl>
-                      <InputImg field={field} initialImage={productImg} w='56' h='56' />
+                      <InputImg
+                        field={field}
+                        initialImage={productImg}
+                        w="56"
+                        h="56"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -232,7 +240,7 @@ export function EditProduct() {
             </div>
           </div>
           <Button type="submit" className="w-full">
-            Add
+            Edit
           </Button>
         </form>
       </Form>

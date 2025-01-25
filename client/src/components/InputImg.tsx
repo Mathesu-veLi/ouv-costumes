@@ -20,7 +20,7 @@ export function InputImg(props: IProps) {
   const [productImg, setProductImg] = useState<File | null>(null);
   useEffect(() => {
     if (props.initialImage) setProductImg(props.initialImage);
-  }, []);
+  }, [props.initialImage]);
 
   return (
     <div>
@@ -37,6 +37,7 @@ export function InputImg(props: IProps) {
       />
       <Button
         variant="outline"
+        type="button"
         className="w-36 h-36 p-0"
         onClick={() => {
           document.getElementById('productImg')?.click();

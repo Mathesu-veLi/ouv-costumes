@@ -32,8 +32,12 @@ export function Dashboard() {
       );
 
       setAuthorized(authorized);
+      if (!authorized) {
+        navigate('/');
+        return;
+      }
     }
-    
+
     !authorized && authorize();
     !products.length && fetchProducts(setIsLoading, setProducts);
   }, []);

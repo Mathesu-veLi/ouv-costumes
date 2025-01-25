@@ -15,7 +15,11 @@ import { api } from '@/lib/axios';
 import { useCartStore } from '@/store/useCartStore';
 import { useUserStore } from '@/store/useUserStore';
 import { authorizeAdmin } from '@/utils/authorizationFunctions';
-import { createFileObjectFromImage } from '@/utils/fileFunctions';
+import {
+  createFileObjectFromImage,
+  deleteProductImage,
+  uploadProductImage,
+} from '@/utils/fileFunctions';
 import { fetchProduct } from '@/utils/productsFunctions';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useState } from 'react';
@@ -81,17 +85,36 @@ export function EditProduct() {
   async function updateProduct(productForm: TFormSchema) {
     setIsLoading(true);
 
+    const filename = await uploadProductImage(
+      productForm.image,
+      token,
+      setIsLoading,
+    );
+    if (!filename) return;
+
     await api
-      .patch(`/products/${id}`, productForm, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      .patch(
+        `/products/${id}`,
+        {
+          img: filename,
+          name: productForm.name,
+          price: productForm.price,
+          stock: productForm.stock,
         },
-      })
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      )
       .then(() => {
         toast.success('Product updated successfully');
         navigate(`/products/${id}`);
       })
-      .catch((e) => toast.error(e.response.data.message))
+      .catch((e) => {
+        deleteProductImage(filename, token);
+        toast.error(e.response.data.message);
+      })
       .finally(() => setIsLoading(false));
   }
 

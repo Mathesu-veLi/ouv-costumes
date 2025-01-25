@@ -84,13 +84,20 @@ export function EditProduct() {
 
   async function updateProduct(productForm: TFormSchema) {
     setIsLoading(true);
+    let filename;
+    if(productForm.image.name !== product?.img) {
+      filename = await uploadProductImage(
+        productForm.image,
+        token,
+        setIsLoading,
+      );
 
-    const filename = await uploadProductImage(
-      productForm.image,
-      token,
-      setIsLoading,
-    );
-    if (!filename) return;
+      if (!filename || !product) return;
+
+      deleteProductImage(product.img, token);
+    } else {
+      filename = product?.img;
+    }
 
     await api
       .patch(
@@ -109,7 +116,7 @@ export function EditProduct() {
       )
       .then(() => {
         toast.success('Product updated successfully');
-        navigate(`/products/${id}`);
+        navigate(`/product/${id}`);
       })
       .catch((e) => {
         deleteProductImage(filename, token);

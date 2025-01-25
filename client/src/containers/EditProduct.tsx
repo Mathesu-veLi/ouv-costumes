@@ -79,10 +79,8 @@ export function EditProduct() {
         toast.success('Product updated successfully');
         navigate(`/products/${id}`);
       })
-      .catch((e) => {
-        toast.error(e.response.data.message);
-        setIsLoading(false);
-      });
+      .catch((e) => toast.error(e.response.data.message))
+      .finally(() => setIsLoading(false));
   }
 
   useEffect(() => {
@@ -93,7 +91,7 @@ export function EditProduct() {
 
     async function setProductImgPromise() {
       if (!productImg && product?.img) {
-        const imageFile = await createFileObjectFromImage(product?.img);
+        const imageFile = await createFileObjectFromImage(product.img);
         setProductImg(imageFile);
       }
     }
@@ -112,7 +110,7 @@ export function EditProduct() {
     !authorized && authorize();
     !product && fetch();
     product?.img && setProductImgPromise();
-  }, [product]);
+  }, [product, productImg]);
 
   if (isLoading) return <Loading />;
 
@@ -130,10 +128,7 @@ export function EditProduct() {
                   <FormItem>
                     <FormLabel>Image</FormLabel>
                     <FormControl>
-                      <InputImg
-                        field={field}
-                        imagePath={`${process.env.API_URL}/uploads/${product?.img}`}
-                      />
+                      <InputImg field={field} initialImage={productImg} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

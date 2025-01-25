@@ -4,8 +4,9 @@ import { toast } from 'react-toastify';
 
 export async function createFileObjectFromImage(imagePath: string) {
   if (!imagePath) return;
+  const basename = imagePath.split('/').pop() as string;
   const blob = await (await fetch(imagePath)).blob();
-  const imageFile = new File([blob], 'product.jpg', { type: blob.type });
+  const imageFile = new File([blob], basename, { type: blob.type });
   return imageFile;
 }
 

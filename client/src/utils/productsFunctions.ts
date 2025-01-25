@@ -1,9 +1,8 @@
+import { VoidFunction } from '@/interfaces/GenericVoidFunction';
 import { IProduct } from '@/interfaces/IProduct';
 import { api } from '@/lib/axios';
 import { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
-
-type VoidFunction<G> = (arg: G) => void;
 
 interface ErrorResponseData {
   message: string;

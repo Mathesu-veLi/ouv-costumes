@@ -37,7 +37,7 @@ export async function uploadProductImage(
   }
 }
 
-export async function deleteImage(filename: string, token: string) {
+export async function deleteProductImage(filename: string, token: string) {
   await api
     .delete(`/upload/${filename}`, {
       headers: {

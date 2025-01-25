@@ -23,7 +23,7 @@ import { api } from '@/lib/axios';
 import { toast } from 'react-toastify';
 import { useProductContext } from '@/store/ProductContext';
 import { useUserStore } from '@/store/useUserStore';
-import { deleteImage, uploadProductImage } from '@/utils/fileFunctions';
+import { deleteProductImage, uploadProductImage } from '@/utils/fileFunctions';
 
 function checkFileType(file: File) {
   const validMimeTypes = ['image/jpeg', 'image/png', 'image/jpg'];
@@ -60,7 +60,11 @@ export function NewProduct() {
   async function addProduct(productForm: TFormSchema) {
     setIsLoading(true);
 
-    const filename = await uploadProductImage(productForm.image, token, setIsLoading);
+    const filename = await uploadProductImage(
+      productForm.image,
+      token,
+      setIsLoading,
+    );
     if (!filename) return;
 
     await api
@@ -85,7 +89,7 @@ export function NewProduct() {
       })
       .catch((e) => {
         toast.error(e.response.data.message);
-        deleteImage(filename, token);
+        deleteProductImage(filename, token);
       })
       .finally(() => {
         setIsLoading(false);

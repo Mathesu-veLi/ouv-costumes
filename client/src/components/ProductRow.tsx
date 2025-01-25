@@ -47,7 +47,7 @@ export function ProductRow(props: IProps) {
   return (
     <tr
       className="lg:[&>td]:px-10 [&>td]:py-3 [&>td]:my-5 text-center hover:cursor-pointer hover:border hover:bg-zinc-900"
-      onClick={() => navigate(`/products/${props.product.id}`)}
+      onClick={() => navigate(`/product/${props.product.id}`)}
     >
       <td>{props.product.id}</td>
       <td className="flex justify-center">
@@ -85,7 +85,7 @@ export function ProductRow(props: IProps) {
             variant="secondary"
             onClick={(e) => {
               e.stopPropagation();
-              navigate(`/edit/${props.product.id}`);
+              navigate(`/product/${props.product.id}/edit/`);
             }}
           >
             <FaPen />
@@ -115,7 +115,6 @@ export function ProductRow(props: IProps) {
                     e.stopPropagation();
                     deleteProduct(props.product.id);
                   }}
-                  color="red"
                 >
                   Continue
                 </AlertDialogAction>

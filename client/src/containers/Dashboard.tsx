@@ -1,16 +1,15 @@
 import { Loading } from '@/components/Loading';
-
-import { api } from '@/lib/axios';
 import { useUserStore } from '@/store/useUserStore';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { NewProduct } from '@/components/NewProduct';
 import { ProductsTable } from '@/components/ProductsTable';
 import { useCartStore } from '@/store/useCartStore';
 import { useProductContext } from '@/store/ProductContext';
+import { authorizeAdmin } from '@/utils/authorizationFunctions';
+import { fetchProducts } from '@/utils/productsFunctions';
 
 export function Dashboard() {
   const navigate = useNavigate();
@@ -23,72 +22,33 @@ export function Dashboard() {
 
   const [authorized, setAuthorized] = useState(false);
 
-  async function authorizeAdmin() {
-    if (!token) {
-      setAuthorized(false);
-      toast.error('You must be logged in');
-      return navigate('/login');
+  useEffect(() => {
+    async function authorize() {
+      const authorized = await authorizeAdmin(
+        token,
+        navigate,
+        userStoreReset,
+        cartStoreReset,
+      );
+
+      setAuthorized(authorized);
+      if (!authorized) {
+        navigate('/');
+        return;
+      }
     }
 
-    await api
-      .get('/token', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .catch((e) => {
-        toast.error(e.response.data.message);
-        setAuthorized(false);
-
-        if (e.response.status === 498) {
-          logout();
-          return navigate('/login');
-        } else {
-          return navigate('/');
-        }
-      })
-      .then(() => {
-        toast.success('Access authorized');
-        setAuthorized(true);
-      });
-  }
-
-  function logout() {
-    userStoreReset();
-    cartStoreReset();
-  }
-
-  async function fetchProducts() {
-    setIsLoading(true);
-    await api
-      .get('products')
-      .then((response) => {
-        setProducts(response.data);
-      })
-      .catch((e) => {
-        toast.error('Internal Server Error');
-        console.log(e);
-      })
-      .finally(() => setIsLoading(false));
-  }
-
-  useEffect(() => {
-    if (!authorized) authorizeAdmin();
-    if (!products.length) fetchProducts();
+    !authorized && authorize();
+    !products.length && fetchProducts(setIsLoading, setProducts);
   }, []);
 
   if (isLoading) return <Loading />;
 
   return (
-    <div className="w-full h-screen flex flex-col justify-center items-center text-center">
-      <h1 className="text-2xl">Dashboard</h1>
-      <div
-        className={
-          'w-full rounded-sm lg:p-10 p-3 ' +
-          (products.length <= 4 ? 'mt-10' : 'mt-[400px] sm:mt-[600px]')
-        }
-      >
-        <h2 className="text-xl font-thin">Products</h2>
+    <div className="w-full h-screen text-center">
+      <h1 className="text-3xl font-semibold pt-52">Dashboard</h1>
+      <div className="w-full rounded-sm lg:p-10 p-3">
+        <h2 className="text-2xl font-thin">Products</h2>
         <ProductsTable />
 
         <Dialog>

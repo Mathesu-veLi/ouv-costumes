@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from './ui/button';
 import { FaPlus } from 'react-icons/fa';
 import { ControllerRenderProps } from 'react-hook-form';
@@ -13,10 +13,19 @@ interface IProps {
     },
     'image'
   >;
+  initialImage?: File;
+  w?: string;
+  h?: string;
 }
 
 export function InputImg(props: IProps) {
   const [productImg, setProductImg] = useState<File | null>(null);
+  useEffect(() => {
+    if (props.initialImage) setProductImg(props.initialImage);
+  }, [props.initialImage]);
+
+  const w = !props.w ? '36' : props.w;
+  const h = !props.h ? '36' : props.h;
 
   return (
     <div>
@@ -33,7 +42,8 @@ export function InputImg(props: IProps) {
       />
       <Button
         variant="outline"
-        className="w-36 h-36 p-0"
+        type="button"
+        className={`w-${w} h-${h} p-0`}
         onClick={() => {
           document.getElementById('productImg')?.click();
         }}

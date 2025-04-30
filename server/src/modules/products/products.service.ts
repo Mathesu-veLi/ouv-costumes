@@ -3,6 +3,7 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { PrismaService } from '@/prisma/prisma.service';
 import { productAlreadyExists, productNotExists } from '@/utils/throws';
+import { randomInt } from 'crypto';
 import { UploadService } from '../upload/upload.service';
 
 @Injectable()

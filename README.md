@@ -1,32 +1,136 @@
 
-# OUV Costumes
+# 👕 OUV Costumes
 
-A team shirt e-commerce
+OUV Costumes is a full-stack e-commerce application for selling team shirts, built with a modern React frontend and a robust NestJS backend. It features admin dashboards, Stripe-powered payments, and a clean UI designed for responsiveness and usability.
 
-*Made for learning! You don't get anything if you buy!*
+> ⚠️ This project is for learning purposes only. No actual purchases will be processed.
 
+## 📜 Table of Contents
 
+- [✨ Features](#-features)
+- [🛠 Technologies](#-technologies)
+- [📥 Installation](#-installation)
+  - [⚙ Requirements](#-requirements)
+  - [📑 Environment Setup](#-environment-setup)
+- [▶️ Running the Project](#-running-the-project)
+  - [🎨 Frontend](#-frontend)
+  - [🖥 Backend](#-backend)
+- [📂 Project Structure](#-project-structure)
+- [☁️ Deployment](#-deployment)
+- [🎥 Demo](#-demo)
 
-## Features
+## ✨ Features
 
-- Payment "functional" (payment API in test mode, so no purchase is charged)
-- Possibility of contacting the seller
-- Dashboard for sellers to add products easily
+✅ **User Authentication:** Sign-up and login functionality.  
+✅ **Stripe Checkout Integration:** Fully functional payment flow in test mode.  
+✅ **Admin Dashboard:** Product management features restricted to authorized users.  
+✅ **Product Catalog:** Browse and view shirt items available for purchase.  
+✅ **Responsive UI:** Tailwind CSS and component libraries for polished UX.  
 
-## Demo
+## 🛠 Technologies
 
-Website: https://ouv.vercel.app
+### 🎨 Frontend:
+- ⚛️ React + TypeScript
+- ⚡ Vite
+- 🎨 Tailwind CSS
+- 🌐 Zustand (state management)
+- 🧩 Shadcn/ui
+- 🧹 ESLint & Prettier
 
-API: https://ouv.onrender.com
+### 🖥 Backend:
+- 🚀 NestJS
+- 🗄 Prisma ORM
+- 💳 Stripe API
+- 🐳 Docker Compose (optional)
 
-## Lessons Learned
+## 📥 Installation
 
-- Making payments using Stripe Checkout
-- Permission validation (to know if the logged in user is an admin and then allow the addition of new products)
+### ⚙ Requirements
 
-## Tech Stack
+- 🟢 Node.js (recommended LTS)
+- 📦 PNPM or NPM
+- 🗃 PostgreSQL (or compatible DB via Prisma)
+- 🐳 Docker (optional)
 
-**Client:** React, Zustand, TailwindCSS, Shadcn/ui
+### 📑 Environment Setup
 
-**Server:** Node, NestJS, Prisma
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Mathesu-veLi/ouv-costumes.git
+   cd ouv-costumes
+````
 
+2. Create environment variables:
+
+   * 🖥 **Frontend (`client/`):**
+
+     ```bash
+     cp .env.example .env
+     ```
+
+     (Add your Vite config and Stripe public key)
+
+   * 🗄 **Backend (`server/`):**
+
+     ```bash
+     cp .env.example .env
+     ```
+
+     (Add database URL, Stripe secret key, and any JWT secrets)
+
+## ▶️ Running the Project
+
+### 🎨 Frontend
+
+```bash
+cd client
+pnpm install
+pnpm run dev
+```
+
+App will be available at [http://localhost:3000](http://localhost:3000)
+
+### 🖥 Backend
+
+```bash
+cd server
+pnpm install
+pnpm prisma migrate dev
+pnpm run start:dev
+```
+
+API will be running at [http://localhost:3001](http://localhost:3001)
+
+## 📂 Project Structure
+
+```
+ouv-costumes/
+├── client/             # Frontend (React, Vite, Tailwind)
+│   ├── src/
+│   │   ├── components/     # UI components (cards, forms, etc.)
+│   │   ├── pages/          # Login, Register, Dashboard, etc.
+│   │   └── store/          # Zustand state management
+│   ├── public/
+│   └── vite.config.ts
+│
+├── server/             # Backend (NestJS)
+│   ├── src/
+│   │   ├── auth/           # Auth module
+│   │   ├── products/       # Product CRUD module
+│   │   └── users/          # User roles & permissions
+│   ├── prisma/             # Prisma schema and migrations
+│   └── docker-compose.yaml
+```
+
+## ☁️ Deployment
+
+* **🔧 Vercel**: `vercel.json` is provided for frontend deployment.
+* **⚙️ Render**: Backend is hosted on [Render](https://render.com/).
+* **🐳 Docker**: Use `docker-compose.yaml` for local development of the full stack.
+
+## 🎥 Demo
+
+🌐 Website: [https://ouv.vercel.app](https://ouv.vercel.app)
+🔗 API: [https://ouv.onrender.com](https://ouv.onrender.com)
+
+[![Watch the demo](https://img.youtube.com/vi/video_link/0.jpg)](https://www.youtube.com/watch?v=video_link)

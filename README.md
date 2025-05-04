@@ -55,10 +55,10 @@ OUV Costumes is a full-stack e-commerce application for selling team shirts, bui
 ### 📑 Environment Setup
 
 1. Clone the repository:
-   ```bash
+```bash
    git clone https://github.com/Mathesu-veLi/ouv-costumes.git
    cd ouv-costumes
-````
+```
 
 2. Create environment variables:
 

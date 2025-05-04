@@ -73,7 +73,7 @@ export function NewProduct() {
         {
           img: filename,
           name: productForm.name,
-          price: productForm.price,
+          price: Number(productForm.price.toFixed(2)),
           stock: productForm.stock,
         },
         {

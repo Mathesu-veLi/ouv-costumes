@@ -164,7 +164,7 @@ export function EditProduct() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(updateProduct)}
-          className="m-10 pb-10 lg:pb-0 w-2/4"
+          className="m-10 pb-10 lg:pb-0 w-1/4"
         >
           <div className="flex flex-col justify-around items-center gap-10 mb-4">
             <div>
@@ -178,8 +178,6 @@ export function EditProduct() {
                       <InputImg
                         field={field}
                         initialImage={productImg}
-                        w="56"
-                        h="56"
                       />
                     </FormControl>
                     <FormMessage />

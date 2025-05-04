@@ -24,8 +24,8 @@ export function InputImg(props: IProps) {
     if (props.initialImage) setProductImg(props.initialImage);
   }, [props.initialImage]);
 
-  const w = !props.w ? '36' : props.w;
-  const h = !props.h ? '36' : props.h;
+  const w = !props.w ? '60' : props.w;
+  const h = !props.h ? '60' : props.h;
 
   return (
     <div>

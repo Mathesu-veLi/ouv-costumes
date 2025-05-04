@@ -38,8 +38,8 @@ const formSchema = z.object({
       'Only image files (jpeg, png and jpg) are allowed',
     ),
   name: z.string().min(1),
-  price: z.number().min(1),
-  stock: z.number().min(1),
+  price: z.preprocess((val) => Number(val), z.number().min(1)),
+  stock: z.preprocess((val) => Number(val), z.number().min(1)),
 });
 
 type TFormSchema = z.infer<typeof formSchema>;
@@ -53,7 +53,7 @@ export function NewProduct() {
     defaultValues: {
       name: '',
       price: 1,
-      stock: 1,       
+      stock: 1,
     },
   });
 
@@ -73,8 +73,8 @@ export function NewProduct() {
         {
           img: filename,
           name: productForm.name,
-          price: Number(productForm.price),
-          stock: Number(productForm.stock),
+          price: productForm.price,
+          stock: productForm.stock,
         },
         {
           headers: {

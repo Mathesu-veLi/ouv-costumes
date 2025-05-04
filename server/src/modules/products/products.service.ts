@@ -24,7 +24,7 @@ export class ProductsService {
 
     const stripeProduct = await this.stripe.prices.create({
       currency: 'brl',
-      unit_amount_decimal: Number(createProductDto.price.toFixed(2)),
+      unit_amount: (createProductDto.price * 100),
       product_data: {
         name: createProductDto.name,
       },

@@ -1,9 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { fileNotFound, noImageProvided } from '@/utils/throws';
-import { existsSync, unlinkSync } from 'fs';
+import { existsSync, readdirSync, unlinkSync } from 'fs';
 
 @Injectable()
 export class UploadService {
+  getFiles() {
+    let files: string[];
+
+    readdirSync('./uploads/').forEach((file) => {
+      files.push(file);
+    });
+
+    return { files };
+  }
+
   uploadFile(file: Express.Multer.File) {
     if (!file) {
       noImageProvided();

@@ -1,6 +1,7 @@
 import {
   Controller,
   Delete,
+  Get,
   Param,
   Post,
   UploadedFile,
@@ -12,6 +13,11 @@ import { UploadService } from './upload.service';
 @Controller('upload')
 export class UploadController {
   constructor(private readonly uploadService: UploadService) {}
+
+  @Get()
+  getFiles() {
+    return this.uploadService.getFiles();
+  }
 
   @Post()
   @UseInterceptors(FileInterceptor('image'))

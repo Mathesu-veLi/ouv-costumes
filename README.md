@@ -11,7 +11,6 @@ OUV Costumes is a full-stack e-commerce application for selling team shirts, bui
 - [🛠 Technologies](#-technologies)
 - [📥 Installation](#-installation)
   - [⚙ Requirements](#-requirements)
-  - [📑 Environment Setup](#-environment-setup)
 - [▶️ Running the Project](#-running-the-project)
   - [🎨 Frontend](#-frontend)
   - [🖥 Backend](#-backend)

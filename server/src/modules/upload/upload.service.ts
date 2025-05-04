@@ -5,7 +5,7 @@ import { existsSync, readdirSync, unlinkSync } from 'fs';
 @Injectable()
 export class UploadService {
   getFiles() {
-    let files: string[];
+    const files: string[] = [];
 
     readdirSync('./uploads/').forEach((file) => {
       files.push(file);

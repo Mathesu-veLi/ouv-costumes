@@ -11,7 +11,6 @@ OUV Costumes is a full-stack e-commerce application for selling team shirts, bui
 - [🛠 Technologies](#-technologies)
 - [📥 Installation](#-installation)
   - [⚙ Requirements](#-requirements)
-  - [📑 Environment Setup](#-environment-setup)
 - [▶️ Running the Project](#-running-the-project)
   - [🎨 Frontend](#-frontend)
   - [🖥 Backend](#-backend)
@@ -52,32 +51,6 @@ OUV Costumes is a full-stack e-commerce application for selling team shirts, bui
 - 🗃 PostgreSQL (or compatible DB via Prisma)
 - 🐳 Docker (optional)
 
-### 📑 Environment Setup
-
-1. Clone the repository:
-```bash
-   git clone https://github.com/Mathesu-veLi/ouv-costumes.git
-   cd ouv-costumes
-```
-
-2. Create environment variables:
-
-   * 🖥 **Frontend (`client/`):**
-
-     ```bash
-     cp .env.example .env
-     ```
-
-     (Add your Vite config and Stripe public key)
-
-   * 🗄 **Backend (`server/`):**
-
-     ```bash
-     cp .env.example .env
-     ```
-
-     (Add database URL, Stripe secret key, and any JWT secrets)
-
 ## ▶️ Running the Project
 
 ### 🎨 Frontend
@@ -88,7 +61,7 @@ pnpm install
 pnpm run dev
 ```
 
-App will be available at [http://localhost:3000](http://localhost:3000)
+App will be available at [http://localhost:3000](http://localhost:5173)
 
 ### 🖥 Backend
 
@@ -99,7 +72,7 @@ pnpm prisma migrate dev
 pnpm run start:dev
 ```
 
-API will be running at [http://localhost:3001](http://localhost:3001)
+API will be running at [http://localhost:3001](http://localhost:2607)
 
 ## 📂 Project Structure
 
@@ -133,4 +106,4 @@ ouv-costumes/
 🌐 Website: [https://ouv.vercel.app](https://ouv.vercel.app)
 🔗 API: [https://ouv.onrender.com](https://ouv.onrender.com)
 
-[![Watch the demo](https://img.youtube.com/vi/video_link/0.jpg)](https://www.youtube.com/watch?v=video_link)
+[![Watch the demo](https://img.youtube.com/vi/iG6xZd5ukhY/0.jpg)](https://www.youtube.com/watch?v=iG6xZd5ukhY)

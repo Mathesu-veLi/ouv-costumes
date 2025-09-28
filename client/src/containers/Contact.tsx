@@ -14,8 +14,9 @@ import {
 } from '@/components/ui/form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-
 import { z } from 'zod';
+import { Link } from 'react-router-dom';
+import { GoArrowUpRight } from 'react-icons/go';
 
 const formSchema = z.object({
   firstName: z.string().min(1),
@@ -78,21 +79,29 @@ export function Contact() {
   return (
     <div className="flex justify-center items-center lg:h-screen pt-32 lg:p-0 mb-10 lg:m-0">
       <div className="flex flex-col lg:flex-row justify-center items-center gap-10 lg:gap-24 lg:p-10">
-        <div className="max-w-72 flex gap-7 flex-col tracking-wider leading-relaxed p-2">
+        <div className="max-w-96 flex gap-5 flex-col tracking-wider leading-relaxed p-2">
           <h1 className="text-3xl font-semibold">Contact Us</h1>
-          <p className="text-lg text-gray-400">
-            Email, call, or complete the form to send us a message without
-            leaving the site
+          <p className="text-md text-gray-400">
+            Esse site foi feito somente como projeto pessoal. Qualquer compra
+            feita aqui não será debitada do cartão ou chegará pra você. Se você
+            está vendo a versão online e não a local, poderá ter problemas para
+            visualizar as fotos dos produtos já cadastrados e se está tendo esse
+            problema, é porque eu ainda não consegui comprar um hardware usado
+            para servir de homelab para hospedar os sites e databases que eu
+            crio (o que eu espero que seja resolvido em breve).
           </p>
-          <a
-            className="text-lg text-gray-400"
-            href="mailto:matheuslevit@gmail.com"
+          <Link
+            to="https://github.com/Mathesu-veLi"
+            className="flex items-center hover:underline"
           >
-            matheuslevit@gmail.com
-          </a>
-          <a className="text-lg text-gray-400" href="tel:+5571985076263">
-            +55 71 98507-6263
-          </a>
+            Github <GoArrowUpRight />
+          </Link>
+          <Link
+            to="https://www.linkedin.com/in/mathsvl/"
+            className="flex items-center hover:underline"
+          >
+            Linkedin <GoArrowUpRight />
+          </Link>
         </div>
         <div className="border p-5 mx-3 rounded-md grid gap-5 ">
           <Form {...form}>

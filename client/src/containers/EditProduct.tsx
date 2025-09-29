@@ -85,7 +85,7 @@ export function EditProduct() {
   async function updateProduct(productForm: TFormSchema) {
     setIsLoading(true);
     let filename;
-    if (productForm.image.name !== product?.img) {
+    if (productForm.image.name !== product?.img.split('/').pop()) {
       filename = await uploadProductImage(
         productForm.image,
         token,
@@ -94,7 +94,10 @@ export function EditProduct() {
 
       if (!filename || !product) return;
 
-      deleteProductImage(product.img, token);
+      deleteProductImage(
+        product.img.split('/').slice(-2).join('/').split('.')[0],
+        token,
+      );
     } else {
       filename = product?.img;
     }

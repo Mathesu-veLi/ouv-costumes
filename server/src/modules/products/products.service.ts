@@ -71,7 +71,9 @@ export class ProductsService {
       });
     if (!product) return;
 
-    this.uploadService.deleteFile(product.img.split('/').slice(-2).join('/'));
+    this.uploadService.deleteFile(
+      product.img.split('/').slice(-2).join('/').split('.')[0],
+    );
 
     return await this.prismaService.products
       .delete({ where: { id } })

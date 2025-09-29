@@ -16,8 +16,9 @@ export class UploadService {
     return this.cloudinaryUpload.getFiles();
   }
 
-  uploadFile(file: Express.Multer.File) {
-    return this.cloudinaryUpload.uploadFile(file);
+  async uploadFile(file: Express.Multer.File) {
+    const result = await this.cloudinaryUpload.uploadFile(file);
+    return result;
   }
 
   deleteFile(filename: string) {

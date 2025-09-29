@@ -21,8 +21,9 @@ export class UploadController {
 
   @Post()
   @UseInterceptors(FileInterceptor('image'))
-  uploadFile(@UploadedFile() file: Express.Multer.File) {
-    return this.uploadService.uploadFile(file); // Delegando a lógica para o serviço
+  async uploadFile(@UploadedFile() file: Express.Multer.File) {
+    const result = await this.uploadService.uploadFile(file);
+    return result;
   }
 
   @Delete(':filename')

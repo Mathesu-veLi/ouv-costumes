@@ -56,23 +56,24 @@ export class ProductsService {
     const product = await this.findOne(id);
     if (!product) return;
 
-    if (
-      product.name !== updateProductDto.name ||
-      product.price !== updateProductDto.price
-    ) {
+    // TODO: update name and price in stripe (needs to save the productId in db)
+    /*if (product.name !== updateProductDto.name) {
       this.stripe.products.update(product.priceId, {
+        name: updateProductDto.name,
+      });
+    }
+
+    if (product.price !== updateProductDto.price) {
+      this.stripe.prices.update(product.priceId, {
         active: false,
       });
 
-      const stripeProduct = await this.stripe.prices.create({
+      await this.stripe.prices.create({
         currency: 'brl',
         unit_amount: updateProductDto.price * 100,
-        product_data: {
-          name: updateProductDto.name,
-        },
+        product: product.priceId,
       });
-      updateProductDto['priceId'] = stripeProduct.id;
-    }
+    }*/
 
     return await this.prismaService.products
       .update({
@@ -91,6 +92,8 @@ export class ProductsService {
         if (e.code === 'P2025') productNotExists();
       });
     if (!product) return;
+
+    this.stripe.products.del(product.priceId);
 
     this.uploadService.deleteFile(
       product.img.split('/').slice(-2).join('/').split('.')[0],

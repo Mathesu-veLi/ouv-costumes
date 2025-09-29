@@ -53,6 +53,27 @@ export class ProductsService {
   }
 
   async update(id: number, updateProductDto: UpdateProductDto) {
+    const product = await this.findOne(id);
+    if (!product) return;
+
+    if (
+      product.name !== updateProductDto.name ||
+      product.price !== updateProductDto.price
+    ) {
+      this.stripe.products.update(product.priceId, {
+        active: false,
+      });
+
+      const stripeProduct = await this.stripe.prices.create({
+        currency: 'brl',
+        unit_amount: updateProductDto.price * 100,
+        product_data: {
+          name: updateProductDto.name,
+        },
+      });
+      updateProductDto['priceId'] = stripeProduct.id;
+    }
+
     return await this.prismaService.products
       .update({
         where: { id },

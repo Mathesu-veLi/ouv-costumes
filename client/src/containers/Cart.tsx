@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { useCartStore } from '@/store/useCartStore';
 import { formatToPrice } from '@/utils/formatToPrice';
-import { API_URL } from '@/utils/globals';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaRegTrashCan } from 'react-icons/fa6';
 import { FiPlusCircle } from 'react-icons/fi';

@@ -1,7 +1,6 @@
 import { Loading } from '@/components/Loading';
 import { ProductCard } from '@/components/ProductCard';
 import { IProduct } from '@/interfaces/IProduct';
-import { API_URL } from '@/utils/globals';
 import { fetchProducts } from '@/utils/productsFunctions';
 import { useEffect, useState } from 'react';
 

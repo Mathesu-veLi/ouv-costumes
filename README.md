@@ -1,4 +1,3 @@
-
 # 👕 OUV Costumes
 
 OUV Costumes is a full-stack e-commerce application for selling team shirts, built with a modern React frontend and a robust NestJS backend. It features admin dashboards, Stripe-powered payments, and a clean UI designed for responsiveness and usability.
@@ -24,11 +23,12 @@ OUV Costumes is a full-stack e-commerce application for selling team shirts, bui
 ✅ **Stripe Checkout Integration:** Fully functional payment flow in test mode.  
 ✅ **Admin Dashboard:** Product management features restricted to authorized users.  
 ✅ **Product Catalog:** Browse and view shirt items available for purchase.  
-✅ **Responsive UI:** Tailwind CSS and component libraries for polished UX.  
+✅ **Responsive UI:** Tailwind CSS and component libraries for polished UX.
 
 ## 🛠 Technologies
 
 ### 🎨 Frontend:
+
 - ⚛️ React + TypeScript
 - ⚡ Vite
 - 🎨 Tailwind CSS
@@ -37,6 +37,7 @@ OUV Costumes is a full-stack e-commerce application for selling team shirts, bui
 - 🧹 ESLint & Prettier
 
 ### 🖥 Backend:
+
 - 🚀 NestJS
 - 🗄 Prisma ORM
 - 💳 Stripe API
@@ -61,7 +62,7 @@ pnpm install
 pnpm run dev
 ```
 
-App will be available at [http://localhost:3000](http://localhost:5173)
+App will be available at [http://localhost:5173](http://localhost:5173)
 
 ### 🖥 Backend
 
@@ -72,7 +73,7 @@ pnpm prisma migrate dev
 pnpm run start:dev
 ```
 
-API will be running at [http://localhost:3001](http://localhost:2607)
+API will be running at [http://localhost:3110](http://localhost:3110)
 
 ## 📂 Project Structure
 
@@ -97,9 +98,9 @@ ouv-costumes/
 
 ## ☁️ Deployment
 
-* **🔧 Vercel**: `vercel.json` is provided for frontend deployment.
-* **⚙️ Render**: Backend is hosted on [Render](https://render.com/).
-* **🐳 Docker**: Use `docker-compose.yaml` for local development of the full stack.
+- **🔧 Vercel**: `vercel.json` is provided for frontend deployment.
+- **⚙️ Render**: Backend is hosted on [Render](https://render.com/).
+- **🐳 Docker**: Use `docker-compose.yaml` for local development of the full stack.
 
 ## 🎥 Demo
 

@@ -1,39 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import { fileNotFound, noImageProvided } from '@/utils/throws';
-import { existsSync, readdirSync, unlinkSync } from 'fs';
+import LocalUpload from './local.upload';
 
 @Injectable()
 export class UploadService {
+  constructor(private readonly localUpload: LocalUpload) {}
+
   getFiles() {
-    const files: string[] = [];
-
-    readdirSync('./uploads/').forEach((file) => {
-      files.push(file);
-    });
-
-    return { files };
+    return this.localUpload.getFiles();
   }
 
   uploadFile(file: Express.Multer.File) {
-    if (!file) {
-      noImageProvided();
-    }
-
-    return { message: 'File uploaded successfully', filename: file.filename };
+    return this.localUpload.uploadFile(file);
   }
 
   deleteFile(filename: string) {
-    const path = `./uploads/${filename}`;
-    if (!existsSync(path)) {
-      fileNotFound();
-    }
-
-    try {
-      unlinkSync(path);
-      return { message: 'File deleted successfully' };
-    } catch (e) {
-      console.error(e);
-      throw new Error('Failed to delete file');
-    }
+    return this.localUpload.deleteFile(filename);
   }
 }

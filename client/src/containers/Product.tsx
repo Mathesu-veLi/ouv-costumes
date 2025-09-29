@@ -87,7 +87,7 @@ export function Product() {
         <div className="flex flex-col lg:flex-row gap-3 lg:gap-5">
           <div className="flex flex-col justify-center items-center">
             <img
-              src={`${API_URL}/uploads/${product?.img}`}
+              src={`${product?.img}`}
               alt={product?.name}
               className="w-64 lg:w-96 border border-slate-500"
             />

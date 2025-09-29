@@ -75,7 +75,7 @@ export function Cart() {
                     className="flex gap-4 lg:gap-6"
                   >
                     <img
-                      src={`${API_URL}/uploads/${product.img}`}
+                      src={`${product.img}`}
                       alt={product.name}
                       className="w-36 lg:w-48 border rounded-sm"
                     />

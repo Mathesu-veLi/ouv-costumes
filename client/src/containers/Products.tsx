@@ -25,7 +25,7 @@ export function Products() {
               key={product.id}
               id={product.id}
               name={product.name}
-              img={`${API_URL}/uploads/${product.img}`}
+              img={`${product.img}`}
               price={product.price}
               stock={product.stock}
             />

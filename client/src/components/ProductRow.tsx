@@ -52,7 +52,7 @@ export function ProductRow(props: IProps) {
       <td>{props.product.id}</td>
       <td className="flex justify-center">
         <img
-          src={`${process.env.API_URL}/uploads/${props.product.img}`}
+          src={`${props.product.img}`}
           alt={`${props.product.name} image`}
           className="max-w-28 max-h-28 max-[800px]:w-20 max-[800px]:h-20 rounded-sm"
         />

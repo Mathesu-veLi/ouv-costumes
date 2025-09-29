@@ -133,9 +133,7 @@ export function EditProduct() {
 
     async function setProductImgPromise() {
       if (!productImg && product?.img) {
-        const imageFile = await createFileObjectFromImage(
-          `${process.env.API_URL}/uploads/${product.img}`,
-        );
+        const imageFile = await createFileObjectFromImage(`${product.img}`);
         setProductImg(imageFile);
       }
     }
@@ -175,10 +173,7 @@ export function EditProduct() {
                   <FormItem>
                     <FormLabel>Image</FormLabel>
                     <FormControl>
-                      <InputImg
-                        field={field}
-                        initialImage={productImg}
-                      />
+                      <InputImg field={field} initialImage={productImg} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

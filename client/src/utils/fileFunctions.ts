@@ -11,7 +11,8 @@ export async function createFileObjectFromImage(imagePath: string) {
 }
 
 interface UploadResponse {
-  filename: string;
+  url: string;
+  public_id: string;
 }
 
 export async function uploadProductImage(
@@ -34,7 +35,7 @@ export async function uploadProductImage(
         setIsLoading(false);
       });
 
-    return res?.data.filename;
+    return res?.data.url;
   }
 }
 

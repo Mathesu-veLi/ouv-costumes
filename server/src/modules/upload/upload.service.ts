@@ -1,19 +1,26 @@
 import { Injectable } from '@nestjs/common';
-import LocalUpload from './local.upload';
+import { CloudinaryService } from '../cloudinary/cloudinary.service';
+import CloudinaryUpload from './cloudnary.upload';
 
 @Injectable()
 export class UploadService {
-  constructor(private readonly localUpload: LocalUpload) {}
+  // Use to uploads product images locally
+  //constructor(private readonly localUpload: LocalUpload) {}
+  private cloudinaryUpload: CloudinaryUpload;
+
+  constructor(cloudinaryService: CloudinaryService) {
+    this.cloudinaryUpload = new CloudinaryUpload(cloudinaryService);
+  }
 
   getFiles() {
-    return this.localUpload.getFiles();
+    return this.cloudinaryUpload.getFiles();
   }
 
   uploadFile(file: Express.Multer.File) {
-    return this.localUpload.uploadFile(file);
+    return this.cloudinaryUpload.uploadFile(file);
   }
 
   deleteFile(filename: string) {
-    return this.localUpload.deleteFile(filename);
+    return this.cloudinaryUpload.deleteFile(filename);
   }
 }

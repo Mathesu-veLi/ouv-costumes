@@ -3,7 +3,6 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { PrismaService } from '@/prisma/prisma.service';
 import { productAlreadyExists, productNotExists } from '@/utils/throws';
-import { randomInt } from 'crypto';
 import { UploadService } from '../upload/upload.service';
 
 @Injectable()
@@ -24,7 +23,7 @@ export class ProductsService {
 
     const stripeProduct = await this.stripe.prices.create({
       currency: 'brl',
-      unit_amount: (createProductDto.price * 100),
+      unit_amount: createProductDto.price * 100,
       product_data: {
         name: createProductDto.name,
       },
@@ -72,7 +71,7 @@ export class ProductsService {
       });
     if (!product) return;
 
-    this.uploadService.deleteFile(product.img);
+    this.uploadService.deleteFile(product.img.split('/').slice(-2).join('/'));
 
     return await this.prismaService.products
       .delete({ where: { id } })
